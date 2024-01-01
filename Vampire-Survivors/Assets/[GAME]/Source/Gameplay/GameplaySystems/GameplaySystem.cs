@@ -1,0 +1,23 @@
+namespace VampireSurvivors.Gameplay.Systems
+{
+    public class GameplaySystem : VSSystem
+    {
+
+        public SkillSystem SkillSystem { get; private set; }
+        public  CraftingSystem CraftingSystem{ get; private set; }
+        public PlayerControlSystem PlayerControlSystem { get; private set; }
+        public ManaSystem ManaSystem { get; private set; }
+        public CollectionSystem CollectionSystem { get; private set; }
+        public ChestSystem ChestSystem { get; private set; }
+        public BattleSystem BattleSystem { get; private set; }
+        public AIControlSystem AIControlSystem { get; private set; }
+
+
+
+        public GameplaySystem()
+        {
+
+        }
+
+    }
+}
