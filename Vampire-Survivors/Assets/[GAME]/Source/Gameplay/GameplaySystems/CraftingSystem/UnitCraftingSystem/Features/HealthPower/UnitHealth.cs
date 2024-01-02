@@ -7,7 +7,6 @@ namespace VampireSurvivors.Gameplay.Units
     /// </summary>
     public class UnitHealth
     {
-        private static int c_defaultMaxUnitHealth = 100;
 
         public Action Changed ;
 
@@ -53,6 +52,6 @@ namespace VampireSurvivors.Gameplay.Units
             _maxHealth.SetValue(maxHealth);
             _currentHealth.SetValue(Math.Min(_currentHealth.Value, maxHealth));
             Changed?.Invoke();
-        } 
+        }
     }
 }
