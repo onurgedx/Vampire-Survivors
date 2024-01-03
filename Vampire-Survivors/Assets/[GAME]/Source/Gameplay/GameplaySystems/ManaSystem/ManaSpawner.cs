@@ -6,12 +6,14 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
     public class ManaSpawner
     {
-        
-        private CollectableRecorder _collectableRecorder;
+
+        private CollectableRecorder _collectableRecorder = null;
         private Dictionary<System.Type, ManaFactory> _manaFactories = new Dictionary<System.Type, ManaFactory>();
 
-        public ManaSpawner(CollectableRecorder a_collectableRecorder)
+        public ManaSpawner(CollectableRecorder a_collectableRecorder, Dictionary<System.Type, ManaFactory> a_manaFactories)
         {
+            _manaFactories = a_manaFactories;
+            _collectableRecorder = a_collectableRecorder;
         }
 
 
