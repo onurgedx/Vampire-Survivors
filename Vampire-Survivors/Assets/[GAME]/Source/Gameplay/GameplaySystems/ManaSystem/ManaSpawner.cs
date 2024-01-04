@@ -1,43 +1,24 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 
 namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
-    public class ManaSpawner
+    public class ManaSpawner : Spawner
     {
-
-        private CollectableRecorder _collectableRecorder = null;
-        private Dictionary<System.Type, ManaFactory> _manaFactories = new Dictionary<System.Type, ManaFactory>();
-
-        public ManaSpawner(CollectableRecorder a_collectableRecorder, Dictionary<System.Type, ManaFactory> a_manaFactories)
+        public ManaSpawner(CollectableRecorder a_collectableRecorder, Dictionary<Type, CollectableFactory> a_manaFactories) : base(a_collectableRecorder, a_manaFactories)
         {
-            _manaFactories = a_manaFactories;
-            _collectableRecorder = a_collectableRecorder;
         }
 
-
-        public void Spawn()
+        protected override Vector3 SpawnPosition()
         {
-            if (_manaFactories.TryGetValue(ManaType(), out ManaFactory factory))
-            {            
-                (Mana mana , GameObject manaGameobject) = factory.Create(SpawnPosition());
-                Collider collider = manaGameobject.GetComponent<Collider>();
-                _collectableRecorder.RecordCollectable(collider, mana );
-            }
+            throw new NotImplementedException();
         }
 
-        private System.Type ManaType()
+        protected override Type Type()
         {
-            return typeof(SmallMana);
-
+            throw new NotImplementedException();
         }
-
-        private Vector3 SpawnPosition()
-        {
-            return Vector3.one;
-        }
-
-
     }
 }

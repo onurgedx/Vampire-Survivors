@@ -1,6 +1,6 @@
 namespace VampireSurvivors.Gameplay.Systems
 {
-    public class VSSystem 
+    public abstract class VSSystem 
     {
         public virtual void Update()
         {

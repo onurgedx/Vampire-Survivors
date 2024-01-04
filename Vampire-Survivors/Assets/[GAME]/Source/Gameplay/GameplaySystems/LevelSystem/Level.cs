@@ -10,11 +10,11 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         public int ExperienceCapacity { get;  set; }
 
 
-        public Level()
+        public Level(int a_experienceCapacity =10)
         {
             Number = 0;
             CurrentExperience = 0;
-            ExperienceCapacity = 10;
+            ExperienceCapacity = a_experienceCapacity;
         }    
 
         

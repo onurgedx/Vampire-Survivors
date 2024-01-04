@@ -1,4 +1,5 @@
 using UnityEngine;
+using VampireSurvivors.Gameplay.Systems.CollectionSys;
 
 namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
@@ -8,7 +9,7 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
         {
         }
 
-        public override (Mana, GameObject) Create(Vector3 a_position)
+        public override (ICollectable, GameObject) Create(Vector3 a_position)
         {
             SmallMana mana = new SmallMana();
             GameObject manaGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent);

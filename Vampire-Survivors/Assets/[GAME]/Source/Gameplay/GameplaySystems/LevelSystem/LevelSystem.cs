@@ -13,10 +13,8 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
 
         public LevelSystem(LevelDatas a_levelData)
         {
-            _level = new Level();
-            _level.Number = 0;
-            _level.ExperienceCapacity = 10;
             _levelCapaties = a_levelData.RequiredExperiences;
+            _level = new Level(_levelCapaties[0]);
         }
 
 
