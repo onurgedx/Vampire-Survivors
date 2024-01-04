@@ -1,3 +1,4 @@
+using VampireSurvivors.Gameplay.Systems.ChestSys;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Gameplay.Systems.ManaSys;
 

@@ -32,9 +32,6 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
                     }
                 }
             }
-
         }
-
-
     }
 }
