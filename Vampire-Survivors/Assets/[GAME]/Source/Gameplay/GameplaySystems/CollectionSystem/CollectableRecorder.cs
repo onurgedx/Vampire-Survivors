@@ -1,24 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Systems.CollectionSys
 {
-    public class CollectableRecorder
+    public class CollectableRecorder : Recorder<Collider, ICollectable>
     {
-
-        private Dictionary<Collider, ICollectable> _collectables=null;
-
-        
-        public CollectableRecorder(Dictionary<Collider,ICollectable> a_collectables)
+        public CollectableRecorder(Dictionary<Collider, ICollectable> a_recordeds) : base(a_recordeds)
         {
-            _collectables = a_collectables;
         }
-
-
-        public void RecordCollectable(Collider a_collider , ICollectable a_collectable)
-        {
-            _collectables.Add(a_collider, a_collectable);
-        }
-       
     }
 }

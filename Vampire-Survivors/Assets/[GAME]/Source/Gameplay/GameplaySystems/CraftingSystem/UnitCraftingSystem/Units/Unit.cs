@@ -1,4 +1,5 @@
 using System;
+using VampireSurvivors.Gameplay.Systems.BattleSys;
 
 namespace VampireSurvivors.Gameplay.Units
 {
@@ -7,8 +8,9 @@ namespace VampireSurvivors.Gameplay.Units
 
         public int Id { get; private set; }
 
-        public Action OnDead;
+        public bool IsAlive => throw new NotImplementedException();
 
+        public Action OnDead;
 
 
         public Unit()
@@ -17,14 +19,9 @@ namespace VampireSurvivors.Gameplay.Units
         }
 
 
-
-
-
-        
-
-
-
-
-
+        public void Damage(int a_damage)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace VampireSurvivors.Gameplay.Systems
             {
                 (ICollectable collectable, GameObject manaGameobject) = factory.Create(SpawnPosition());
                 Collider collider = manaGameobject.GetComponent<Collider>();
-                _collectableRecorder.RecordCollectable(collider, collectable);
+                _collectableRecorder.Record(collider, collectable);
             }
         }
 
