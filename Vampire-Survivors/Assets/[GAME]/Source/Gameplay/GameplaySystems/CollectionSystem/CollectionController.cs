@@ -7,9 +7,8 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
     {
 
         private Dictionary<Collider, ICollectable> _collectables = new Dictionary<Collider, ICollectable>();
-
-
         private IEnumerable<Collector> _collectors { get; }
+
 
         public CollectionController(Dictionary<Collider, ICollectable> a_collectables, IEnumerable<Collector> a_collectors)
         {
