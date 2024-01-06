@@ -19,10 +19,10 @@ namespace VampireSurvivors.Gameplay.Units
         private Property<int> _maxHealth;
         
 
-        public UnitHealth(int a_maxHealth ,int a_currentHealth)
+        public UnitHealth(int a_maxHealth  )
         {
             _maxHealth = new Property<int>(a_maxHealth);
-            _currentHealth = new Property<int>(a_currentHealth);
+            _currentHealth = new Property<int>(a_maxHealth);
         }
 
 

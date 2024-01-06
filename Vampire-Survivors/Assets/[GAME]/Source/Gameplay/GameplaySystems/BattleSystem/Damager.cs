@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace VampireSurvivors.Gameplay.Systems.BattleSys
 {
     public class Damager
     {
+
         private Dictionary<Collider, IDamageable> _damageables ;
+
 
         public Damager(Dictionary<Collider, IDamageable>  a_damageables)
         {
