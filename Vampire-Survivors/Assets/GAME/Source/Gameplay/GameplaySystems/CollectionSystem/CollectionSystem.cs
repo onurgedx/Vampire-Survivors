@@ -7,20 +7,20 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
     {
         private Dictionary<Collider, ICollectable> _collectables = new Dictionary<Collider, ICollectable>();
         public CollectableRecorder CollectableRecorder { get; private set; }
-        private CollectionController _collectionController;
+        public CollectionController CollectionController { get; private set; }
 
 
-        public CollectionSystem(IEnumerable<Collector> a_collectors)
+        public CollectionSystem( )
         {
             CollectableRecorder = new CollectableRecorder(_collectables);
-            _collectionController = new CollectionController(_collectables, a_collectors);
+            CollectionController = new CollectionController(_collectables);
         }
 
 
         public override void Update()
         {
             base.Update();
-            _collectionController.Update();
+            CollectionController.Update();
         }
                 
     }

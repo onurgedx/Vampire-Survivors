@@ -10,11 +10,10 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
            
         }
 
-        public override (ICollectable, GameObject) Create(Vector3 a_position)
+        
+        protected override ICollectable RetriveCollectable()
         {
-            BigMana mana = new BigMana();
-            GameObject manaGameObject = GameObject.Instantiate(_prefab , a_position, Quaternion.identity, _parent);
-            return (mana, manaGameObject);
+            throw new System.NotImplementedException();
         }
     }
 

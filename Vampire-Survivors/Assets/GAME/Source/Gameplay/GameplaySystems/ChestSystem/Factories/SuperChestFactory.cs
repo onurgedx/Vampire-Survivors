@@ -9,12 +9,9 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
         {
         }
 
-
-        public override (ICollectable, GameObject) Create(Vector3 a_position)
+        protected override ICollectable RetriveCollectable()
         {
-            SuperChest chest = new SuperChest();
-            GameObject manaGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent);
-            return (chest, manaGameObject);
+            return new SuperChest();
         }
     }
 }

@@ -9,12 +9,10 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
         {
         }
 
-
-        public override (ICollectable, GameObject) Create(Vector3 a_position)
+        protected override ICollectable RetriveCollectable()
         {
             Heal heal = new Heal();
-            GameObject manaGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent);
-            return (heal, manaGameObject);
-        }         
+            return heal;
+        }
     }
 }

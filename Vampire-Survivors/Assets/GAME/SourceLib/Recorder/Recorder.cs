@@ -12,10 +12,9 @@ namespace VampireSurvivors.Lib.Record
         }
 
 
-        public void Record (TKey a_collider, TValue a_collectable)
+        public void Record (TKey a_key, TValue a_recordable)
         {
-            _recordeds.Add(a_collider, a_collectable);
+            _recordeds.Add(a_key, a_recordable);
         }
     }
-
 }

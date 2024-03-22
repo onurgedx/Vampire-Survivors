@@ -25,7 +25,7 @@ namespace VampireSurvivors.Gameplay.Systems
             LoadUnitsPrefabs();
         }
 
-        public void CraftPlayer(  PlayerControlSystem a_playerControlSystem)
+        public void CraftPlayer(PlayerControlSystem a_playerControlSystem)
         {
             if (_unitPrefabs.TryGetValue(Keys.PlayerDefault, out GameObject playerGameobject))
             {
@@ -48,35 +48,7 @@ namespace VampireSurvivors.Gameplay.Systems
                     }
                 };
             }
-
-
-
-
         }
-
-
-        private void UnitLoaded(AsyncOperationHandle<GameObject> a_asyncOperationHandle)
-        {
-            if (a_asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
-            {
-                _unitPrefabs.Add(Keys.PlayerDefault, a_asyncOperationHandle.Result);
-                _playerLoad?.Invoke();
-            }
-            else
-            {
-                Debug.Log("Unit Loading Failed!");
-            }
-
-
-        }
-
-
-
-
-
-
-
-
 
     }
 }

@@ -16,23 +16,24 @@ namespace VampireSurvivors.SceneProcess
         public static readonly string Scene_Camera = "Camera";
         private GameplaySystem _gameplaySystem;
 
+
         public void Start()
         {
             LoadMenuUI();
             _gameplaySystem= new GameplaySystem();
         }
 
+
         private void Update()
         {
             _gameplaySystem.Update();
         }
+
 
         private void LoadMenuUI()
         {
             // Use it for After Scene be Loaded
             //SceneManager.LoadSceneAsync( Scene_MenuUI , LoadSceneMode.Additive).completed;
         }
-
-
     }
 }

@@ -5,16 +5,13 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
 {
     public class SmallChestFactory : ChestFactory
     {
-        public SmallChestFactory(GameObject a_manaPrefab, Transform a_parent) : base(a_manaPrefab, a_parent)
+        public SmallChestFactory(GameObject a_prefab, Transform a_parent) : base(a_prefab, a_parent)
         {
         }
 
-
-        public override (ICollectable, GameObject) Create(Vector3 a_position)
+        protected override ICollectable RetriveCollectable()
         {
-            SmallChest chest = new SmallChest();
-            GameObject manaGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent);
-            return (chest, manaGameObject);
+            return new SmallChest();
         }
     }
 }

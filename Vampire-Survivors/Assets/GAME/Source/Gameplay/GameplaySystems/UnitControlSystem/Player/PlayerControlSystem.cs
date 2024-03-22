@@ -5,6 +5,7 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
 {
     public class PlayerControlSystem : VSSystem
     {
+        public Transform PlayerTransform =>_playerTransform;
         private Transform _playerTransform;
         private IProperty<float> _playerSpeed;
         private IProperty<bool> _canPlayerMove;
@@ -35,7 +36,6 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
 
         public override void Update()
         {
-            base.Update();
             if (_canMove && _canPlayerMove.Value && _isMove)
             { 
                 Vector3 direction = Vector2.ClampMagnitude(_playerInput.PlayerTouch.TouchPosition.ReadValue<Vector2>() - _touchStartPosition, 1);
@@ -55,6 +55,7 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
             _isMove = true;
             _touchStartPosition = _playerInput.PlayerTouch.TouchPosition.ReadValue<Vector2>();
         }
+
 
         private void TouchEnded(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
         {

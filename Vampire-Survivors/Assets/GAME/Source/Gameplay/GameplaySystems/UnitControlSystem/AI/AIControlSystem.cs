@@ -1,4 +1,5 @@
 using UnityEngine;
+using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.AIControl
 {
@@ -7,8 +8,12 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
 
         public EnemyMovementControl EnemyMovementControl { get; private set; }
 
-        public AIControlSystem(Transform a_playerTransform )
+        private IProperty<Vector3> _playerPosition;
+
+
+        public AIControlSystem(IProperty<Vector3> a_playerPosition )
         {
+            _playerPosition = a_playerPosition;
 
         }
 
