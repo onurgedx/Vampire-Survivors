@@ -16,9 +16,9 @@ public abstract class CollectableFactory
     }
 
 
-    public (ICollectable, GameObject) Create(Vector3 a_position)
+    public (Collectable, GameObject) Create(Vector3 a_position)
     {
-        ICollectable collectable = RetriveCollectable();
+        Collectable collectable = RetriveCollectable();
         if (_pool.TryRetrieve(out GameObject collectableGameObject))
         {
             collectableGameObject.transform.position = a_position;
@@ -31,9 +31,19 @@ public abstract class CollectableFactory
         }
         collectableGameObject.SetActive(true);
 
+        CollectableBehavior collectableHBehavior = collectableGameObject.GetComponent<CollectableBehavior>();
+        if (collectableHBehavior == null)
+        {
+            Debug.LogError("CollectableHBehavior is NULL. Please add CollectableHBehavior to the GameObject");
+        }
+        else
+        {
+            collectableHBehavior.Init(collectable);
+        }
+
         return (collectable, collectableGameObject);
     }
 
 
-    protected abstract ICollectable RetriveCollectable();
+    protected abstract Collectable RetriveCollectable();
 }

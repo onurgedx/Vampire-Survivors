@@ -17,7 +17,7 @@ namespace VampireSurvivors.Gameplay.Units
         }
 
 
-        public PlayerUnit CreatePlayerUnit( PlayerControlSystem a_playerControlSys, GameObject a_unitPrefab)
+        public (PlayerUnit, UnitBehaviour) CreatePlayerUnit( PlayerControlSystem a_playerControlSys, GameObject a_unitPrefab)
         {
             //
             //Property<float> speed = new Property<float>(a_playerUnitData.MovementSpeed);
@@ -52,7 +52,7 @@ namespace VampireSurvivors.Gameplay.Units
             UnitBehaviour unitBehaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
             a_playerControlSys.Init(gameobjectUnit.transform, speed);
 
-            return unit;
+            return (unit, unitBehaviour);
         }
 
 

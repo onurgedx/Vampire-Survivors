@@ -9,7 +9,7 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
         {
         }
 
-        protected override ICollectable RetriveCollectable()
+        protected override Collectable RetriveCollectable()
         {
             return new MediumChest();
         }

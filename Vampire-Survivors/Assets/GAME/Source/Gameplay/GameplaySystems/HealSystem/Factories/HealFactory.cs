@@ -9,7 +9,7 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
         {
         }
 
-        protected override ICollectable RetriveCollectable()
+        protected override Collectable RetriveCollectable()
         {
             Heal heal = new Heal();
             return heal;

@@ -22,7 +22,7 @@ namespace VampireSurvivors.Gameplay.Systems
         {
             if (_factories.TryGetValue(Type(), out CollectableFactory factory))
             {
-                (ICollectable collectable, GameObject gameobjectCollectable) = factory.Create(SpawnPosition());
+                (Collectable collectable, GameObject gameobjectCollectable) = factory.Create(SpawnPosition());
                 
                 _collectableRecorder.Record(gameobjectCollectable, collectable);
             }

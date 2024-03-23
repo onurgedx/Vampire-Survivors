@@ -1,11 +1,11 @@
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 namespace VampireSurvivors.Gameplay.Systems.ChestSys
 {
-    public abstract class Chest : ICollectable
+    public abstract class Chest : Collectable
     {
-        public virtual void Collect()
+        public override void Collect()
         {
-
+            base.Collect();
         }
     }
 }

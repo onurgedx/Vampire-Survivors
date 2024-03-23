@@ -38,8 +38,8 @@ namespace VampireSurvivors.Gameplay.Systems
             SkillSystem = new SkillSystem();
 
             
-            CollectionSystem = new CollectionSystem();
-            ChestSystem = new ChestSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform, 6, _chestParentTransform);
+            CollectionSystem = new CollectionSystem(); 
+            ChestSystem = new ChestSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform,(int)Mathf.Pow(2,6) , _chestParentTransform);
             ManaSystem = new ManaSystem(CollectionSystem);
             HealSystem = new HealSystem(CollectionSystem);
         }
@@ -52,6 +52,7 @@ namespace VampireSurvivors.Gameplay.Systems
             base.Update();
             PlayerControlSystem.Update();
             ChestSystem.Update();
+            CollectionSystem.Update();
         }       
 
     }

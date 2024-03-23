@@ -34,8 +34,8 @@ namespace VampireSurvivors.Gameplay.Systems
         {
             if (_unitPrefabs.TryGetValue(Keys.PlayerDefault, out GameObject playerGameobject))
             {
-                _playerTransform.SetValue ( playerGameobject.transform);
-                PlayerUnit unit = _unitFactory.CreatePlayerUnit(a_playerControlSystem, playerGameobject);
+                (PlayerUnit unit ,UnitBehaviour playerUnitBehavior) = _unitFactory.CreatePlayerUnit(a_playerControlSystem, playerGameobject);
+                _playerTransform.SetValue (playerUnitBehavior.transform);
             }
         }
 
