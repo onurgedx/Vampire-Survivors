@@ -19,18 +19,19 @@ public abstract class CollectableFactory
     public (ICollectable, GameObject) Create(Vector3 a_position)
     {
         ICollectable collectable = RetriveCollectable();
-        if (_pool.TryRetrieve(out GameObject manaGameObject))
+        if (_pool.TryRetrieve(out GameObject collectableGameObject))
         {
-            manaGameObject.transform.position = a_position;
+            collectableGameObject.transform.position = a_position;
         }
         else
         {
-            manaGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent);
-            _pool.Add(manaGameObject.transform);
+            //collectableGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent );
+            collectableGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, null );
+            _pool.Add(collectableGameObject.transform);
         }
-        manaGameObject.SetActive(true);
+        collectableGameObject.SetActive(true);
 
-        return (collectable, manaGameObject);
+        return (collectable, collectableGameObject);
     }
 
 

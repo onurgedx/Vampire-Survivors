@@ -5,7 +5,7 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
 {
     public class CollectionSystem : VSSystem
     {
-        private Dictionary<Collider, ICollectable> _collectables = new Dictionary<Collider, ICollectable>();
+        private Dictionary<GameObject, ICollectable> _collectables = new Dictionary<GameObject, ICollectable>();
         public CollectableRecorder CollectableRecorder { get; private set; }
         public CollectionController CollectionController { get; private set; }
 

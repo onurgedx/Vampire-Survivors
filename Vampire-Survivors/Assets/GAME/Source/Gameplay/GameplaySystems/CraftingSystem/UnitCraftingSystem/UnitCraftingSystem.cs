@@ -5,6 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.Units;
+using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
@@ -13,23 +14,28 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private Dictionary<string, GameObject> _unitPrefabs = new Dictionary<string, GameObject>();
         private UnitFactory _unitFactory;
-
+                 
+        public IProperty<Transform> PlayerTransform => _playerTransform;
+        private Property<Transform> _playerTransform { get;   set; }
+        
         public Action _playerLoad;
 
 
-        public UnitCraftingSystem(  PlayerControlSystem a_playerControlSystem)
+        public UnitCraftingSystem(PlayerControlSystem a_playerControlSystem)
         {
             _unitFactory = new UnitFactory();
-
-            _playerLoad  = () => CraftPlayer( a_playerControlSystem);
+            _playerTransform = new Property<Transform>(null);
+            _playerLoad = () => CraftPlayer(a_playerControlSystem);
             LoadUnitsPrefabs();
         }
+
 
         public void CraftPlayer(PlayerControlSystem a_playerControlSystem)
         {
             if (_unitPrefabs.TryGetValue(Keys.PlayerDefault, out GameObject playerGameobject))
             {
-                PlayerUnit unit = _unitFactory.CreatePlayerUnit(  a_playerControlSystem, playerGameobject);
+                _playerTransform.SetValue ( playerGameobject.transform);
+                PlayerUnit unit = _unitFactory.CreatePlayerUnit(a_playerControlSystem, playerGameobject);
             }
         }
 

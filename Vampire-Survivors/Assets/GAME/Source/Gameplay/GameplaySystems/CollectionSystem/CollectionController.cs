@@ -6,11 +6,11 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
     public class CollectionController
     {
 
-        private Dictionary<Collider, ICollectable> _collectables = new Dictionary<Collider, ICollectable>();
+        private Dictionary<GameObject, ICollectable> _collectables = new Dictionary<GameObject, ICollectable>();
         private List<Collector> _collectors = new List<Collector>();
 
 
-        public CollectionController(Dictionary<Collider, ICollectable> a_collectables)
+        public CollectionController(Dictionary<GameObject, ICollectable> a_collectables)
         {
             _collectables = a_collectables;
         }
@@ -29,10 +29,10 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
                 Collider[] colliders = collector.Collect();
                 foreach (Collider collider in colliders)
                 {
-                    if (_collectables.TryGetValue(collider, out ICollectable collectable))
+                    if (_collectables.TryGetValue(collider.gameObject, out ICollectable collectable))
                     {
-                        collectable.Collect();
-                        _collectables.Remove(collider);
+                        collector.Collect(collectable);
+                        _collectables.Remove(collider.gameObject);
                     }
                 }
             }

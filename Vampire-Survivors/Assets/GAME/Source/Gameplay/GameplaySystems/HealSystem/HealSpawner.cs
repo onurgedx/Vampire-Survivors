@@ -5,7 +5,7 @@ using VampireSurvivors.Gameplay.Systems.CollectionSys;
 
 namespace VampireSurvivors.Gameplay.Systems.HealSys
 {
-    public class HealSpawner : Spawner
+    public class HealSpawner : CollectableSpawner
     {
         public HealSpawner(CollectableRecorder a_collectableRecorder, Dictionary<Type, CollectableFactory> a_manaFactories) : base(a_collectableRecorder, a_manaFactories)
         {

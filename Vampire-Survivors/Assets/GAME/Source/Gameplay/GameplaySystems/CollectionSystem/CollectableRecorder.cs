@@ -4,9 +4,9 @@ using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Systems.CollectionSys
 {
-    public class CollectableRecorder : Recorder<Collider, ICollectable>
+    public class CollectableRecorder : Recorder<GameObject, ICollectable>
     {
-        public CollectableRecorder(Dictionary<Collider, ICollectable> a_recordeds) : base(a_recordeds)
+        public CollectableRecorder(Dictionary<GameObject, ICollectable> a_recordeds) : base(a_recordeds)
         {
         }
     }

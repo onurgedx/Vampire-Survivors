@@ -5,7 +5,7 @@ using VampireSurvivors.Gameplay.Systems.CollectionSys;
 
 namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
-    public class ManaSpawner : Spawner
+    public class ManaSpawner : CollectableSpawner
     {
         public ManaSpawner(CollectableRecorder a_collectableRecorder, Dictionary<Type, CollectableFactory> a_manaFactories) : base(a_collectableRecorder, a_manaFactories)
         {
