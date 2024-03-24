@@ -5,7 +5,7 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
 {
     public class Collector
     {
-        public Action OnCollect;
+        public Action<Collectable> OnCollect;
 
         private IProperty<Transform> _transform;
         private IProperty<float> _collectRange;
@@ -31,7 +31,7 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
         public void Collect(Collectable a_collectable)
         {
             a_collectable.Collect();
-            OnCollect?.Invoke();
+            OnCollect?.Invoke(a_collectable);
         }
 
     }

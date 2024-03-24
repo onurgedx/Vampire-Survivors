@@ -5,7 +5,6 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Lib.Basic.Properties;
-
 namespace VampireSurvivors.Gameplay.Systems.ChestSys
 {
     public class ChestSystem : VSSystem
@@ -13,6 +12,8 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
         private Collector _collector;
         private CollectableRecorder _collectableRecorder;
         private ChestSpawner _spawner;
+
+        private List<Chest> _activeChests = new List<Chest>();
 
 
         public IProperty<float> CollectableRange => _collectRange;
@@ -54,7 +55,6 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
             AsyncOperationHandle<GameObject> chestSmall = Addressables.LoadAssetAsync<GameObject>(Keys.ChestSmall);
             chestMedium.Completed += (_) =>
             {
-
                 Dictionary<Type, CollectableFactory> factories = new Dictionary<Type, CollectableFactory>()
                 {
                     {typeof(SmallChest) , new SmallChestFactory(chestSmall.Result,_chestParentTransform) },
@@ -64,7 +64,7 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
                 _spawner = new ChestSpawner(_collectableRecorder, factories, _playerTransform);
             };
         }
-        
+
 
         private void ProcessChestCreating()
         {
@@ -73,24 +73,52 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
                 return;
             }
             _spawnTimer += Time.deltaTime;
-            if(_spawnTimer> _chestSpawnDelayDuration)
+            if (_spawnTimer > _chestSpawnDelayDuration)
             {
                 _spawnTimer = 0;
-                _spawner.Spawn();
-                OnAChestCreated();
+                Chest chest = _spawner.Spawn() as Chest;
+                if (chest != null)
+                {
+                    OnAChestCreated(chest);
+                }
             }
         }
 
 
-        private void OnAChestCollected()
+        private void OnAChestCollected(Collectable a_collectable)
         {
-            _currentChestCount--;
+            if (a_collectable is Chest chest)
+            {
+                OpenChest(chest);
+                _activeChests.Remove(chest);
+                _currentChestCount--;
+            }
         }
 
 
-        private void OnAChestCreated()
+        private void OnAChestCreated(Chest a_chest)
         {
+            _activeChests.Add(a_chest);
             _currentChestCount++;
         }
+
+        private void OpenChest(Chest a_chest)
+        {
+            Debug.Log("A chest Opened");
+            if(a_chest is BigChest bigchest)
+            {                
+                // do something
+            }
+            else if (a_chest is MediumChest mediumchest)
+            {
+                // do something
+            }
+            else if ( a_chest is SmallChest smallChest)
+            {
+                // do something
+            }
+
+        }
+
     }
 }

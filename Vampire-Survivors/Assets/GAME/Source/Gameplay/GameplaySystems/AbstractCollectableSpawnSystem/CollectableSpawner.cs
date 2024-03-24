@@ -18,14 +18,16 @@ namespace VampireSurvivors.Gameplay.Systems
         }
         
         
-        public void Spawn()
+        public Collectable Spawn()
         {
             if (_factories.TryGetValue(Type(), out CollectableFactory factory))
             {
                 (Collectable collectable, GameObject gameobjectCollectable) = factory.Create(SpawnPosition());
                 
                 _collectableRecorder.Record(gameobjectCollectable, collectable);
+                return collectable;
             }
+            return null;
         }
 
 
