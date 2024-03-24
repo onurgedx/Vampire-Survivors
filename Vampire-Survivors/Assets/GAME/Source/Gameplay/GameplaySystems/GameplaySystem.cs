@@ -27,6 +27,7 @@ namespace VampireSurvivors.Gameplay.Systems
         public LevelSystem LevelSystem { get; private set; }
 
         private Transform _chestParentTransform;
+        private Transform _manaParentTransform;
 
         public GameplaySystem()
         {
@@ -36,13 +37,11 @@ namespace VampireSurvivors.Gameplay.Systems
             CraftingSystem = new CraftingSystem(PlayerControlSystem);
             //AIControlSystem = new AIControlSystem();
             SkillSystem = new SkillSystem();
-
-            
+                        
             CollectionSystem = new CollectionSystem(); 
             ChestSystem = new ChestSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform,(int)Mathf.Pow(2,6) , _chestParentTransform);
-            ManaSystem = new ManaSystem(CollectionSystem);
-            HealSystem = new HealSystem(CollectionSystem);
-
+            ManaSystem = new ManaSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform, (int)Mathf.Pow(2, 8), _manaParentTransform);
+            HealSystem = new HealSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform, (int)Mathf.Pow(2, 7), _manaParentTransform);
         }
 
 
@@ -53,6 +52,8 @@ namespace VampireSurvivors.Gameplay.Systems
             base.Update();
             PlayerControlSystem.Update();
             ChestSystem.Update();
+            ManaSystem.Update();
+            HealSystem.Update();
             CollectionSystem.Update();
 
         }       

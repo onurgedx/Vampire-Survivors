@@ -1,4 +1,4 @@
-namespace VampireSurvivors.Gameplay.Manas
+namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
     public class Keys 
     {
