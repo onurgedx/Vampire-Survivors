@@ -13,7 +13,7 @@ namespace VampireSurvivors.Gameplay.Systems
         public IProperty<float> CollectableRange => _collectRange;
         protected Property<float> _collectRange { get; set; }
         protected Transform _parentTransform;
-        protected IProperty<Transform> _originTransform;
+        protected IProperty<Vector3> _originPosition;
         protected List<T> _activeCollectables = new List<T>();
         protected int _activeCollectableCount = 0;
         protected int _maxActiveCollectableCount = 1;
@@ -21,13 +21,13 @@ namespace VampireSurvivors.Gameplay.Systems
         protected float _collectableSpawnDelayDuration = 100;
 
 
-        protected AbstractCollectableSpawnSystem(CollectionSystem a_collectionSystem, IProperty<Transform> a_originTransform, LayerMask a_collectableLayer, Transform a_collectableParentTransform)
+        protected AbstractCollectableSpawnSystem(CollectionSystem a_collectionSystem, IProperty<Vector3> a_originTransform, LayerMask a_collectableLayer, Transform a_collectableParentTransform)
         {
             _collectableRecorder = a_collectionSystem.CollectableRecorder;
             _collectRange = new Property<float>(1);
             _parentTransform = a_collectableParentTransform;
-            _originTransform = a_originTransform;
-            _collector = new Collector(_originTransform, _collectRange, a_collectableLayer);
+            _originPosition = a_originTransform;
+            _collector = new Collector(_originPosition, _collectRange, a_collectableLayer);
             _collector.OnCollect += OnCollected;
             a_collectionSystem.CollectionController.AddCollector(_collector);
             CreateSpawner();

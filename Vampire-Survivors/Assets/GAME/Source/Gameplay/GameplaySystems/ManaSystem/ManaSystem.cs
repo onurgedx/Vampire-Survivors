@@ -21,9 +21,8 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
 
         };
 
-
         public ManaSystem(CollectionSystem a_collectionSystem,
-                          IProperty<Transform> a_originTransform,
+                          IProperty<Vector3> a_originTransform,
                           LayerMask a_collectableLayer,
                           Transform a_collectableParentTransform,
                           IExperiencer a_experiencer) : base(a_collectionSystem, a_originTransform, a_collectableLayer, a_collectableParentTransform)
@@ -33,8 +32,8 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
             _collectableSpawnDelayDuration = 3;
             _maxActiveCollectableCount = 40;
         }
+         
 
-          
 
 
         protected override void OnCollected(Collectable a_collectable)
@@ -72,7 +71,7 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
                     {typeof(MediumMana) , new MediumManaFactory(manaMedium.Result, _parentTransform) },
                     {typeof(BigMana) , new BigManaFactory(manaBig.Result, _parentTransform) },
                 };
-                _spawner = new ManaSpawner(_collectableRecorder, factories, _originTransform);
+                _spawner = new ManaSpawner(_collectableRecorder, factories, _originPosition);
             };
         }
     }

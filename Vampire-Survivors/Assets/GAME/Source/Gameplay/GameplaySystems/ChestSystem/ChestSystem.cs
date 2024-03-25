@@ -10,7 +10,7 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
     public class ChestSystem : AbstractCollectableSpawnSystem<Chest>
     {
         public ChestSystem(CollectionSystem a_collectionSystem,
-                           IProperty<Transform> a_originTransform,
+                           IProperty<Vector3> a_originTransform,
                            LayerMask a_collectableLayer,
                            Transform a_collectableParentTransform) : base(a_collectionSystem, a_originTransform, a_collectableLayer, a_collectableParentTransform)
         {
@@ -18,7 +18,7 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
             _collectableSpawnDelayDuration = 10;
             _maxActiveCollectableCount = 3;
         }
-
+         
 
         protected override void CreateSpawner()
         {
@@ -33,7 +33,7 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
                     {typeof(MediumChest) , new MediumChestFactory(chestMedium.Result,_parentTransform)},
                     {typeof(BigChest) , new BigChestFactory(chestBig.Result,_parentTransform)}
                 };
-                _spawner = new ChestSpawner(_collectableRecorder, factories, _originTransform);
+                _spawner = new ChestSpawner(_collectableRecorder, factories, _originPosition);
             };
         }         
 

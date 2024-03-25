@@ -21,7 +21,6 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
             Number = a_levelNumber;
             ExperienceCapacity = a_manaCapacity;
             CurrentExperience = Experience.Zero;
-        }
-                
+        }                
     }
 }

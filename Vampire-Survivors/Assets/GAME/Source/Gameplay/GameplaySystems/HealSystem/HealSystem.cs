@@ -10,10 +10,8 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
 {
     public class HealSystem : AbstractCollectableSpawnSystem<Heal>
     {
-
-
         public HealSystem(CollectionSystem a_collectionSystem,
-                          IProperty<Transform> a_originTransform,
+                          IProperty<Vector3> a_originTransform,
                           LayerMask a_collectableLayer,
                           Transform a_collectableParentTransform) : base(a_collectionSystem, a_originTransform, a_collectableLayer, a_collectableParentTransform)
         {
@@ -21,8 +19,7 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
             _collectableSpawnDelayDuration = 20;
             _maxActiveCollectableCount = 3;
         }
-
-
+              
 
         protected override void CreateSpawner()
         {
@@ -33,7 +30,7 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
                 {
                     {typeof(Heal) , new HealFactory(heal.Result,_parentTransform) },
                 };
-                _spawner = new HealSpawner(_collectableRecorder, factories, _originTransform);
+                _spawner = new HealSpawner(_collectableRecorder, factories, _originPosition);
             };
         }
 

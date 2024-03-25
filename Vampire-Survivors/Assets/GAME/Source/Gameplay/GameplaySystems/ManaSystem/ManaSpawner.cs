@@ -22,16 +22,16 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
             Vector3.down +Vector3.right,
         };
 
-        private IProperty<Transform> _originTransform;
+        private IProperty<Vector3> _originTransform;
         private float _maxSpawnDistance = 25;
         private float _minSpawnDistance = 1;
 
 
         public ManaSpawner(CollectableRecorder a_collectableRecorder,
                            Dictionary<Type, CollectableFactory> a_manaFactories,
-                           IProperty<Transform> a_originTransform) : base(a_collectableRecorder, a_manaFactories)
+                           IProperty<Vector3> a_originPosition) : base(a_collectableRecorder, a_manaFactories)
         {
-            _originTransform = a_originTransform;
+            _originTransform = a_originPosition;
         }
 
         protected override Vector3 SpawnPosition()
@@ -39,7 +39,7 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
             Vector3 extraSpawnPosition = _spawnDirections.Random();
             float distance = UnityEngine.Random.Range(_minSpawnDistance, _maxSpawnDistance);
             extraSpawnPosition *= distance;
-            return _originTransform.Value.position + extraSpawnPosition;
+            return _originTransform.Value + extraSpawnPosition;
         }
 
         protected override Type Type()
