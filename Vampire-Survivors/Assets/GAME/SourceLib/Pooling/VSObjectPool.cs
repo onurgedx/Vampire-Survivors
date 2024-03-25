@@ -7,14 +7,14 @@ namespace VampireSurvivors.Lib.Pooling
     {
         private List<T> _objectList = new List<T>() { };
                 
-        public bool TryRetrieve( out GameObject a_objPool)
+        public bool TryRetrieve( out T a_objPool)
         {
             a_objPool = null;
             foreach (T obj in _objectList)
             {
                 if (!obj.gameObject.activeInHierarchy)
                 {
-                    a_objPool = obj.gameObject;
+                    a_objPool = obj;
                     return true;
                 }
             }

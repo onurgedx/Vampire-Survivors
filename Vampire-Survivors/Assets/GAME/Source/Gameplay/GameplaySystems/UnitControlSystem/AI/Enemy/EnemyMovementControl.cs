@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Units;
+using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.AIControl
 {
     public class EnemyMovementControl
     {
 
-        private Transform _targetTransform;
+        private IProperty<Vector3> _targetPosition;
         private List<UnitMovement> _movements = new List<UnitMovement>();
 
 
-        public EnemyMovementControl(Transform a_targetTransform)
+        public EnemyMovementControl(IProperty<Vector3> a_targetTransform)
         {            
-            _targetTransform = a_targetTransform;
+            _targetPosition = a_targetTransform;
         }
 
 
@@ -29,17 +30,13 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
         }
 
 
-        private void Move()
+        public void Move()
         {
             foreach (UnitMovement movement in _movements)
             {
-                Vector3 direction =Vector3.ClampMagnitude( (_targetTransform.position - movement.Transform.Value.position),1);
+                Vector3 direction =Vector3.ClampMagnitude( (_targetPosition.Value - movement.Transform.Value.position),1);
                 movement.Transform.Value.position += direction * Time.deltaTime * movement.Speed.Value;
             }
         }
-
-
-
-
     }
 }

@@ -10,7 +10,7 @@ namespace VampireSurvivors.Gameplay.Units
 
         public bool IsAlive => Health.CurrentHealth.Value>0;
 
-        public Action OnDead=>Health.Dead;
+        public Action OnDead;
 
         public UnitHealth Health { get; private set; }
 
@@ -24,6 +24,7 @@ namespace VampireSurvivors.Gameplay.Units
         public Unit(UnitHealth a_unitHealth, Property<float> a_movementSpeed, Property<float> a_damageTaken, Property<int> a_attackPower)
         {
             Health = a_unitHealth;
+            Health.Dead += Dead;
             MovementSpeed = a_movementSpeed;
             DamageTaken = a_damageTaken;
             AttackPower = a_attackPower;
@@ -42,6 +43,11 @@ namespace VampireSurvivors.Gameplay.Units
             int conculusionDamage ;
             conculusionDamage = (int)( a_rawDamage + a_rawDamage * DamageTaken.Value);
             return conculusionDamage;
+        }
+
+        private void Dead()
+        {
+            OnDead?.Invoke();
         }
     }
 }

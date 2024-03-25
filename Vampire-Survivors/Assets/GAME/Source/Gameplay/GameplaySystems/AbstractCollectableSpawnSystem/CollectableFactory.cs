@@ -7,7 +7,7 @@ public abstract class CollectableFactory
 {
     protected GameObject _prefab;
     protected Transform _parent;
-    protected VSObjectPool<Transform> _pool= new VSObjectPool<Transform>();
+    protected VSObjectPool<CollectableBehavior> _pool= new VSObjectPool<CollectableBehavior>();
 
     public CollectableFactory(GameObject a_prefab, Transform a_parent)
     {
@@ -19,29 +19,29 @@ public abstract class CollectableFactory
     public (Collectable, GameObject) Create(Vector3 a_position)
     {
         Collectable collectable = RetriveCollectable();
-        if (_pool.TryRetrieve(out GameObject collectableGameObject))
+        if (_pool.TryRetrieve(out CollectableBehavior collectableBehavior))
         {
-            collectableGameObject.transform.position = a_position;
+            collectableBehavior.transform.position = a_position;
         }
         else
         {
-            //collectableGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent );
-            collectableGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, null );
-            _pool.Add(collectableGameObject.transform);
+            //GameObject collectableGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent );
+            GameObject collectableGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, null );
+            collectableBehavior = collectableGameObject.GetComponent<CollectableBehavior>();
+            _pool.Add(collectableBehavior);
         }
-        collectableGameObject.SetActive(true);
-
-        CollectableBehavior collectableHBehavior = collectableGameObject.GetComponent<CollectableBehavior>();
-        if (collectableHBehavior == null)
+        collectableBehavior.gameObject.SetActive(true);
+         
+        if (collectableBehavior == null)
         {
-            Debug.LogError("CollectableHBehavior is NULL. Please add CollectableHBehavior to the GameObject");
+            Debug.LogError("CollectableBehavior is NULL. Please add CollectableBehavior to the GameObject");
         }
         else
         {
-            collectableHBehavior.Init(collectable);
+            collectableBehavior.Init(collectable);
         }
 
-        return (collectable, collectableGameObject);
+        return (collectable, collectableBehavior.gameObject);
     }
 
 

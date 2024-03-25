@@ -36,8 +36,8 @@ namespace VampireSurvivors.Gameplay.Systems
             Property<bool> canPlayerMove = new Property<bool>(true);
 
             PlayerControlSystem = new PlayerControlSystem(canPlayerMove);
-            CraftingSystem = new CraftingSystem(PlayerControlSystem);
             AIControlSystem = new AIControlSystem(PlayerControlSystem.Position);
+            CraftingSystem = new CraftingSystem(PlayerControlSystem, AIControlSystem);
             SkillSystem = new SkillSystem();
             LevelSystem = new LevelSystem(_levelData);
                         
@@ -46,9 +46,7 @@ namespace VampireSurvivors.Gameplay.Systems
             ManaSystem = new ManaSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 8), _manaParentTransform, LevelSystem);
             HealSystem = new HealSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 7), _manaParentTransform);
         }
-
-
-        
+                
 
         public override void Update()
         {
@@ -59,6 +57,7 @@ namespace VampireSurvivors.Gameplay.Systems
             ManaSystem.Update();
             HealSystem.Update();
             CollectionSystem.Update();
+            CraftingSystem.Update();
         }       
 
     }

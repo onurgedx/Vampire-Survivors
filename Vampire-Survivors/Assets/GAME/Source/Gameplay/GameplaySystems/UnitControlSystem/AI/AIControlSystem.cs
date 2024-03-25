@@ -14,9 +14,15 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
         public AIControlSystem(IProperty<Vector3> a_playerPosition )
         {
             _playerPosition = a_playerPosition;
+            EnemyMovementControl = new EnemyMovementControl(_playerPosition);
 
         }
 
 
+        public override void Update()
+        {
+            base.Update();
+            EnemyMovementControl.Move();
+        }
     }
 }
