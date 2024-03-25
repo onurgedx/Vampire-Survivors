@@ -1,7 +1,9 @@
 using System;
+using UnityEngine;
+
 namespace VampireSurvivors.Gameplay.Systems.LevelSys
 {
-    public class LevelSystem : VSSystem
+    public class LevelSystem : VSSystem, IExperiencer
     {
         public Action LevelUp;
         public Action Experienced;
@@ -14,15 +16,15 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         public LevelSystem(LevelDatas a_levelData)
         {
             _levelCapaties = a_levelData.RequiredExperiences;
-            _level = new Level(_levelCapaties[0]);
+            _level = new Level(new Experience(_levelCapaties[0]));
         }
 
 
-        public void ExperienceGained(int a_exp)
+        public void ExperienceGained(Experience a_exp)
         {
-            int experienceSum = (_level.CurrentExperience + a_exp);
-            int extraExperience = experienceSum - _level.ExperienceCapacity;
-            if (extraExperience >= 0)
+            Experience experienceSum = (_level.CurrentExperience + a_exp);
+            Experience extraExperience = experienceSum - _level.ExperienceCapacity;
+            if (extraExperience.Value >= 0)
             {
                 UpdateLevel();
                 ExperienceGained(extraExperience);
@@ -31,6 +33,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
             {
                 UpdateExperience(experienceSum);
             }
+            Debug.Log(_level.Number);
         }
 
 
@@ -43,7 +46,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         }
 
 
-        private void UpdateExperience(int a_experience)
+        private void UpdateExperience(Experience a_experience)
         {
             _level.CurrentExperience = a_experience;
             Experienced?.Invoke();
@@ -52,7 +55,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
 
         private int RequiredExperience(int a_levelNumber)
         {
-            if (_levelCapaties.Length > a_levelNumber)
+            if (a_levelNumber >=_levelCapaties.Length )
             {
                 return _levelCapaties[^-1];
             }

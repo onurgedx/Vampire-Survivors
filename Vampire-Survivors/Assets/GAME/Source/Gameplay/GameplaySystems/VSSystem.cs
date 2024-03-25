@@ -4,8 +4,7 @@ namespace VampireSurvivors.Gameplay.Systems
     {
         public virtual void Update()
         {
-        }
-        
+        }        
 
     }
 }

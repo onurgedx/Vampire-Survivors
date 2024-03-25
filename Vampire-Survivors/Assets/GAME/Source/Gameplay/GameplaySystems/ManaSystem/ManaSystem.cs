@@ -4,17 +4,31 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
+using VampireSurvivors.Gameplay.Systems.LevelSys;
 using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
     public class ManaSystem : AbstractCollectableSpawnSystem<Mana>
     {
+        private IExperiencer _experiencer;
+
+        private Dictionary<Type, Experience> _manaExperiences = new Dictionary<Type, Experience>()
+        {
+            {typeof(SmallMana), new Experience(3) },
+            {typeof(MediumMana), new Experience(6) },
+            {typeof(BigMana), new Experience(9) },
+
+        };
+
+
         public ManaSystem(CollectionSystem a_collectionSystem,
                           IProperty<Transform> a_originTransform,
                           LayerMask a_collectableLayer,
-                          Transform a_collectableParentTransform) : base(a_collectionSystem, a_originTransform, a_collectableLayer, a_collectableParentTransform)
+                          Transform a_collectableParentTransform,
+                          IExperiencer a_experiencer) : base(a_collectionSystem, a_originTransform, a_collectableLayer, a_collectableParentTransform)
         {
+            _experiencer = a_experiencer;
             _collectRange.SetValue(1);
             _collectableSpawnDelayDuration = 3;
             _maxActiveCollectableCount = 40;
@@ -29,6 +43,11 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
             {
                 _activeCollectableCount--;
                 _activeCollectables.Remove(mana);
+                if(_manaExperiences.TryGetValue(mana.GetType(),out Experience exp))
+                {
+                    _experiencer.ExperienceGained(exp);
+                }
+
             }
         }
 

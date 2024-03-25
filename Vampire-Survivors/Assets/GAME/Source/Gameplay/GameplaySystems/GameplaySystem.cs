@@ -28,19 +28,22 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private Transform _chestParentTransform;
         private Transform _manaParentTransform;
+        private LevelDatas _levelData;
 
-        public GameplaySystem()
+        public GameplaySystem(LevelDatas a_levelDatas)
         {
+            _levelData = a_levelDatas;
             Property<bool> canPlayerMove = new Property<bool>(true);
 
             PlayerControlSystem = new PlayerControlSystem(canPlayerMove);
             CraftingSystem = new CraftingSystem(PlayerControlSystem);
             //AIControlSystem = new AIControlSystem();
             SkillSystem = new SkillSystem();
+            LevelSystem = new LevelSystem(_levelData);
                         
             CollectionSystem = new CollectionSystem(); 
             ChestSystem = new ChestSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform,(int)Mathf.Pow(2,6) , _chestParentTransform);
-            ManaSystem = new ManaSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform, (int)Mathf.Pow(2, 8), _manaParentTransform);
+            ManaSystem = new ManaSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform, (int)Mathf.Pow(2, 8), _manaParentTransform, LevelSystem);
             HealSystem = new HealSystem(CollectionSystem, CraftingSystem.UnitCraftingSystem.PlayerTransform, (int)Mathf.Pow(2, 7), _manaParentTransform);
         }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems;
+using VampireSurvivors.Gameplay.Systems.LevelSys;
 
 namespace VampireSurvivors.SceneProcess
 {   
@@ -15,12 +16,12 @@ namespace VampireSurvivors.SceneProcess
         public static readonly string Scene_MenuUI = "UI.Menu";
         public static readonly string Scene_Camera = "Camera";
         private GameplaySystem _gameplaySystem;
-
+        [SerializeField] private LevelDatas _levelData;
 
         public void Start()
         {
             LoadMenuUI();
-            _gameplaySystem= new GameplaySystem();
+            _gameplaySystem= new GameplaySystem(_levelData);
         }
 
 
