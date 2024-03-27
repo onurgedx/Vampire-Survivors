@@ -8,23 +8,11 @@ using VampireSurvivors.Lib.Basic.Properties;
 namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
     public class ManaSpawner : CollectableSpawner
-    {
-
-        private static readonly Vector3[] _spawnDirections = new Vector3[] {
-            Vector3.zero,
-            Vector3.up,
-            Vector3.down,
-            Vector3.right,
-            Vector3.left,
-            Vector3.up+Vector3.left,
-            Vector3.up + Vector3.right,
-            Vector3.down +Vector3.left,
-            Vector3.down +Vector3.right,
-        };
+    { 
 
         private IProperty<Vector3> _originTransform;
         private float _maxSpawnDistance = 25;
-        private float _minSpawnDistance = 1;
+        private float _minSpawnDistance = 4;
 
 
         public ManaSpawner(CollectableRecorder a_collectableRecorder,
@@ -35,10 +23,12 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
         }
 
         protected override Vector3 SpawnPosition()
-        {
-            Vector3 extraSpawnPosition = _spawnDirections.Random();
-            float distance = UnityEngine.Random.Range(_minSpawnDistance, _maxSpawnDistance);
-            extraSpawnPosition *= distance;
+        {            
+            float distanceX = UnityEngine.Random.Range(_minSpawnDistance, _maxSpawnDistance);
+            float distanceY = UnityEngine.Random.Range(_minSpawnDistance, _maxSpawnDistance);
+            float xSign= UnityEngine.Random.Range(0, 2)==0 ? 1:-1;
+            float ySign= UnityEngine.Random.Range(0, 2)==0 ? 1:-1;
+            Vector3 extraSpawnPosition = Vector3.right * distanceX* xSign + Vector3.up*distanceY* ySign;             
             return _originTransform.Value + extraSpawnPosition;
         }
 

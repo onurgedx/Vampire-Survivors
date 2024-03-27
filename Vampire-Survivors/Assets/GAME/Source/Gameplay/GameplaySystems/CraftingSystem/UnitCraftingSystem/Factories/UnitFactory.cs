@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.AIControl;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
+using VampireSurvivors.Lib.Basic.Extension.Array;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Lib.Pooling;
 
@@ -9,9 +10,15 @@ namespace VampireSurvivors.Gameplay.Units
 {
     public class UnitFactory
     {
+        private float _maxEnemySpawnDistance = 25;
+        private float _minEnemySpawnDistance = 10;
+
+
+
         private Dictionary<GameObject, VSObjectPool<UnitBehaviour>> _enemyPools = new Dictionary<GameObject, VSObjectPool<UnitBehaviour>>();
         private UnitData _enemyUnitData = new UnitData();
 
+        private IProperty<Vector3> _playerPosition;
         public UnitFactory()
         {
 
@@ -53,7 +60,7 @@ namespace VampireSurvivors.Gameplay.Units
             UnitBehaviour unitBehaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
             unitBehaviour.Init(unit);
             a_playerControlSys.Init(gameobjectUnit.transform, speed);
-
+            _playerPosition = a_playerControlSys.Position;
             return (unit, unitBehaviour);
         }
 
@@ -71,7 +78,7 @@ namespace VampireSurvivors.Gameplay.Units
             behaviour.Init(unit);
             UnitMovement unitMovement = new UnitMovement(speed, new Property<Transform>(behaviour.transform));
             a_enemyMovementControl.Add(unitMovement);
-            unit.OnDead += () => { a_enemyMovementControl.Remove(unitMovement); }; 
+            unit.OnDead += () => { a_enemyMovementControl.Remove(unitMovement); };
             return (unit, behaviour);
         }
 
@@ -87,7 +94,7 @@ namespace VampireSurvivors.Gameplay.Units
                 }
                 else
                 {
-                    GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab);
+                    GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, EnemySpawnPosition(), Quaternion.identity);
                     behaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
                     gameobjectUnit.SetActive(true);
                     pool.Add(behaviour);
@@ -98,7 +105,7 @@ namespace VampireSurvivors.Gameplay.Units
             {
                 VSObjectPool<UnitBehaviour> newPool = new VSObjectPool<UnitBehaviour>();
                 _enemyPools.Add(a_unitPrefab, newPool);
-                GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab);
+                GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, EnemySpawnPosition(),Quaternion.identity);
                 UnitBehaviour behavior = gameobjectUnit.GetComponent<UnitBehaviour>();
                 gameobjectUnit.SetActive(true);
                 newPool.Add(behavior);
@@ -107,6 +114,15 @@ namespace VampireSurvivors.Gameplay.Units
         }
 
 
-         
+        private Vector3 EnemySpawnPosition()
+        {
+            float distanceX = UnityEngine.Random.Range(_minEnemySpawnDistance, _maxEnemySpawnDistance);
+            float distanceY = UnityEngine.Random.Range(_minEnemySpawnDistance, _maxEnemySpawnDistance);
+            float xSign = UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
+            float ySign = UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
+            Vector3 extraSpawnPosition = Vector3.right * distanceX * xSign + Vector3.up * distanceY * ySign;
+            return _playerPosition.Value + extraSpawnPosition;
+        }
+
     }
 }

@@ -9,7 +9,7 @@ namespace VampireSurvivors.Gameplay.Units
         [SerializeField] private int _maxHealth=100;
 
         public float MovementSpeed => _movementSpeed;
-        [SerializeField] private float _movementSpeed=10;
+        [SerializeField] private float _movementSpeed=1;
 
         public int AttackPower => _attackPower;
         [SerializeField] private int _attackPower=10;
