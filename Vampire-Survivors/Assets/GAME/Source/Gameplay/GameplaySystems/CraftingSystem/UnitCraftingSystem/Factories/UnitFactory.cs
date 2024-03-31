@@ -3,6 +3,7 @@ using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.AIControl;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Lib.Basic.Extension.Array;
+using VampireSurvivors.Lib.Basic.Extension.Vectors;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Lib.Pooling;
 
@@ -105,7 +106,7 @@ namespace VampireSurvivors.Gameplay.Units
             {
                 VSObjectPool<UnitBehaviour> newPool = new VSObjectPool<UnitBehaviour>();
                 _enemyPools.Add(a_unitPrefab, newPool);
-                GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, EnemySpawnPosition(),Quaternion.identity);
+                GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, EnemySpawnPosition(), Quaternion.identity);
                 UnitBehaviour behavior = gameobjectUnit.GetComponent<UnitBehaviour>();
                 gameobjectUnit.SetActive(true);
                 newPool.Add(behavior);
@@ -115,13 +116,8 @@ namespace VampireSurvivors.Gameplay.Units
 
 
         private Vector3 EnemySpawnPosition()
-        {
-            float distanceX = UnityEngine.Random.Range(_minEnemySpawnDistance, _maxEnemySpawnDistance);
-            float distanceY = UnityEngine.Random.Range(_minEnemySpawnDistance, _maxEnemySpawnDistance);
-            float xSign = UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
-            float ySign = UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
-            Vector3 extraSpawnPosition = Vector3.right * distanceX * xSign + Vector3.up * distanceY * ySign;
-            return _playerPosition.Value + extraSpawnPosition;
+        {             
+            return VSVectors.RandomPosition(_playerPosition.Value, _minEnemySpawnDistance, _maxEnemySpawnDistance) ;
         }
 
     }

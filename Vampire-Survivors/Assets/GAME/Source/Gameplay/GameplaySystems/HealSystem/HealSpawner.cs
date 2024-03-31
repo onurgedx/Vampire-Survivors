@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using VampireSurvivors.Gameplay.Systems.CollectionSys;
-using VampireSurvivors.Lib.Basic.Extension.Array;
+using VampireSurvivors.Gameplay.Systems.CollectionSys; 
+using VampireSurvivors.Lib.Basic.Extension.Vectors;
 using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.HealSys
@@ -24,12 +24,7 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
 
         protected override Vector3 SpawnPosition()
         {
-            float distanceX = UnityEngine.Random.Range(_minSpawnDistance, _maxSpawnDistance);
-            float distanceY = UnityEngine.Random.Range(_minSpawnDistance, _maxSpawnDistance);
-            float xSign = UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
-            float ySign = UnityEngine.Random.Range(0, 2) == 0 ? 1 : -1;
-            Vector3 extraSpawnPosition = Vector3.right * distanceX * xSign + Vector3.up * distanceY * ySign;
-            return _originTransform.Value + extraSpawnPosition;
+            return VSVectors.RandomPosition(_originTransform.Value, _minSpawnDistance, _maxSpawnDistance);
         }
 
 

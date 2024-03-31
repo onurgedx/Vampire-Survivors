@@ -12,7 +12,5 @@ namespace VampireSurvivors.Gameplay.Units
         {
             gameObject.SetActive(false);
         }
-
-
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VampireSurvivors.Gameplay.Systems.AIControl;
+using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.Units;
 using VampireSurvivors.Lib.Basic.Properties;
@@ -22,11 +23,14 @@ namespace VampireSurvivors.Gameplay.Systems
         public Action _playerLoad;
         private AIControlSystem _aiControlSystem;
 
+        private DamageableRecorder _damageableRecorder;
+
         private float _timeCounter = 0;
         private float _enemyCreateDelayDuration = 2;
 
-        public UnitCraftingSystem(PlayerControlSystem a_playerControlSystem, AIControlSystem a_aiControlSystem)
+        public UnitCraftingSystem(PlayerControlSystem a_playerControlSystem, AIControlSystem a_aiControlSystem, DamageableRecorder a_damageableRecorder)
         {
+            _damageableRecorder = a_damageableRecorder;
             _aiControlSystem = a_aiControlSystem;
             _unitFactory = new UnitFactory();
             _playerTransform = new Property<Transform>(null);
@@ -58,6 +62,7 @@ namespace VampireSurvivors.Gameplay.Systems
             if (_unitPrefabs.TryGetValue(Keys.EnemyDefault, out GameObject enemyGo))
             {
                 (EnemyUnit unit, UnitBehaviour behavior) = _unitFactory.CreateEnemyUnit(_aiControlSystem.EnemyMovementControl, enemyGo, null);
+                _damageableRecorder.Record(behavior.gameObject , unit);
             }
         }
 

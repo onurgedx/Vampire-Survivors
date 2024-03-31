@@ -4,9 +4,9 @@ using UnityEngine;
 using VampireSurvivors.Lib.Record;
 namespace VampireSurvivors.Gameplay.Systems.BattleSys
 {
-    public class DamageableRecorder : Recorder<Collider, IDamageable>
+    public class DamageableRecorder : Recorder<GameObject, IDamageable>
     {
-        public DamageableRecorder(Dictionary<Collider, IDamageable> a_recordeds) : base(a_recordeds)
+        public DamageableRecorder(Dictionary<GameObject, IDamageable> a_recordeds) : base(a_recordeds)
         {
         }
     }

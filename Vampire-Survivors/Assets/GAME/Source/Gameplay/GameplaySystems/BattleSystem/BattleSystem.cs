@@ -7,7 +7,7 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
         public Damager Damager { get; private set; }
         public DamageableRecorder DamageRecorder { get; private set; }
 
-        private Dictionary<Collider, IDamageable> _damageables = new Dictionary<Collider, IDamageable>();        
+        private Dictionary<GameObject, IDamageable> _damageables = new Dictionary<GameObject, IDamageable>();        
 
 
         public BattleSystem()
@@ -15,5 +15,8 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
             Damager = new Damager(_damageables);
             DamageRecorder = new DamageableRecorder(_damageables);
         }
+
+
+
     }
 }

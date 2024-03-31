@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.AIControl;
 using VampireSurvivors.Gameplay.Systems.BattleSys;
@@ -8,6 +7,8 @@ using VampireSurvivors.Gameplay.Systems.HealSys;
 using VampireSurvivors.Gameplay.Systems.LevelSys;
 using VampireSurvivors.Gameplay.Systems.ManaSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
+using VampireSurvivors.Gameplay.Systems.SkillSys;
+using VampireSurvivors.Gameplay.UI;
 using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems
@@ -30,21 +31,22 @@ namespace VampireSurvivors.Gameplay.Systems
         private Transform _manaParentTransform;
         private LevelDatas _levelData;
 
-        public GameplaySystem(LevelDatas a_levelDatas)
+        public GameplaySystem(LevelDatas a_levelDatas  )
         {
             _levelData = a_levelDatas;
             Property<bool> canPlayerMove = new Property<bool>(true);
-
+            BattleSystem = new BattleSystem();
             PlayerControlSystem = new PlayerControlSystem(canPlayerMove);
             AIControlSystem = new AIControlSystem(PlayerControlSystem.Position);
-            CraftingSystem = new CraftingSystem(PlayerControlSystem, AIControlSystem);
-            SkillSystem = new SkillSystem();
+            CraftingSystem = new CraftingSystem(PlayerControlSystem, AIControlSystem, BattleSystem.DamageRecorder);            
+            SkillSystem = new SkillSystem(BattleSystem.Damager);
             LevelSystem = new LevelSystem(_levelData);
                         
             CollectionSystem = new CollectionSystem(); 
             ChestSystem = new ChestSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2,6) , _chestParentTransform);
             ManaSystem = new ManaSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 8), _manaParentTransform, LevelSystem);
             HealSystem = new HealSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 7), _manaParentTransform);
+
         }
                 
 
@@ -58,7 +60,6 @@ namespace VampireSurvivors.Gameplay.Systems
             HealSystem.Update();
             CollectionSystem.Update();
             CraftingSystem.Update();
-        }       
-
+        }
     }
 }
