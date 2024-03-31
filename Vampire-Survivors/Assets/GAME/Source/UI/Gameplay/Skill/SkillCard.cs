@@ -28,6 +28,10 @@ namespace VampireSurvivors.Gameplay.UI
 
         public SkillCard()
         {
+            _iconSprite = new Property<Sprite>(null);
+            _name = new Property<string>("Skill");
+            _level = new Property<string>("Level");
+            _description = new Property<string>("description");
         }
 
 

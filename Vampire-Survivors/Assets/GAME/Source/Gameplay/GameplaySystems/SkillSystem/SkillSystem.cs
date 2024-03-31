@@ -5,7 +5,7 @@ using VampireSurvivors.Gameplay.UI;
 using VampireSurvivors.Lib.Basic.Extension.Array;
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
-    public class SkillSystem :VSSystem
+    public class SkillSystem :VSSystem , ISkillRequester
     {
         public Action SkillRequested;
         private Dictionary<string, Skill> _skills = new Dictionary<string, Skill>();
@@ -24,7 +24,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
             SkillRequested?.Invoke();
         }
-
+                
 
         private void CreateSkills()
         {

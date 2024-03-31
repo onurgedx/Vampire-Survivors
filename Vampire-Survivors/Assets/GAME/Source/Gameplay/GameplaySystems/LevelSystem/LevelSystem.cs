@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using VampireSurvivors.Gameplay.Systems.SkillSys;
 
 namespace VampireSurvivors.Gameplay.Systems.LevelSys
 {
@@ -12,9 +13,11 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         private Level _level;
         private int[] _levelCapaties = new int[] { };
 
+        private ISkillRequester _skillRequester;
 
-        public LevelSystem(LevelDatas a_levelData)
+        public LevelSystem(LevelDatas a_levelData,ISkillRequester a_skillRequester)
         {
+            _skillRequester = a_skillRequester;
             _levelCapaties = a_levelData.RequiredExperiences;
             _level = new Level(new Experience(_levelCapaties[0]));
         }
@@ -42,6 +45,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
             _level.Number = _level.Number + 1;
             _level.ExperienceCapacity = RequiredExperience(_level.Number);
             _level.CurrentExperience = 0;
+            _skillRequester.RequestSkill();
             LevelUp?.Invoke();
         }
 

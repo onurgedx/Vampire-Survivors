@@ -31,6 +31,8 @@ namespace VampireSurvivors.Gameplay.Systems
         private Transform _manaParentTransform;
         private LevelDatas _levelData;
 
+        private bool _paused = false;
+
         public GameplaySystem(LevelDatas a_levelDatas  )
         {
             _levelData = a_levelDatas;
@@ -40,18 +42,21 @@ namespace VampireSurvivors.Gameplay.Systems
             AIControlSystem = new AIControlSystem(PlayerControlSystem.Position);
             CraftingSystem = new CraftingSystem(PlayerControlSystem, AIControlSystem, BattleSystem.DamageRecorder);            
             SkillSystem = new SkillSystem(BattleSystem.Damager);
-            LevelSystem = new LevelSystem(_levelData);
+            SkillSystem.SkillRequested += PauseGame;
+            LevelSystem = new LevelSystem(_levelData,SkillSystem);
                         
             CollectionSystem = new CollectionSystem(); 
-            ChestSystem = new ChestSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2,6) , _chestParentTransform);
+            ChestSystem = new ChestSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2,6) , _chestParentTransform, SkillSystem);
             ManaSystem = new ManaSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 8), _manaParentTransform, LevelSystem);
             HealSystem = new HealSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 7), _manaParentTransform);
 
         }
-                
+            
+        
 
         public override void Update()
         {
+            if(_paused) { return; }
             base.Update();
             PlayerControlSystem.Update();
             AIControlSystem.Update();
@@ -61,5 +66,16 @@ namespace VampireSurvivors.Gameplay.Systems
             CollectionSystem.Update();
             CraftingSystem.Update();
         }
+
+        private void PauseGame()
+        {
+            _paused = true;
+        }
+
+        public void ContinueGame()
+        {
+            _paused = false;
+        }
+
     }
 }

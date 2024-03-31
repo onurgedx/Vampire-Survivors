@@ -12,33 +12,20 @@ namespace VampireSurvivors.Gameplay.UI
         [SerializeField] private Transform _skillCardParent;
         private VSObjectPool<SkillCardBehavior> _pool = new VSObjectPool<SkillCardBehavior>();
         private SkillChooseFrame _skillChooseFrame;
-        [SerializeField] private List<SkillCardBehavior> _skillCardBehaviors = new List<SkillCardBehavior>();
 
         public void Init(SkillChooseFrame a_skillChooseFrame)
         {
             _skillChooseFrame = a_skillChooseFrame;
             _skillChooseFrame.SkillCardCreated += CreateSkillCardBehavior;
-            //foreach (SkillCard skillCard in _skillChooseFrame.SkillCards)
-            //{
-            //    if (_pool.TryRetrieve(out SkillCardBehavior skillCardBehavior))
-            //    {
-            //        skillCardBehavior.gameObject.SetActive(true);                    
-            //    }
-            //    else
-            //    {
-            //        GameObject go = Instantiate(_skillCardPrefab, _skillCardParent);
-            //        skillCardBehavior = go.GetComponent<SkillCardBehavior>();
-            //        _pool.Add(skillCardBehavior);
-            //        skillCardBehavior.gameObject.SetActive(true);
-            //    }
-            //    skillCardBehavior.Init(skillCard);
-            //}
+            _skillChooseFrame.SkillChooseActivate += UpdateCards;
+            _skillChooseFrame.SkillChooseDeactivate += () => gameObject.SetActive(false);
 
         }
 
 
         public void UpdateCards()
         {
+            gameObject.SetActive(true);
             foreach (SkillCard skillCard in _skillChooseFrame.SkillCards)
             {
                 if (_pool.TryRetrieve(out SkillCardBehavior skillCardBehavior))

@@ -6,9 +6,13 @@ namespace VampireSurvivors.Gameplay.UI
 
     public class SkillChooseFrame
     {
+
+        public Action SkillChooseActivate;
+        public Action SkillChooseDeactivate;
+
         public Action<SkillCard> SkillCardCreated;
 
-        public List<SkillCard> SkillCards = new List<SkillCard>();
+        public List<SkillCard> SkillCards = new List<SkillCard>() {  };
 
 
         public SkillCard GenerateSkillCard()
@@ -16,17 +20,18 @@ namespace VampireSurvivors.Gameplay.UI
             SkillCard skillCard = new SkillCard();
             SkillCards.Add(skillCard);
             SkillCardCreated?.Invoke(skillCard);
+            skillCard.Choosed += DeactivateChooseSkill;
             return skillCard;
         }
-
-        public void UpdateCards()
+         
+        public void DeactivateChooseSkill()
         {
-
+            SkillChooseDeactivate?.Invoke();
         }
-
+        
         public void ActivateChooseSkill()
         {
-            string[] a_skillIds = new string[] { };
+            string[] a_skillIds = new string[] { "Skill.MagicBolt" , "Skill.MagicBolt", "Skill.MagicBolt" };
             int neededCardCount = a_skillIds.Length - SkillCards.Count;
             if (neededCardCount > 0)
             {
@@ -47,6 +52,7 @@ namespace VampireSurvivors.Gameplay.UI
                     SkillCards[i].Hide();
                 }
             }
+            SkillChooseActivate.Invoke();
 
 
         }

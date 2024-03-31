@@ -55,6 +55,7 @@ namespace VampireSurvivors.SceneProcess
         private void GameplaySystemLoaded(GameplayUI a_gameplayUI, GameplaySceneEntry a_gameplaySystemSceneEntry)
         {
             a_gameplaySystemSceneEntry.GameplaySystem.SkillSystem.SkillRequested += a_gameplayUI.SkillChooseFrame.ActivateChooseSkill;
+            a_gameplayUI.SkillChooseFrame.SkillChooseDeactivate += a_gameplaySystemSceneEntry.GameplaySystem.ContinueGame;
 
         }
     }
