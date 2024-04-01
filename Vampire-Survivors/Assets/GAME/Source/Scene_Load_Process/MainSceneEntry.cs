@@ -1,4 +1,6 @@
+using VampireSurvivors.CameraSystems;
 using VampireSurvivors.Gameplay;
+using VampireSurvivors.Gameplay.Systems;
 using VampireSurvivors.Gameplay.UI;
 using VampireSurvivors.Lib.Basic.Completables;
 using VampireSurvivors.UI.Menu;
@@ -57,6 +59,14 @@ namespace VampireSurvivors.SceneProcess
             a_gameplaySystemSceneEntry.GameplaySystem.SkillSystem.SkillRequested += a_gameplayUI.SkillChooseFrame.ActivateChooseSkill;
             a_gameplayUI.SkillChooseFrame.SkillChooseDeactivate += a_gameplaySystemSceneEntry.GameplaySystem.ContinueGame;
 
+            LoadCameraSystem(a_gameplaySystemSceneEntry.GameplaySystem);
+        }
+
+
+        private void LoadCameraSystem(GameplaySystem a_gameplaySystem)
+        {
+            Completable<CameraSceneEntry> cameraSceneEntry = _vsSceneManager.LoadAdditive<CameraSceneEntry>(CameraSceneEntry.SceneName);
+            cameraSceneEntry.Completed += () => cameraSceneEntry.Value.VSCamera.Init(a_gameplaySystem.PlayerControlSystem.Position);
         }
     }
 }

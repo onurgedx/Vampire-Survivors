@@ -18,14 +18,8 @@ namespace VampireSurvivors.UI.Menu
             _menuUIFrameBehavior.Init(MenuUIFrame);
         }
 
-        public override void Show()
-        {
-            throw new System.NotImplementedException();
-        }
+         
 
-        public override void Hide()
-        {
-            throw new System.NotImplementedException();
-        }
+         
     }
 }

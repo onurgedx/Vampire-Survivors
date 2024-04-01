@@ -21,6 +21,7 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
             _collectRange.SetValue(1);
             _collectableSpawnDelayDuration = 10;
             _maxActiveCollectableCount = 3;
+            _skillRequester = a_skillRequester;
         }
          
 

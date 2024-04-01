@@ -13,10 +13,7 @@ namespace VampireSurvivors.Gameplay.UI
 
         public GameplayUI GameplayUI { get; private set; }
 
-        public override void Hide()
-        {
-            throw new System.NotImplementedException();
-        }
+        
 
         public override void Load()
         {
@@ -25,9 +22,6 @@ namespace VampireSurvivors.Gameplay.UI
 
         }
 
-        public override void Show()
-        {
-            throw new System.NotImplementedException();
-        }
+        
     }   
 }

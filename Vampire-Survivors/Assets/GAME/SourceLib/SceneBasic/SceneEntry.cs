@@ -5,8 +5,6 @@ namespace VampireSurvivors
     {
         public abstract void Load();
 
-
-        public abstract void Show();
-        public abstract void Hide();
+         
     }
 }

@@ -14,6 +14,7 @@ namespace VampireSurvivors.Gameplay
         public override void Load()
         {
             GameplaySystem = new GameplaySystem(_levelData);
+
         }
 
         private void Update()
@@ -21,14 +22,6 @@ namespace VampireSurvivors.Gameplay
             GameplaySystem?.Update();   
         }
 
-        public override void Show()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Hide()
-        {
-            throw new System.NotImplementedException();
-        }
+        
     }
 }
