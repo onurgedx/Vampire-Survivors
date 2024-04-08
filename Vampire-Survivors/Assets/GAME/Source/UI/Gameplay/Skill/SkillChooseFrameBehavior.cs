@@ -13,13 +13,13 @@ namespace VampireSurvivors.Gameplay.UI
         private VSObjectPool<SkillCardBehavior> _pool = new VSObjectPool<SkillCardBehavior>();
         private SkillChooseFrame _skillChooseFrame;
 
+
         public void Init(SkillChooseFrame a_skillChooseFrame)
         {
             _skillChooseFrame = a_skillChooseFrame;
             _skillChooseFrame.SkillCardCreated += CreateSkillCardBehavior;
             _skillChooseFrame.SkillChooseActivate += UpdateCards;
-            _skillChooseFrame.SkillChooseDeactivate += () => gameObject.SetActive(false);
-
+            _skillChooseFrame.SkillChoosed += () => gameObject.SetActive(false);
         }
 
 

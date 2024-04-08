@@ -81,6 +81,9 @@ public class VSSceneManager
 
     private void SceneUnloaded(Scene a_scene)
     {
+        if(_sceneEntries.TryGetValue(a_scene.name,out SceneEntry sceneEntry)){
+            sceneEntry.Unload();
+        }
         _sceneEntries.Remove(a_scene.name);
     }
 

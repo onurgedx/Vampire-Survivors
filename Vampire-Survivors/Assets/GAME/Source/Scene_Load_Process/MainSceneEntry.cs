@@ -39,28 +39,25 @@ namespace VampireSurvivors.SceneProcess
         {
             _vsSceneManager.Unload<UIMenuSceneEntry>(UIMenuSceneEntry.Scene_MenuUI);
             Completable<GameplayUISceneEntry> gameplayUICompletable = _vsSceneManager.LoadAdditive<GameplayUISceneEntry>(GameplayUISceneEntry.GameplayUIScene);
-            gameplayUICompletable.Completed += () => GameplayUILoaded(gameplayUICompletable.Value);
+            gameplayUICompletable.Completed += () => GameplayUILoaded( );
         }
 
 
-        private void GameplayUILoaded(GameplayUISceneEntry gameplayUISceneEntry)
+        private void GameplayUILoaded( )
         {
-            LoadGameplaySystem(gameplayUISceneEntry.GameplayUI);
+            LoadGameplaySystem( );
         }
 
 
-        private void LoadGameplaySystem(GameplayUI a_gameplayUI)
+        private void LoadGameplaySystem( )
         {
             Completable<GameplaySceneEntry> gameplaySceneEntry = _vsSceneManager.LoadAdditive<GameplaySceneEntry>(GameplaySceneEntry.GameplaySystemScene);
-            gameplaySceneEntry.Completed += () => GameplaySystemLoaded(a_gameplayUI, gameplaySceneEntry.Value);
+            gameplaySceneEntry.Completed += () => GameplaySystemLoaded( gameplaySceneEntry.Value);
         }
 
 
-        private void GameplaySystemLoaded(GameplayUI a_gameplayUI, GameplaySceneEntry a_gameplaySystemSceneEntry)
-        {
-            a_gameplaySystemSceneEntry.GameplaySystem.SkillSystem.SkillRequested += a_gameplayUI.SkillChooseFrame.ActivateChooseSkill;
-            a_gameplayUI.SkillChooseFrame.SkillChooseDeactivate += a_gameplaySystemSceneEntry.GameplaySystem.ContinueGame;
-
+        private void GameplaySystemLoaded( GameplaySceneEntry a_gameplaySystemSceneEntry)
+        {  
             LoadCameraSystem(a_gameplaySystemSceneEntry.GameplaySystem);
         }
 

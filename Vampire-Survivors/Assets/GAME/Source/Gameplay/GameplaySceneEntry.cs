@@ -17,6 +17,12 @@ namespace VampireSurvivors.Gameplay
 
         }
 
+        public override void Unload()
+        {
+            base.Unload();
+            GameplaySystem.Unload();
+        }
+
         private void Update()
         {
             GameplaySystem?.Update();   

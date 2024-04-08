@@ -47,6 +47,7 @@ namespace VampireSurvivors.Gameplay.Systems
             SkillSystem = new SkillSystem( PlayerControlSystem.Position);
             SkillSystem.DamageRequest += BattleSystem.Damager.Damage;
             SkillSystem.SkillRequested += PauseGame;
+            SkillSystem.SkillChoosed += ContinueGame;
             LevelSystem = new LevelSystem(_levelData,SkillSystem);
                         
             CollectionSystem = new CollectionSystem(); 
@@ -94,5 +95,10 @@ namespace VampireSurvivors.Gameplay.Systems
             _paused = true;
         }
 
+
+        public void Unload()
+        {
+            SkillSystem.Unload();
+        }
     }
 }

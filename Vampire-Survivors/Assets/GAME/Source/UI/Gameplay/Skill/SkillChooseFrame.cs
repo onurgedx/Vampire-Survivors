@@ -8,7 +8,7 @@ namespace VampireSurvivors.Gameplay.UI
     {
 
         public Action SkillChooseActivate;
-        public Action SkillChooseDeactivate;
+        public Action SkillChoosed;
 
         public Action<SkillCard> SkillCardCreated;
 
@@ -26,7 +26,7 @@ namespace VampireSurvivors.Gameplay.UI
          
         public void DeactivateChooseSkill()
         {
-            SkillChooseDeactivate?.Invoke();
+            SkillChoosed?.Invoke();
         }
         
         public void ActivateChooseSkill()
