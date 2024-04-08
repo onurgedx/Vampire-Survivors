@@ -13,25 +13,26 @@ namespace VampireSurvivors.SceneProcess
     public class MainSceneEntry : VSBehavior
     { 
         private VSSceneManager _vsSceneManager;
+
+
         public void Start()
         {
             _vsSceneManager = new VSSceneManager();
             LoadMenuUI();
         }
 
+
         private void LoadMenuUI()
         {
             Completable<UIMenuSceneEntry> uiMenuCompletable = _vsSceneManager.LoadAdditive<UIMenuSceneEntry>(UIMenuSceneEntry.Scene_MenuUI);
             uiMenuCompletable.Completed += () => MenuUILoaded(uiMenuCompletable.Value);
-
         }
+
 
         private void MenuUILoaded(UIMenuSceneEntry uiMenuSceneEntry)
         {
             uiMenuSceneEntry.MenuUIFrame.StartGame += LoadGameplayUI;
         }
-
-
 
 
         private void LoadGameplayUI()
@@ -53,6 +54,7 @@ namespace VampireSurvivors.SceneProcess
             Completable<GameplaySceneEntry> gameplaySceneEntry = _vsSceneManager.LoadAdditive<GameplaySceneEntry>(GameplaySceneEntry.GameplaySystemScene);
             gameplaySceneEntry.Completed += () => GameplaySystemLoaded(a_gameplayUI, gameplaySceneEntry.Value);
         }
+
 
         private void GameplaySystemLoaded(GameplayUI a_gameplayUI, GameplaySceneEntry a_gameplaySystemSceneEntry)
         {

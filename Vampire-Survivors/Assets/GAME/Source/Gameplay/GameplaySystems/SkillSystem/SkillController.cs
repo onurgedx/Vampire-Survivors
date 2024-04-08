@@ -1,5 +1,6 @@
+using System;
+using UnityEngine;
 using VampireSurvivors.Lib.Pooling;
-
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
     public abstract class SkillController<T> where T : Skill
@@ -7,7 +8,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         private VSObjectPool<SkillBehaviour> _behaviorPool;
 
         public T Skill { get; protected set; }
-
+        public Action<GameObject,int> SkillImpact;
 
         public SkillController(T a_skill)
         {
@@ -17,12 +18,14 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         public void Update()
         {
+            Skill.TimeCounter += Time.deltaTime;
             if (Skill.TimeCounter >= Skill.Cooldown)
             {
                 Skill.TimeCounter = 0;
                 Process();
             }
         }
+
 
         protected virtual void Process()
         {
@@ -39,8 +42,5 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
 
         }
-
-
-
     }
 }

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 namespace VampireSurvivors.CameraSystems
 {
@@ -10,10 +9,8 @@ namespace VampireSurvivors.CameraSystems
 
         [SerializeField] private VSCameraBehavior _vsCameraBehavior;
         [SerializeField] private Camera _camera;
-
         public VSCamera VSCamera { get; private set; }
-        
-        
+                
 
         public override void Load()
         {
@@ -26,7 +23,5 @@ namespace VampireSurvivors.CameraSystems
         {
             VSCamera.Update();
         }
-
     }
-
 }

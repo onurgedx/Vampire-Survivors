@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using VampireSurvivors.Gameplay.Units;
+
 namespace VampireSurvivors.Gameplay.Systems.BattleSys
 {
-    public class Damager
+    public class Damager 
     {
-
+        public Action PlayerDead;
         private Dictionary<GameObject, IDamageable> _damageables ;
 
 
@@ -14,16 +17,22 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
         }
         
         
-        public void Damage(GameObject a_damageableBehavior, int a_damage)
+        public void Damage(GameObject a_damageableGameObject, int a_damage)
         {
-            if(_damageables.TryGetValue(a_damageableBehavior, out IDamageable damageable))
+            if(_damageables.TryGetValue(a_damageableGameObject, out IDamageable damageable))
             {
                 damageable.Damage(a_damage);
                 if (!damageable.IsAlive)
                 {
-                    _damageables.Remove(a_damageableBehavior);
+                    if(damageable is PlayerUnit)
+                    {
+                        PlayerDead?.Invoke();
+                    }
+                    _damageables.Remove(a_damageableGameObject);
                 }
             }
         }
+
+
     }
 }

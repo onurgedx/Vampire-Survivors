@@ -33,15 +33,19 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private bool _paused = false;
 
+
         public GameplaySystem(LevelDatas a_levelDatas  )
         {
             _levelData = a_levelDatas;
             Property<bool> canPlayerMove = new Property<bool>(true);
             BattleSystem = new BattleSystem();
+            BattleSystem.Damager.PlayerDead += LoseGame;
+
             PlayerControlSystem = new PlayerControlSystem(canPlayerMove);
             AIControlSystem = new AIControlSystem(PlayerControlSystem.Position);
             CraftingSystem = new CraftingSystem(PlayerControlSystem, AIControlSystem, BattleSystem.DamageRecorder);            
-            SkillSystem = new SkillSystem(BattleSystem.Damager);
+            SkillSystem = new SkillSystem( PlayerControlSystem.Position);
+            SkillSystem.DamageRequest += BattleSystem.Damager.Damage;
             SkillSystem.SkillRequested += PauseGame;
             LevelSystem = new LevelSystem(_levelData,SkillSystem);
                         
@@ -50,8 +54,7 @@ namespace VampireSurvivors.Gameplay.Systems
             ManaSystem = new ManaSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 8), _manaParentTransform, LevelSystem);
             HealSystem = new HealSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 7), _manaParentTransform);
 
-        }
-            
+        }            
         
 
         public override void Update()
@@ -65,16 +68,30 @@ namespace VampireSurvivors.Gameplay.Systems
             HealSystem.Update();
             CollectionSystem.Update();
             CraftingSystem.Update();
+            SkillSystem.Update();
         }
+
 
         private void PauseGame()
         {
             _paused = true;
         }
 
+
         public void ContinueGame()
         {
             _paused = false;
+        }
+
+        public void WinGame()
+        {
+
+        }
+
+        public void LoseGame()
+        {
+            Debug.Log("PlayerDead");
+            _paused = true;
         }
 
     }

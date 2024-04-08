@@ -1,9 +1,7 @@
- 
 namespace VampireSurvivors.CameraSystems
 {
     public class VSCameraBehavior : VSBehavior
     {
-
         private ICamera _vsCamera;
 
         public void Init(ICamera a_vsCamera)

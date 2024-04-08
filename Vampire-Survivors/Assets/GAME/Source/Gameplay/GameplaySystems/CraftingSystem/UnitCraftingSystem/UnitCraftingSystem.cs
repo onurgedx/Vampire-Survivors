@@ -53,6 +53,7 @@ namespace VampireSurvivors.Gameplay.Systems
             {
                 (PlayerUnit unit, UnitBehaviour playerUnitBehavior) = _unitFactory.CreatePlayerUnit(a_playerControlSystem, playerGameobject);
                 _playerTransform.SetValue(playerUnitBehavior.transform);
+                _damageableRecorder.Record(playerUnitBehavior.gameObject, unit);
             }
         }
 
