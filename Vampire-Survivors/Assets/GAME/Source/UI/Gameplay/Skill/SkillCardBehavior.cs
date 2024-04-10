@@ -26,8 +26,13 @@ namespace VampireSurvivors.Gameplay.UI
             _skillCard = a_skillCard;
             _skillCard.Updated += UpdateValues;
             _button.onClick.AddListener( _skillCard.Choose);
+            _skillCard.Activated.RunOnChange(Activate);
         }
 
+        private void Activate()
+        {
+            gameObject.SetActive(_skillCard.Activated.Value);
+        }
 
         private void UpdateValues()
         {

@@ -1,61 +1,53 @@
 using System;
 using System.Collections.Generic;
-
-namespace VampireSurvivors.Gameplay.UI
+namespace VampireSurvivors.Gameplay.UI.SkillSystem
 {
 
     public class SkillChooseFrame
     {
 
         public Action SkillChooseActivate;
-        public Action SkillChoosed;
+        public Action<string> SkillChoosed;
 
         public Action<SkillCard> SkillCardCreated;
 
-        public List<SkillCard> SkillCards = new List<SkillCard>() {  };
-
-
+        public List<SkillCard> SkillCards = new List<SkillCard>() { };
         public SkillCard GenerateSkillCard()
         {
             SkillCard skillCard = new SkillCard();
-            SkillCards.Add(skillCard);
             SkillCardCreated?.Invoke(skillCard);
-            skillCard.Choosed += DeactivateChooseSkill;
+            skillCard.Choosed += () => Choose(skillCard.Id);
             return skillCard;
         }
-         
-        public void DeactivateChooseSkill()
-        {
-            SkillChoosed?.Invoke();
+
+        private void Choose(string a_id)
+        {            
+            SkillChoosed?.Invoke(a_id);
         }
-        
-        public void ActivateChooseSkill()
+
+        public void ActivateChooseSkill(string[] a_skillIds, int[] a_levels)
         {
-            string[] a_skillIds = new string[] { "Skill.MagicBolt" , "Skill.MagicBolt", "Skill.MagicBolt" };
             int neededCardCount = a_skillIds.Length - SkillCards.Count;
             if (neededCardCount > 0)
             {
                 for (int i = 0; i < neededCardCount; i++)
                 {
-                    GenerateSkillCard();
+                    SkillCards.Add(GenerateSkillCard());
                 }
             }
-            for (int i = 0; i < SkillCards.Count; i++)
+            for (int k = 0; k < SkillCards.Count; k++)
             {
-                if (i < a_skillIds.Length)
+                if (k < a_skillIds.Length)
                 {
-                    SkillCards[i].Update(a_skillIds[i], 1);
-                    SkillCards[i].Show();
+                    SkillCards[k].Update(a_skillIds[k], a_levels[k]);
+                    SkillCards[k].Show();
                 }
                 else
                 {
-                    SkillCards[i].Hide();
+                    SkillCards[k].Hide();
                 }
             }
             SkillChooseActivate.Invoke();
-
-
         }
-
     }
 }

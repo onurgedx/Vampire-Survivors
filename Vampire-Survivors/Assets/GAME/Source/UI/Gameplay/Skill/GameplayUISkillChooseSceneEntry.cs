@@ -1,6 +1,5 @@
-using UnityEngine;
-
-namespace VampireSurvivors.Gameplay.UI
+using UnityEngine; 
+namespace VampireSurvivors.Gameplay.UI.SkillSystem
 {
     public class GameplayUISkillChooseSceneEntry : SceneEntry
     {

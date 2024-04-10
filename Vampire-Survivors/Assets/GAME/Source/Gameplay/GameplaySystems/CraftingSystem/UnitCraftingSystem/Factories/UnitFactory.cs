@@ -33,7 +33,7 @@ namespace VampireSurvivors.Gameplay.Units
             //UnitHealth unitHealth = new UnitHealth(a_playerUnitData.MaxHealth);
             //Property<float> damageTaken = new Property<float>(0);
             //Property<int> attackPower = new Property<int>(a_playerUnitData.AttackPower); 
-            Property<float> speed = new Property<float>(11);
+            Property<float> speed = new Property<float>(3);
             UnitHealth unitHealth = new UnitHealth(111);
             Property<float> damageTaken = new Property<float>(0);
             Property<int> attackPower = new Property<int>(11);

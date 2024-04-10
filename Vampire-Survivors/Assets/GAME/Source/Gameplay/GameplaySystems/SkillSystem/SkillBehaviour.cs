@@ -1,20 +1,38 @@
+using System;
+using UnityEngine;
+using VampireSurvivors.Gameplay.Layer;
 
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
-    public class SkillBehaviour :VSBehavior
+    public class SkillBehaviour : VSBehavior
     {
-        
-        public virtual void Init(Skill a_skill)
+        public Action<GameObject> Impact;
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-
-        }
-
-        public virtual void Run()
-        {
-
+            if (collision.gameObject.layer == Layers.EnemyLayer )
+            {
+                SkillImpact(collision.gameObject);
+            }
         }
 
         
 
+        public virtual void Play()
+        {
+            gameObject.SetActive(true);
+        }
+        
+
+
+        public void Finish()
+        {
+            gameObject.SetActive(false);
+        }
+
+
+        private void SkillImpact(GameObject a_gameobject)
+        {
+            Impact?.Invoke(a_gameobject);
+        }
     }
 }

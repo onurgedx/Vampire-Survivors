@@ -1,46 +1,55 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Lib.Pooling;
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
-    public abstract class SkillController<T> where T : Skill
+    public abstract class SkillController
     {
-        private VSObjectPool<SkillBehaviour> _behaviorPool;
+        protected VSObjectPool<SkillBehaviour> _behaviorPool = new VSObjectPool<SkillBehaviour>();
 
-        public T Skill { get; protected set; }
-        public Action<GameObject,int> SkillImpact;
+        protected SkillBehaviorFactory _skillFactory;
+        protected Skill _skill;
+        private Action<GameObject, int> SkillImpact;
 
-        public SkillController(T a_skill)
+
+        public SkillController()
         {
-            Skill = a_skill;
+
         }
 
 
         public void Update()
         {
-            Skill.TimeCounter += Time.deltaTime;
-            if (Skill.TimeCounter >= Skill.Cooldown)
+            _skill.TimeCounter += Time.deltaTime;
+
+            if (_skill.TimeCounter > _skill.Cooldown)
             {
-                Skill.TimeCounter = 0;
-                Process();
+                if (!_behaviorPool.TryRetrieve(out SkillBehaviour skillBehavior))
+                {
+                    skillBehavior = _skillFactory.Create();
+                    skillBehavior.Impact += Impact;
+                    _behaviorPool.Add(skillBehavior);
+                }
+                Play(skillBehavior);
+
+                _skill.TimeCounter = 0;
             }
         }
 
 
-        protected virtual void Process()
+        public abstract void Play(SkillBehaviour a_skillBehavior);
+
+
+        protected void Impact(GameObject a_gameobject)
         {
-            if (_behaviorPool.TryRetrieve(out SkillBehaviour skillBehavior))
-            {
-                skillBehavior.Init(Skill);
-
-            }
-
+            SkillImpact?.Invoke(a_gameobject, _skill.Damage);
         }
 
 
-        public virtual void LevelUp()
+        public void RunOnSkillImpact(Action<GameObject, int> a_skillImpactAction)
         {
-
+            SkillImpact += a_skillImpactAction;
         }
     }
 }

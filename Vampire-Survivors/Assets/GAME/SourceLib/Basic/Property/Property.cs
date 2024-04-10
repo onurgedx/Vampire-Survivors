@@ -9,7 +9,7 @@ namespace VampireSurvivors.Lib.Basic.Properties
             Value = a_value;
         }
         
-        public void SetValue(T a_value)
+        public virtual void SetValue(T a_value)
         {
             Value = a_value;
         }       

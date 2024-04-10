@@ -3,24 +3,28 @@ using VampireSurvivors.Gameplay.Layer;
 using VampireSurvivors.Lib.Basic.Properties;
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
-    public class EnemyAttackSkillController : SkillController<Skill>
+    public class EnemyAttackSkillController : SkillController 
     {
         private IProperty<Vector3> _playerPosition;
 
         private GameObject _playerGameObject = null;
 
-        public EnemyAttackSkillController(EnemyAttack a_skill, IProperty<Vector3> a_playerPosition) : base(a_skill)
+        public EnemyAttackSkillController( IProperty<Vector3> a_playerPosition) : base()
         {
             _playerPosition = a_playerPosition;
         }
 
-
-        protected override void Process()
+        public override void Play(SkillBehaviour a_skillBehavior)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerPosition.Value, 1, Layers.EnemyLayer);
+            throw new System.NotImplementedException();
+        }
+
+        protected  void PlaySkill( )
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerPosition.Value, 1, Layers.EnemyLayerMask);
             if (_playerGameObject == null)
             {
-                Collider2D playerCollider = Physics2D.OverlapCircle(_playerPosition.Value, 1, Layers.PlayerLayer);
+                Collider2D playerCollider = Physics2D.OverlapCircle(_playerPosition.Value, 1, Layers.PlayerLayerMask);
                 if (playerCollider != null)
                 {
                     _playerGameObject = playerCollider.gameObject;
@@ -31,7 +35,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             {
                 foreach (Collider2D collider in colliders)
                 {
-                    SkillImpact?.Invoke(_playerGameObject, (int)Skill.Damage);
+                    Impact(_playerGameObject); 
                 }
             }
         }

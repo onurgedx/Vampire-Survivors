@@ -1,19 +1,29 @@
 
+using System;
+using UnityEngine;
+
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
-    public abstract class Skill
+    public class Skill
     {
 
-        public float TimeCounter;
-        public float Cooldown { get; set; }
-        public float Damage { get; private set; }
-        public int Level { get; private set; }
+        public Action Played;
+        public Action Finished;
+        public Action<GameObject> Impacted;
 
-        public Skill(float a_cooldown, float a_damage)
+        public float TimeCounter = 0;
+        public float Cooldown { get; set; }
+
+        public int Damage { get; private set; }
+        public virtual bool Active { get; private set; }
+
+
+        public Skill(float a_cooldown, int a_damage)
         {
-            Level = 0;
-            Cooldown = a_cooldown;
             Damage = a_damage;
+            Cooldown = a_cooldown;
         }
+         
+
     }
 }
