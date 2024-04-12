@@ -15,6 +15,10 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             asset.Completed += Init;
         }
 
+        public override void LevelUp()
+        {
+            Debug.Log("LEvelUp SpikeFoller");
+        }
 
         public override void Play(SkillBehaviour a_skillBehavior)
         {

@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System; 
 using UnityEngine;
 using VampireSurvivors.Lib.Pooling;
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
@@ -12,10 +11,11 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         protected Skill _skill;
         private Action<GameObject, int> SkillImpact;
 
+        public int Level => _level;
+        protected int _level = 0;
 
         public SkillController()
         {
-
         }
 
 
@@ -51,5 +51,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
             SkillImpact += a_skillImpactAction;
         }
+
+        public abstract void LevelUp();
     }
 }

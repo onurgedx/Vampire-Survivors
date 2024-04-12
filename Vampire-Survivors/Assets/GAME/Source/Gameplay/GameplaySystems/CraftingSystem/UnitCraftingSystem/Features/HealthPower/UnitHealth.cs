@@ -7,9 +7,7 @@ namespace VampireSurvivors.Gameplay.Units
     /// </summary>
     public class UnitHealth
     {
-
         public Action Changed ;
-
         public Action Dead;
 
         public IProperty<int> CurrentHealth => _currentHealth;
@@ -19,7 +17,7 @@ namespace VampireSurvivors.Gameplay.Units
         private Property<int> _maxHealth;
         
 
-        public UnitHealth(int a_maxHealth  )
+        public UnitHealth(int a_maxHealth)
         {
             _maxHealth = new Property<int>(a_maxHealth);
             _currentHealth = new Property<int>(a_maxHealth);

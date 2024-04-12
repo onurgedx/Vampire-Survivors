@@ -19,6 +19,13 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         }
 
+        public override void LevelUp()
+        {
+            _level++;
+            
+
+        }
+
         public override void Play(SkillBehaviour a_skillBehavior)
         {
             KnifeBehavior behavior = a_skillBehavior as KnifeBehavior;

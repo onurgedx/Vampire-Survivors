@@ -40,17 +40,20 @@ MonoBehaviour:
   - m_GUID: 33a890d722e82274cbb25b1a06228e58
     m_Address: Skill.MagicBolt.Prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skill
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb7b2eed06538ae4c899db9e643c554d
     m_Address: Skill.SpikeFloor.Prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skill
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bef1406c91733464883d6efdbfbdf655
     m_Address: Skill.Knife.Prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skill
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7cd60bb34076bc84b9785833014a0986, type: 2}

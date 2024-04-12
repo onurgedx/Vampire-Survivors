@@ -43,6 +43,8 @@ namespace VampireSurvivors.Gameplay.Systems
 
             PlayerControlSystem = new PlayerControlSystem(canPlayerMove);
             AIControlSystem = new AIControlSystem(PlayerControlSystem.Position);
+            AIControlSystem.EnemyDamageControl.Damage += BattleSystem.Damager.Damage;
+
             CraftingSystem = new CraftingSystem(PlayerControlSystem, AIControlSystem, BattleSystem.DamageRecorder);            
             SkillSystem = new SkillSystem( PlayerControlSystem.Position, PlayerControlSystem.Direction);
             SkillSystem.DamageRequest += BattleSystem.Damager.Damage;

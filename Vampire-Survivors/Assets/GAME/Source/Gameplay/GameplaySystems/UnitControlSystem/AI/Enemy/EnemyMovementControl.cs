@@ -30,7 +30,7 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
         }
 
 
-        public void Move()
+        public void Update()
         {
             foreach (UnitMovement movement in _movements)
             {
