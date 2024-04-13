@@ -90,6 +90,7 @@ namespace VampireSurvivors.Gameplay.Units
             {
                 if (pool.TryRetrieve(out UnitBehaviour behaviour))
                 {
+                    behaviour.transform.position = EnemySpawnPosition();
                     behaviour.gameObject.SetActive(true);
                     return behaviour;
                 }

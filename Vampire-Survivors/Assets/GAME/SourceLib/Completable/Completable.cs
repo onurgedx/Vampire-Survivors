@@ -4,19 +4,25 @@ using System;
 namespace VampireSurvivors.Lib.Basic.Completables
 {
 
-    public class Completable<T>
+    public class Completable<T>: ICompletable<T>
     {
-        public Action Completed;
-        public T Value;
+        private Action _completed;
+        public T Value { get;  set; }
 
 
         public Completable()
         {
         }
+         
 
         public void Complete()
         {
-            Completed?.Invoke();
+            _completed?.Invoke();
+        }
+
+        public void RunOnCompleted(Action a_void)
+        {
+            _completed += a_void;
         }
     }
 

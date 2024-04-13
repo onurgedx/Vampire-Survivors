@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.SkillSys;
+using VampireSurvivors.Gameplay.UI.LevelSystem;
+using VampireSurvivors.Lib.Basic.Completables;
 
 namespace VampireSurvivors.Gameplay.Systems.LevelSys
 {
@@ -14,12 +16,18 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         private int[] _levelCapaties = new int[] { };
 
         private ISkillRequester _skillRequester;
+        private VSSceneManager _sceneManager = new VSSceneManager();
+        private GameplayUILevel _gameplayUILevel;
 
-        public LevelSystem(LevelDatas a_levelData,ISkillRequester a_skillRequester)
+        public LevelSystem(LevelDatas a_levelData, ISkillRequester a_skillRequester)
         {
             _skillRequester = a_skillRequester;
             _levelCapaties = a_levelData.RequiredExperiences;
             _level = new Level(new Experience(_levelCapaties[0]));
+            ICompletable<GameplayUILevelSceneEntry> levelUISceneEntry = _sceneManager.LoadAdditive<GameplayUILevelSceneEntry>(GameplayUILevelSceneEntry.SceneName);
+            levelUISceneEntry.RunOnCompleted(()=> { _gameplayUILevel = levelUISceneEntry.Value.GameplayUILevel; });
+
+
         }
 
 
@@ -36,6 +44,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
             {
                 UpdateExperience(experienceSum);
             }
+            _gameplayUILevel.UpdateCurrentManaCount(_level.CurrentExperience.Value);
             Debug.Log(_level.Number);
         }
 
@@ -47,19 +56,21 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
             _level.CurrentExperience = 0;
             _skillRequester.RequestSkill();
             LevelUp?.Invoke();
+            _gameplayUILevel.UpdateLevel(_level.Number);
+            _gameplayUILevel.UpdateLevelManaCapacity(_level.ExperienceCapacity.Value);
         }
 
 
         private void UpdateExperience(Experience a_experience)
         {
             _level.CurrentExperience = a_experience;
-            Experienced?.Invoke();
+            Experienced?.Invoke();            
         }
 
 
         private int RequiredExperience(int a_levelNumber)
         {
-            if (a_levelNumber >=_levelCapaties.Length )
+            if (a_levelNumber >= _levelCapaties.Length)
             {
                 return _levelCapaties[^-1];
             }

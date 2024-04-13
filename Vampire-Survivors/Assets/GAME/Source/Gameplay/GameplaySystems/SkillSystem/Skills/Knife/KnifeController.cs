@@ -21,8 +21,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         public override void LevelUp()
         {
-            _level++;
-            
+            _level++;            
 
         }
 

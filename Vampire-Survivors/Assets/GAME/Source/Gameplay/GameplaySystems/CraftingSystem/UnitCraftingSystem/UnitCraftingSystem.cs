@@ -8,6 +8,7 @@ using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.Units;
 using VampireSurvivors.Lib.Basic.Properties;
+using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
@@ -23,10 +24,8 @@ namespace VampireSurvivors.Gameplay.Systems
         public Action _playerLoad;
         private AIControlSystem _aiControlSystem;
 
-        private DamageableRecorder _damageableRecorder;
-
-        private float _timeCounter = 0;
-        private float _enemyCreateDelayDuration = 2;
+        private DamageableRecorder _damageableRecorder;         
+        private VSTimerCounter _enemyCreateTimer = new VSTimerCounter(2);
 
         public UnitCraftingSystem(PlayerControlSystem a_playerControlSystem, AIControlSystem a_aiControlSystem, DamageableRecorder a_damageableRecorder)
         {
@@ -41,7 +40,7 @@ namespace VampireSurvivors.Gameplay.Systems
         public override void Update()
         {
             base.Update();
-            if (IsTimeToCreateEnemy())
+            if (_enemyCreateTimer.Process())
             {
                 CreateEnemy();
             }
@@ -82,19 +81,6 @@ namespace VampireSurvivors.Gameplay.Systems
                     }
                 };
             }
-        }
-
-
-        private bool IsTimeToCreateEnemy()
-        {
-            _timeCounter += Time.deltaTime;
-            bool canCreate = _timeCounter >= _enemyCreateDelayDuration;
-            if (canCreate)
-            {
-                _timeCounter = 0;
-            }
-            return canCreate;
-
-        }
+        }                
     }
 }

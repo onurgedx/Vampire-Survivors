@@ -14,7 +14,6 @@ namespace VampireSurvivors.Gameplay
         public override void Load()
         {
             GameplaySystem = new GameplaySystem(_levelData);
-
         }
 
         public override void Unload()

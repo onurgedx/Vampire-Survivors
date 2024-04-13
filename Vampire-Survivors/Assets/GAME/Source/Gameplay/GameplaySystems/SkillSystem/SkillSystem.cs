@@ -26,11 +26,11 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             CreateFactories(a_playerPosition, a_playerDirection);
             _vSSceneManager = new VSSceneManager();
             Completable<GameplayUISkillChooseSceneEntry> sceneCompletable = _vSSceneManager.LoadAdditive<GameplayUISkillChooseSceneEntry>(GameplayUISkillChooseSceneEntry.SceneName);
-            sceneCompletable.Completed += () =>
-            {
-                _skillChooseFrame = sceneCompletable.Value.SkillChooseFrame;
-                _skillChooseFrame.SkillChoosed += SkillChoose;
-            };
+            sceneCompletable.RunOnCompleted(() =>
+          {
+              _skillChooseFrame = sceneCompletable.Value.SkillChooseFrame;
+              _skillChooseFrame.SkillChoosed += SkillChoose;
+          });
         }
 
 

@@ -25,7 +25,7 @@ namespace VampireSurvivors.SceneProcess
         private void LoadMenuUI()
         {
             Completable<UIMenuSceneEntry> uiMenuCompletable = _vsSceneManager.LoadAdditive<UIMenuSceneEntry>(UIMenuSceneEntry.Scene_MenuUI);
-            uiMenuCompletable.Completed += () => MenuUILoaded(uiMenuCompletable.Value);
+            uiMenuCompletable.RunOnCompleted(() => MenuUILoaded(uiMenuCompletable.Value));
         }
 
 
@@ -39,7 +39,7 @@ namespace VampireSurvivors.SceneProcess
         {
             _vsSceneManager.Unload<UIMenuSceneEntry>(UIMenuSceneEntry.Scene_MenuUI);
             Completable<GameplayUISceneEntry> gameplayUICompletable = _vsSceneManager.LoadAdditive<GameplayUISceneEntry>(GameplayUISceneEntry.GameplayUIScene);
-            gameplayUICompletable.Completed += () => GameplayUILoaded( );
+            gameplayUICompletable.RunOnCompleted ( () => GameplayUILoaded( ));
         }
 
 
@@ -52,7 +52,7 @@ namespace VampireSurvivors.SceneProcess
         private void LoadGameplaySystem( )
         {
             Completable<GameplaySceneEntry> gameplaySceneEntry = _vsSceneManager.LoadAdditive<GameplaySceneEntry>(GameplaySceneEntry.GameplaySystemScene);
-            gameplaySceneEntry.Completed += () => GameplaySystemLoaded( gameplaySceneEntry.Value);
+            gameplaySceneEntry.RunOnCompleted(() => GameplaySystemLoaded( gameplaySceneEntry.Value));
         }
 
 
@@ -65,7 +65,7 @@ namespace VampireSurvivors.SceneProcess
         private void LoadCameraSystem(GameplaySystem a_gameplaySystem)
         {
             Completable<CameraSceneEntry> cameraSceneEntry = _vsSceneManager.LoadAdditive<CameraSceneEntry>(CameraSceneEntry.SceneName);
-            cameraSceneEntry.Completed += () => cameraSceneEntry.Value.VSCamera.Init(a_gameplaySystem.PlayerControlSystem.Position);
+            cameraSceneEntry.RunOnCompleted(() => cameraSceneEntry.Value.VSCamera.Init(a_gameplaySystem.PlayerControlSystem.Position));
         }
     }
 }
