@@ -77,9 +77,9 @@ namespace VampireSurvivors.Gameplay.Units
             EnemyUnit unit = new EnemyUnit(unitHealth, speed, damageTaken, attackPower);
             UnitBehaviour behaviour = CreateUnitBehavior(a_unitPrefab);
             behaviour.Init(unit);
-            UnitMovement unitMovement = new UnitMovement(speed, new Property<Transform>(behaviour.transform));
-            a_enemyMovementControl.Add(unitMovement);
-            unit.OnDead += () => { a_enemyMovementControl.Remove(unitMovement); };
+            UnitMovementData unitMovement = new UnitMovementData(speed, new Property<Transform>(behaviour.transform));
+            a_enemyMovementControl.Add(unit, unitMovement);
+            unit.OnDead += () => { a_enemyMovementControl.Remove(unit); };
             return (unit, behaviour);
         }
 

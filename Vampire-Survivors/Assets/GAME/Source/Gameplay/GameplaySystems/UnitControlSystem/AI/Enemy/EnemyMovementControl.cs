@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using VampireSurvivors.Gameplay.Systems.MovementControl;
 using VampireSurvivors.Gameplay.Units;
 using VampireSurvivors.Lib.Basic.Properties;
 
@@ -9,34 +10,46 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
     {
 
         private IProperty<Vector3> _targetPosition;
-        private List<UnitMovement> _movements = new List<UnitMovement>();
+        private Dictionary<Unit,UnitMovementData> _moveableUnitsData = new Dictionary<Unit, UnitMovementData>();
 
+        private Dictionary<System.Type, IMovement> _movements = new Dictionary<System.Type, IMovement>();
 
         public EnemyMovementControl(IProperty<Vector3> a_targetTransform)
         {            
             _targetPosition = a_targetTransform;
+            AdjustMovements();
         }
 
 
-        public void Add( UnitMovement a_unitMovement )
+        public void Add(Unit a_unit, UnitMovementData a_unitMovement )
         {            
-            _movements.Add(a_unitMovement);
+            _moveableUnitsData.Add(a_unit, a_unitMovement);
         }
 
         
-        public void Remove(UnitMovement a_unitMovement)
+        public void Remove(Unit a_unit )
         {
-            _movements.Remove(a_unitMovement);
+            _moveableUnitsData.Remove(a_unit);
         }
 
 
         public void Update()
         {
-            foreach (UnitMovement movement in _movements)
+            foreach ((Unit unit, UnitMovementData unitMovementData) in _moveableUnitsData)
             {
-                Vector3 direction =Vector3.ClampMagnitude( (_targetPosition.Value - movement.Transform.Value.position),1);
-                movement.Transform.Value.position += direction * Time.deltaTime * movement.Speed.Value;
+                if(_movements.TryGetValue(unit.GetType(),out IMovement movement))
+                {
+                    movement.Move(unitMovementData);
+                }                   
             }
         }
+
+
+        private void AdjustMovements()
+        {
+            _movements.Add(typeof(EnemyUnit), new DefaultEnemyMovement(_targetPosition));
+
+        }
+
     }
 }

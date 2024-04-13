@@ -16,7 +16,6 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
             _playerPosition = a_playerPosition;
             EnemyMovementControl = new EnemyMovementControl(_playerPosition);
             EnemyDamageControl = new EnemyDamageControl(_playerPosition);
-
         }
 
 

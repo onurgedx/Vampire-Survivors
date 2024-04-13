@@ -25,7 +25,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
             _levelCapaties = a_levelData.RequiredExperiences;
             _level = new Level(new Experience(_levelCapaties[0]));
             ICompletable<GameplayUILevelSceneEntry> levelUISceneEntry = _sceneManager.LoadAdditive<GameplayUILevelSceneEntry>(GameplayUILevelSceneEntry.SceneName);
-            levelUISceneEntry.RunOnCompleted(()=> { _gameplayUILevel = levelUISceneEntry.Value.GameplayUILevel; });
+            levelUISceneEntry.RunOnCompleted(() => { _gameplayUILevel = levelUISceneEntry.Value.GameplayUILevel; });
 
 
         }
@@ -43,9 +43,8 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
             else
             {
                 UpdateExperience(experienceSum);
+                _gameplayUILevel.UpdateCurrentManaCount(_level.CurrentExperience.Value);
             }
-            _gameplayUILevel.UpdateCurrentManaCount(_level.CurrentExperience.Value);
-            Debug.Log(_level.Number);
         }
 
 
@@ -64,7 +63,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         private void UpdateExperience(Experience a_experience)
         {
             _level.CurrentExperience = a_experience;
-            Experienced?.Invoke();            
+            Experienced?.Invoke();
         }
 
 
