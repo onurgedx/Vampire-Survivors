@@ -2,14 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using VampireSurvivors.Gameplay.Systems.AIControl;
-using VampireSurvivors.Gameplay.Systems.BattleSys;
-using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
-using VampireSurvivors.Gameplay.UI.PlayerHP;
-using VampireSurvivors.Gameplay.Units;
-using VampireSurvivors.Lib.Basic.Properties;
-using VampireSurvivors.Update;
+using UnityEngine.ResourceManagement.AsyncOperations; 
+using VampireSurvivors.Gameplay.Systems.CraftingSys; 
+using VampireSurvivors.Gameplay.Units; 
 
 namespace VampireSurvivors.Gameplay.Systems
 {
@@ -17,21 +12,27 @@ namespace VampireSurvivors.Gameplay.Systems
     {
 
         private Dictionary<string, GameObject> _unitPrefabs = new Dictionary<string, GameObject>();
-        private EnemyUnitFactory _unitFactory;  
+        private EnemyUnitFactory _unitFactory;
 
         public EnemyUnitCrafting(EnemyUnitFactory a_enemyUnitFactory)
-        {           
+        {
             _unitFactory = a_enemyUnitFactory;
             LoadEnemyUnitsPrefabs();
         }
-        
 
-        public void CreateEnemy()
+
+        public void CreateEnemy(EnemyData[] a_enemies)
         {
-            if (_unitPrefabs.TryGetValue(Keys.EnemyDefault, out GameObject enemyGo))
+            foreach (EnemyData data in a_enemies)
             {
-                 _unitFactory.CreateEnemyUnit(  enemyGo, null);                                
-            } 
+                if (_unitPrefabs.TryGetValue(data.Name, out GameObject enemyGo))
+                {
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        _unitFactory.CreateEnemyUnit(enemyGo, null);
+                    }
+                } 
+            }
         }
 
 

@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace VampireSurvivors.Gameplay.Systems.CollectionSys
 {
-    public class CollectionController
+    public class CollectionController: ICollectorAdder
     {
 
         private Dictionary<GameObject, Collectable> _collectables = new Dictionary<GameObject, Collectable>();
-        private List<Collector> _collectors = new List<Collector>();
+        private List<ICollector> _collectors = new List<ICollector>();
 
 
         public CollectionController(Dictionary<GameObject, Collectable> a_collectables)
@@ -16,7 +16,7 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
         }
 
 
-        public void AddCollector(Collector a_collector)
+        public void AddCollector(ICollector a_collector)
         {
             _collectors.Add(a_collector);
         }

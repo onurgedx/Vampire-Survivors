@@ -12,17 +12,15 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
         private Property<Vector3> _playerDirection { get; set; }
 
         private Transform _playerTransform;
-        private IProperty<float> _playerSpeed;
-        private IProperty<bool> _canPlayerMove;
+        private IProperty<float> _playerSpeed; 
 
         PlayerInput _playerInput;
         private Vector2 _touchStartPosition;
         private bool _isMove = false;
         private bool _canMove = false;
 
-        public PlayerControlSystem(IProperty<bool> a_canPlayerMove)
-        {
-            _canPlayerMove = a_canPlayerMove;
+        public PlayerControlSystem( )
+        { 
             _playerInput = new();
             _playerInput.Enable();
             _playerPosition = new Property<Vector3>(Vector3.zero);
@@ -43,7 +41,7 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
 
         public override void Update()
         {
-            if (_canMove && _canPlayerMove.Value && _isMove)
+            if (_canMove  && _isMove)
             {
                 Vector3 direction = Vector2.ClampMagnitude(_playerInput.PlayerTouch.TouchPosition.ReadValue<Vector2>() - _touchStartPosition, 1);
                 Move(direction);

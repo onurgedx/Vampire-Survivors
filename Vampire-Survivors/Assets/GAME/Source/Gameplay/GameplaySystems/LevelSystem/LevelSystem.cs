@@ -1,8 +1,6 @@
-using System;
-using UnityEngine;
+using System; 
 using VampireSurvivors.Gameplay.Systems.SkillSys;
-using VampireSurvivors.Gameplay.UI.LevelSystem;
-using VampireSurvivors.Lib.Basic.Completables;
+using VampireSurvivors.Gameplay.UI.LevelSystem; 
 
 namespace VampireSurvivors.Gameplay.Systems.LevelSys
 {
@@ -16,12 +14,12 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         private int[] _levelCapaties = new int[] { };
 
         private ISkillRequester _skillRequester; 
-        private GameplayUILevel _gameplayUILevel;
+        private GameplayLevelFrame _gameplayUILevel;
 
-        public LevelSystem(LevelDatas a_levelData, ISkillRequester a_skillRequester, GameplayUILevel a_gameplayLevelUI)
+        public LevelSystem(int[] a_levelCapaties, ISkillRequester a_skillRequester, GameplayLevelFrame a_gameplayLevelUI)
         {
             _skillRequester = a_skillRequester;
-            _levelCapaties = a_levelData.RequiredExperiences;
+            _levelCapaties = a_levelCapaties;
             _level = new Level(new Experience(_levelCapaties[0]));
             _gameplayUILevel = a_gameplayLevelUI;
 

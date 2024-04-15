@@ -5,6 +5,8 @@ using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Lib.Basic.Extension.Array;
 using VampireSurvivors.Lib.Basic.Extension.Vectors;
 using VampireSurvivors.Lib.Basic.Properties;
+using VampireSurvivors.Lib.Record;
+
 namespace VampireSurvivors.Gameplay.Systems.ChestSys
 {
     public class ChestSpawner : CollectableSpawner
@@ -15,7 +17,7 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
         private float _minSpawnDistance = 4;
 
 
-        public ChestSpawner(CollectableRecorder a_collectableRecorder,
+        public ChestSpawner(IRecorder<GameObject, Collectable> a_collectableRecorder,
                             Dictionary<Type, CollectableFactory> a_factories,
                             IProperty<Vector3> a_originTransform) : base(a_collectableRecorder, a_factories)
         {

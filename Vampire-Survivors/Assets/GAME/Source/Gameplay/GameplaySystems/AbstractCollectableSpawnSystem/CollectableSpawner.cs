@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
+using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
     public abstract class CollectableSpawner
     {
-        protected CollectableRecorder _collectableRecorder = null;
+        protected IRecorder<GameObject,Collectable> _collectableRecorder = null;
         protected Dictionary<System.Type, CollectableFactory> _factories = new Dictionary<System.Type, CollectableFactory>();
 
 
-        protected CollectableSpawner(CollectableRecorder a_collectableRecorder, Dictionary<Type, CollectableFactory> a_factories)
+        protected CollectableSpawner(IRecorder<GameObject, Collectable> a_collectableRecorder, Dictionary<Type, CollectableFactory> a_factories)
         {            
             _collectableRecorder = a_collectableRecorder;
             _factories = a_factories;

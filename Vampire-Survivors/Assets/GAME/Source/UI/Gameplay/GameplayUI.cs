@@ -9,14 +9,14 @@ namespace VampireSurvivors.Gameplay.UI
 
     public class GameplayUI
     {
-        public GameplayUILevel GameplayUILevel { get; private set; }
+        public GameplayLevelFrame GameplayUILevel { get; private set; }
         public SkillChooseFrame SkillChooseFrame { get; private set; }
 
         public PlayerHPFrame PlayerHPFrame { get; private set; }
 
         public GameplayUI()
         {
-            GameplayUILevel = new GameplayUILevel();
+            GameplayUILevel = new GameplayLevelFrame();
             SkillChooseFrame = new SkillChooseFrame();
             PlayerHPFrame = new PlayerHPFrame();
         }

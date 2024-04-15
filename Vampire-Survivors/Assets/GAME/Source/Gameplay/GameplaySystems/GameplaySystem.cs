@@ -9,7 +9,6 @@ using VampireSurvivors.Gameplay.Systems.ManaSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.Systems.SkillSys;
 using VampireSurvivors.Gameplay.UI;
-using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
@@ -26,45 +25,71 @@ namespace VampireSurvivors.Gameplay.Systems
         public ChestSystem ChestSystem { get; private set; }
         public BattleSystem BattleSystem { get; private set; }
         public LevelSystem LevelSystem { get; private set; }
-
-        private Transform _chestParentTransform;
-        private Transform _manaParentTransform;
+         
         private LevelDatas _levelData;
 
         private bool _paused = false;
 
 
-        public GameplaySystem(LevelDatas a_levelDatas ,GameplayUI a_gameplayUI  )
+        public GameplaySystem(LevelDatas a_levelDatas ,GameplayUI a_gameplayUI  , Transform a_poolTransform)
         {
-            _levelData = a_levelDatas;
-            Property<bool> canPlayerMove = new Property<bool>(true);
-            PlayerControlSystem = new PlayerControlSystem(canPlayerMove);
+            _levelData = a_levelDatas; 
 
+            PlayerControlSystem = new PlayerControlSystem( );
+
+            SetupBattleSystem();
+
+            AIControlSystem = new AIControlSystem(PlayerControlSystem.Position);
+            SetupCraftingSystem(a_gameplayUI);
+            SetupSkillSystem(a_gameplayUI);
+
+            LevelSystem = new LevelSystem(_levelData.RequiredExperiences, SkillSystem, a_gameplayUI.GameplayUILevel);
+
+            CollectionSystem = new CollectionSystem();
+            ChestSystem = new ChestSystem(CollectionSystem.CollectableRecorder,
+                                          CollectionSystem.CollectorAdder,
+                                          PlayerControlSystem.Position,
+                                          a_poolTransform,
+                                          SkillSystem);
+            ManaSystem = new ManaSystem(CollectionSystem.CollectableRecorder,
+                                        CollectionSystem.CollectorAdder,
+                                        PlayerControlSystem.Position,
+                                        a_poolTransform,
+                                        LevelSystem);
+            HealSystem = new HealSystem(CollectionSystem.CollectableRecorder,
+                                        CollectionSystem.CollectorAdder,
+                                        PlayerControlSystem.Position,
+                                        a_poolTransform,
+                                        CraftingSystem.PlayerUnitHealth);
+        }
+
+
+        private void SetupBattleSystem()
+        {
             BattleSystem = new BattleSystem(PlayerControlSystem.Position);
             BattleSystem.PlayerDead += LoseGame;
+        }
 
-            AIControlSystem = new AIControlSystem(PlayerControlSystem.Position); 
 
+        private void SetupSkillSystem(GameplayUI a_gameplayUI)
+        {
+            SkillSystem = new SkillSystem(PlayerControlSystem.Position, PlayerControlSystem.Direction, a_gameplayUI.SkillChooseFrame);
+            SkillSystem.DamageRequest += BattleSystem.Damage;
+            SkillSystem.SkillRequested += PauseGame;
+            SkillSystem.SkillChoosed += ContinueGame;
+        }
+
+
+        private void SetupCraftingSystem(GameplayUI a_gameplayUI)
+        {
             CraftingSystem = new CraftingSystem(PlayerControlSystem,
                                                 AIControlSystem.EnemyMovementControl,
                                                 BattleSystem.DamageRecorder,
                                                 a_gameplayUI.PlayerHPFrame,
-                                                BattleSystem.GameObjectDamageSourceTypeRecorder);  
-            
-            SkillSystem = new SkillSystem( PlayerControlSystem.Position, PlayerControlSystem.Direction, a_gameplayUI.SkillChooseFrame);
-            SkillSystem.DamageRequest += BattleSystem.Damage;
-            SkillSystem.SkillRequested += PauseGame;
-            SkillSystem.SkillChoosed += ContinueGame;
-
-
-            LevelSystem = new LevelSystem(_levelData,SkillSystem, a_gameplayUI.GameplayUILevel);
-                        
-            CollectionSystem = new CollectionSystem(); 
-            ChestSystem = new ChestSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2,6) , _chestParentTransform, SkillSystem);
-            ManaSystem = new ManaSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 8), _manaParentTransform, LevelSystem);
-            HealSystem = new HealSystem(CollectionSystem, PlayerControlSystem.Position, (int)Mathf.Pow(2, 7), _manaParentTransform, CraftingSystem.PlayerUnitHealth);
-        }            
-        
+                                                BattleSystem.GameObjectDamageSourceTypeRecorder,
+                                                _levelData.EnemyWaveDatas);
+        }
+               
 
         public override void Update()
         {
@@ -93,10 +118,12 @@ namespace VampireSurvivors.Gameplay.Systems
             _paused = false;
         }
 
+
         public void WinGame()
         {
 
         }
+
 
         public void LoseGame()
         {

@@ -12,6 +12,7 @@ namespace VampireSurvivors.Gameplay
         public static readonly string GameplaySystemScene = "GameplaySystem";
         public GameplaySystem GameplaySystem { get; private set; }
         [SerializeField] private LevelDatas _levelData;
+        [SerializeField] private Transform _poolTransform;
 
         private VSSceneManager _vsSceneManager; 
 
@@ -24,7 +25,7 @@ namespace VampireSurvivors.Gameplay
 
         private void CreateGameplaySystem(GameplayUI a_gameplayUI)
         {
-            GameplaySystem = new GameplaySystem(_levelData, a_gameplayUI);
+            GameplaySystem = new GameplaySystem(_levelData, a_gameplayUI, _poolTransform);
             LoadCamera();
         }
 

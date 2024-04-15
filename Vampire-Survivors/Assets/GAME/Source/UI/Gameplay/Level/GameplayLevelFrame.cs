@@ -2,7 +2,7 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.UI.LevelSystem
 {
-    public class GameplayUILevel : IGameplayUILevel
+    public class GameplayLevelFrame : IGameplayUILevel
     {
         public IActionProperty<int> Level => _level;
         private ActionProperty<int> _level;
@@ -13,7 +13,7 @@ namespace VampireSurvivors.Gameplay.UI.LevelSystem
         public IActionProperty<int> CurrentManaCount => _currentManaCount;
         private ActionProperty<int> _currentManaCount;
 
-        public GameplayUILevel()
+        public GameplayLevelFrame()
         {
             _level = new ActionProperty<int>(0);
             _levelManaCapacity = new ActionProperty<int>(0);

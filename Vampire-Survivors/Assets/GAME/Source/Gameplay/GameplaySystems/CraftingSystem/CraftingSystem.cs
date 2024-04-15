@@ -1,5 +1,6 @@
 using VampireSurvivors.Gameplay.Systems.AIControl;
 using VampireSurvivors.Gameplay.Systems.BattleSys;
+using VampireSurvivors.Gameplay.Systems.CraftingSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.UI.PlayerHP;
 using VampireSurvivors.Gameplay.Units;
@@ -14,18 +15,23 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private PlayerCrafting _playerCraftig = new PlayerCrafting();
 
-        private VSTimerCounter _enemyCreateTimer = new VSTimerCounter(2);
+        private VSTimerCounter _enemyCreateTimer = new VSTimerCounter(60);
 
         public IProperty<IUnitHealth> PlayerUnitHealth => _playerUnitHealth;
         private Property<IUnitHealth> _playerUnitHealth;
+        private EnemyWaveDatas _enemyWaveData;
+        private int _currentWave=0;
+
 
         public CraftingSystem(PlayerControlSystem a_playeControlSystem,
                               EnemyMovementControl a_enemyMovementControl,
                               DamageableRecorder a_damageableRecorder,
                               PlayerHPFrame a_playerHPFrame,
-                              DamageSourceTypeRecorder a_damageSourceTypeRecorder)
+                              DamageSourceTypeRecorder a_damageSourceTypeRecorder,
+                              EnemyWaveDatas a_enemyWaveData)
         {
-            _playerUnitHealth = new Property<IUnitHealth>(null);
+            _enemyWaveData = a_enemyWaveData;
+               _playerUnitHealth = new Property<IUnitHealth>(null);
             _playerCraftig.CraftPlayer(a_playeControlSystem, a_playerHPFrame, a_damageableRecorder, _playerUnitHealth);
 
             EnemyUnitFactory enemyFactory = new EnemyUnitFactory(a_playeControlSystem.Position, a_enemyMovementControl, a_damageableRecorder, a_damageSourceTypeRecorder);
@@ -45,10 +51,14 @@ namespace VampireSurvivors.Gameplay.Systems
 
             if (_enemyCreateTimer.Process())
             {
-                 _enemyUnitCraftingSystem.CreateEnemy();
-                 
+                _currentWave++;
+                // _enemyUnitCraftingSystem.CreateEnemy();
+
             }
 
         }
+
+
+
     }
 }

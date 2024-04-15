@@ -5,6 +5,7 @@ using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Lib.Basic.Extension.Array;
 using VampireSurvivors.Lib.Basic.Extension.Vectors;
 using VampireSurvivors.Lib.Basic.Properties;
+using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
@@ -16,7 +17,7 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
         private float _minSpawnDistance = 4;
 
 
-        public ManaSpawner(CollectableRecorder a_collectableRecorder,
+        public ManaSpawner(IRecorder<GameObject, Collectable> a_collectableRecorder,
                            Dictionary<Type, CollectableFactory> a_manaFactories,
                            IProperty<Vector3> a_originPosition) : base(a_collectableRecorder, a_manaFactories)
         {

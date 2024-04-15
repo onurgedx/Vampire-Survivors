@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Lib.Basic.Properties;
+using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
@@ -9,7 +10,7 @@ namespace VampireSurvivors.Gameplay.Systems
     {
         protected Collector _collector;
         protected CollectableSpawner _spawner;
-        protected CollectableRecorder _collectableRecorder;
+        protected IRecorder<GameObject,Collectable> _collectableRecorder;
         public IProperty<float> CollectableRange => _collectRange;
         protected Property<float> _collectRange { get; set; }
         protected Transform _parentTransform;
@@ -21,15 +22,15 @@ namespace VampireSurvivors.Gameplay.Systems
         protected float _collectableSpawnDelayDuration = 100;
 
 
-        protected AbstractCollectableSpawnSystem(CollectionSystem a_collectionSystem, IProperty<Vector3> a_originTransform, LayerMask a_collectableLayer, Transform a_collectableParentTransform)
+        protected AbstractCollectableSpawnSystem(IRecorder<GameObject, Collectable> a_recorder,ICollectorAdder a_collectorAdder, IProperty<Vector3> a_originTransform, LayerMask a_collectableLayer, Transform a_collectableParentTransform)
         {
-            _collectableRecorder = a_collectionSystem.CollectableRecorder;
+            _collectableRecorder = a_recorder;
             _collectRange = new Property<float>(1);
             _parentTransform = a_collectableParentTransform;
             _originPosition = a_originTransform;
             _collector = new Collector(_originPosition, _collectRange, a_collectableLayer);
             _collector.OnCollect += OnCollected;
-            a_collectionSystem.CollectionController.AddCollector(_collector);
+            a_collectorAdder.AddCollector(_collector);
             CreateSpawner();
         }
 

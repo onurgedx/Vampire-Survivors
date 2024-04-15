@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using VampireSurvivors.Gameplay.Layer;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Gameplay.Units;
 using VampireSurvivors.Lib.Basic.Properties;
+using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Systems.HealSys
 {
     public class HealSystem : AbstractCollectableSpawnSystem<Heal>
     {
+
+        private IProperty<IUnitHealth> _unitHealth;
 
         private Dictionary<Type, int> _healAmounts = new Dictionary<Type, int>()
         {
@@ -18,12 +22,11 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
 
         };
 
-        private IProperty<IUnitHealth> _unitHealth;
-        public HealSystem(CollectionSystem a_collectionSystem,
-                          IProperty<Vector3> a_originTransform,
-                          LayerMask a_collectableLayer,
+        public HealSystem(IRecorder<GameObject, Collectable> a_recorder,
+                            ICollectorAdder a_collectorAdder,
+                          IProperty<Vector3> a_originTransform, 
                           Transform a_collectableParentTransform,
-                          IProperty< IUnitHealth> a_unitHealth) : base(a_collectionSystem, a_originTransform, a_collectableLayer, a_collectableParentTransform)
+                          IProperty< IUnitHealth> a_unitHealth) : base(a_recorder, a_collectorAdder, a_originTransform, Layers.HealLayerMask, a_collectableParentTransform)
         {
             _unitHealth = a_unitHealth;
             _collectRange.SetValue(1);

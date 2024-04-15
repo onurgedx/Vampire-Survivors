@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bacd54285d686ce4f96e03bf97b2f224, type: 3}
-  m_Name: LevelData
+  m_Name: DefaultLevelData
   m_EditorClassIdentifier: 
   _requiredExperienceForLevel: 050000000a0000001000000019000000240000002f0000003b0000004700000017000000
+  _enemyWaveDatas: {fileID: 11400000, guid: fc0c90b9e0c12454f84d7fc75d9d0db1, type: 2}
