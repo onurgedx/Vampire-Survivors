@@ -11,6 +11,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         public MagicBoltController(IProperty<Vector3> a_startPosition ) : base( )
         {
+            LevelTypes = KnifeLevels.Levels;
             _level = 1;
             _skill = new Skill(5.3f,30); 
             _startPosition = a_startPosition;

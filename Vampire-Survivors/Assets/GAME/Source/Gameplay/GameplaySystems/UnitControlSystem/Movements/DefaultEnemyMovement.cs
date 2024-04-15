@@ -13,6 +13,7 @@ namespace VampireSurvivors.Gameplay.Systems.MovementControl
             _targetPosition = a_targetTransform;
         }
 
+
         public void Move(UnitMovementData a_unitMovementData)
         {
             Vector3 direction = Vector3.ClampMagnitude((_targetPosition.Value - a_unitMovementData.Transform.Value.position), 1);

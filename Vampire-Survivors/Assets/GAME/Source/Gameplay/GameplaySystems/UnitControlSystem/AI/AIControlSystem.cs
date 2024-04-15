@@ -5,8 +5,7 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
 {
     public class AIControlSystem : VSSystem
     {
-        public EnemyMovementControl EnemyMovementControl { get; private set; }
-        public EnemyDamageControl EnemyDamageControl { get; private set; }
+        public EnemyMovementControl EnemyMovementControl { get; private set; } 
 
         private IProperty<Vector3> _playerPosition;
 
@@ -14,8 +13,7 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
         public AIControlSystem(IProperty<Vector3> a_playerPosition )
         {
             _playerPosition = a_playerPosition;
-            EnemyMovementControl = new EnemyMovementControl(_playerPosition);
-            EnemyDamageControl = new EnemyDamageControl(_playerPosition);
+            EnemyMovementControl = new EnemyMovementControl(_playerPosition); 
         }
 
 
@@ -23,7 +21,7 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
         {
             base.Update();
             EnemyMovementControl.Update();
-            EnemyDamageControl.Update();
+             
         }
     }
 }

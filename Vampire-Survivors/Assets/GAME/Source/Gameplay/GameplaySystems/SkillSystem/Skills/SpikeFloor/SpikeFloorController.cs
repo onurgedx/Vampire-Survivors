@@ -9,6 +9,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         private IProperty<Vector3> _startPosition;
         public SpikeFloorController(IProperty<Vector3> a_startPosition)
         {
+            LevelTypes = SpikeFloorLevels.Levels;
             _skill = new Skill(3.4f, 120);
             _startPosition = a_startPosition;
             AsyncOperationHandle<GameObject> asset = Addressables.LoadAssetAsync<GameObject>(Keys.Skills.SpikeFloor + AddressableSources.Keys.AddressableKeys.Suffix.Prefab);
@@ -17,7 +18,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         public override void LevelUp()
         {
-            Debug.Log("LEvelUp SpikeFoller");
+            _level++;
         }
 
         public override void Play(SkillBehaviour a_skillBehavior)

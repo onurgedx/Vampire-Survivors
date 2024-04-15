@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 namespace VampireSurvivors.Lib.Record
 {
-    public class Recorder<TKey,TValue>
+    public class Recorder<TKey,TValue>: IRecorder<TKey, TValue>
     {
         private Dictionary<TKey, TValue> _recordeds = null;
 

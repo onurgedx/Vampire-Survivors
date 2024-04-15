@@ -9,8 +9,8 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         protected SkillBehaviorFactory _skillFactory;
         protected Skill _skill;
-        private Action<GameObject, int> SkillImpact;
-
+        private Action<Type,GameObject > SkillImpact;
+        protected Type[] LevelTypes;
         public int Level => _level;
         protected int _level = 0;
 
@@ -42,12 +42,12 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
 
         protected void Impact(GameObject a_gameobject)
-        {
-            SkillImpact?.Invoke(a_gameobject, _skill.Damage);
+        {            
+            SkillImpact?.Invoke(LevelTypes[_level], a_gameobject);
         }
 
 
-        public void RunOnSkillImpact(Action<GameObject, int> a_skillImpactAction)
+        public void RunOnSkillImpact(Action<Type,GameObject > a_skillImpactAction)
         {
             SkillImpact += a_skillImpactAction;
         }

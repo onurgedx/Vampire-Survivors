@@ -1,4 +1,3 @@
-
 namespace VampireSurvivors.Gameplay.Units
 {
     public class UnitBehaviour : VSBehavior

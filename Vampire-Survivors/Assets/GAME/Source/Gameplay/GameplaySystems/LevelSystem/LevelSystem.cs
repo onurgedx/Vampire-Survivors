@@ -15,18 +15,15 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         private Level _level;
         private int[] _levelCapaties = new int[] { };
 
-        private ISkillRequester _skillRequester;
-        private VSSceneManager _sceneManager = new VSSceneManager();
+        private ISkillRequester _skillRequester; 
         private GameplayUILevel _gameplayUILevel;
 
-        public LevelSystem(LevelDatas a_levelData, ISkillRequester a_skillRequester)
+        public LevelSystem(LevelDatas a_levelData, ISkillRequester a_skillRequester, GameplayUILevel a_gameplayLevelUI)
         {
             _skillRequester = a_skillRequester;
             _levelCapaties = a_levelData.RequiredExperiences;
             _level = new Level(new Experience(_levelCapaties[0]));
-            ICompletable<GameplayUILevelSceneEntry> levelUISceneEntry = _sceneManager.LoadAdditive<GameplayUILevelSceneEntry>(GameplayUILevelSceneEntry.SceneName);
-            levelUISceneEntry.RunOnCompleted(() => { _gameplayUILevel = levelUISceneEntry.Value.GameplayUILevel; });
-
+            _gameplayUILevel = a_gameplayLevelUI;
 
         }
 

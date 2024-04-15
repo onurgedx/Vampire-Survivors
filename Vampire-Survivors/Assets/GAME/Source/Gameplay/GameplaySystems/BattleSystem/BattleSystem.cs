@@ -1,24 +1,113 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using VampireSurvivors.Gameplay.Collisions;
 using VampireSurvivors.Gameplay.Layer;
+using VampireSurvivors.Gameplay.Units;
 using VampireSurvivors.Lib.Basic.Properties;
+using static VampireSurvivors.Gameplay.Systems.SkillSys.KnifeLevels;
+using static VampireSurvivors.Gameplay.Systems.SkillSys.MagicBoltLevels;
+using static VampireSurvivors.Gameplay.Systems.SkillSys.SpikeFloorLevels;
 
 namespace VampireSurvivors.Gameplay.Systems.BattleSys
 {
     public class BattleSystem : VSSystem
     {
-        public Damager Damager { get; private set; }
+        public Action PlayerDead;
+        private Damager _damager { get; set; }
         public DamageableRecorder DamageRecorder { get; private set; }
+        public DamageSourceTypeRecorder GameObjectDamageSourceTypeRecorder { get; set; }
 
         private Dictionary<GameObject, IDamageable> _damageables = new Dictionary<GameObject, IDamageable>();
-         
 
-        public BattleSystem( )
+        private Dictionary<System.Type, int> _damageCatalouge = new Dictionary<System.Type, int>()
         {
-            Damager = new Damager(_damageables);
-            DamageRecorder = new DamageableRecorder(_damageables); 
-        } 
 
+            { typeof(EnemyUnit) , 10 },
+            { typeof(SpikeFloorLevel1) , 100 },
+            { typeof(SpikeFloorLevel2) , 150},
+            { typeof(SpikeFloorLevel3) , 200 },
+            { typeof(SpikeFloorLevel4) , 250},
+            { typeof(SpikeFloorLevel5) , 300 },
+            { typeof(SpikeFloorLevel6) , 350},
+            { typeof(SpikeFloorLevel7) , 350 },
+            { typeof(KnifeLevel1) , 10 },
+            { typeof(KnifeLevel2) , 15},
+            { typeof(KnifeLevel3) , 20 },
+            { typeof(KnifeLevel4) , 25},
+            { typeof(KnifeLevel5) , 30 },
+            { typeof(KnifeLevel6) , 35 },
+            { typeof(KnifeLevel7) , 35 },
+            { typeof(MagicBoltLevel1) , 10 },
+            { typeof(MagicBoltLevel2) , 15},
+            { typeof(MagicBoltLevel3) , 20 },
+            { typeof(MagicBoltLevel4) , 25},
+            { typeof(MagicBoltLevel5) , 30 },
+            { typeof(MagicBoltLevel6) , 35 },
+            { typeof(MagicBoltLevel7) , 35 },
+
+
+        };
+
+        private Dictionary<GameObject, Type> _damageSourceTypes = new Dictionary<GameObject, Type>();
+
+        private IProperty<Vector3> _playerPosition;
+        private CollisionCheckerBehavior _enemyCollisionChecker;
+        private GameObject _playerGameObject;
+
+        public BattleSystem(IProperty<Vector3> a_playerPosition)
+        {
+            _playerPosition = a_playerPosition;
+            _damager = new Damager(_damageables);
+            DamageRecorder = new DamageableRecorder(_damageables);
+            DamageRecorder.DamageablePlayerRecoreded += (GameObject a_go) => _playerGameObject = a_go;
+            GameObjectDamageSourceTypeRecorder = new DamageSourceTypeRecorder(_damageSourceTypes);
+            _damager.PlayerDead += OnPlayerDead;
+            AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>("CollisionChecker");
+            asyncOperationHandle.Completed += SetupEnemyCollisionChecker;
+        }
+
+
+        public override void Update()
+        {
+            base.Update();
+            _enemyCollisionChecker?.UpdatePosition(_playerPosition.Value);
+        }
+
+
+        private void SetupEnemyCollisionChecker(AsyncOperationHandle<GameObject> a_asyncOperationHandle)
+        {
+            GameObject collisionCheckerPrefab = a_asyncOperationHandle.Result;
+            GameObject collisionCheckerGO = GameObject.Instantiate(collisionCheckerPrefab);
+            _enemyCollisionChecker = collisionCheckerGO.GetComponent<CollisionCheckerBehavior>();
+            _enemyCollisionChecker.Init(Layers.EnemyLayerMask);
+            _enemyCollisionChecker.TriggerStay += EnemyDamage;
+        }
+
+
+        public void Damage(System.Type a_damageSource, GameObject a_damageableObject)
+        {
+            if (_damageCatalouge.TryGetValue(a_damageSource, out int damage))
+            {
+                _damager.Damage(a_damageableObject, damage);
+            }
+        }
+
+
+        private void EnemyDamage(Collider2D collision)
+        {
+            if (_damageSourceTypes.TryGetValue(collision.gameObject, out Type damageType))
+            {
+                 Damage(damageType, _playerGameObject);
+            }
+        }
+
+
+        private void OnPlayerDead()
+        {
+            PlayerDead?.Invoke();
+        }
     }
 }

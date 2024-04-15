@@ -4,6 +4,7 @@ namespace VampireSurvivors.Gameplay.Units
 {
     public class EnemyUnit : Unit
     {
+        
         public EnemyUnit(UnitHealth a_unitHealth,
                          Property<float> a_movementSpeed,
                          Property<float> a_damageTaken,

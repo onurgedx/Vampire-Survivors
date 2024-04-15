@@ -5,8 +5,9 @@ namespace VampireSurvivors.Gameplay.Units
     /// <summary>
     /// Responsible for a unit's Health parameters
     /// </summary>
-    public class UnitHealth
+    public class UnitHealth: IUnitHealth
     {
+        public Action MaxHealthChanged;
         public Action Changed ;
         public Action Dead;
 
@@ -50,6 +51,7 @@ namespace VampireSurvivors.Gameplay.Units
             _maxHealth.SetValue(maxHealth);
             _currentHealth.SetValue(Math.Min(_currentHealth.Value, maxHealth));
             Changed?.Invoke();
+            MaxHealthChanged?.Invoke();
         }
     }
 }

@@ -8,9 +8,11 @@ using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems.AIControl
 {
+
+    ///I DO NOT NEED this scirpt anymore. Remove it propper time
     public class EnemyDamageControl
     {
-        public Action<GameObject, int> Damage;
+        public Action<Type,GameObject > Damage;
 
         private IProperty<Vector3> _playerPosition;
 
@@ -20,11 +22,10 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
 
         private VSTimerCounter _timer = new VSTimerCounter(0.2f);
 
-        public EnemyDamageControl(IProperty<Vector3> a_playerPosition)
-        {
-            _playerPosition = a_playerPosition;
+        public EnemyDamageControl()
+        { 
         }
-
+        
 
         public void Update()
         {
@@ -43,7 +44,7 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
                 {
                     foreach (Collider2D collider in colliders)
                     {
-                        Damage(_playerGameObject, 2);//I have used here magic number to fix it later !!!
+                     //   Damage(_playerGameObject, 2);//I have used here magic number to fix it later !!!
                     }
                 }
             }

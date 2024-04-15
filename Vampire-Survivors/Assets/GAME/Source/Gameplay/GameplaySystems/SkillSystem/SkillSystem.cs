@@ -11,26 +11,20 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     public class SkillSystem : VSSystem, ISkillRequester
     {
 
-        public Action<GameObject, int> DamageRequest;
+        public Action<Type,GameObject > DamageRequest;
         public Action SkillRequested;
         public Action SkillChoosed;
         private Dictionary<string, SkillControllerFactory> _skillControllerFactories = new Dictionary<string, SkillControllerFactory>();
         private Dictionary<string, int> _skillLevels = new Dictionary<string, int>();
         private Dictionary<string, SkillController> _currentSkills = new Dictionary<string, SkillController>();
-        private VSSceneManager _vSSceneManager;
         private SkillChooseFrame _skillChooseFrame;
 
 
-        public SkillSystem(IProperty<Vector3> a_playerPosition, IProperty<Vector3> a_playerDirection)
+        public SkillSystem(IProperty<Vector3> a_playerPosition, IProperty<Vector3> a_playerDirection, SkillChooseFrame a_skillChooseFrame)
         {
             CreateFactories(a_playerPosition, a_playerDirection);
-            _vSSceneManager = new VSSceneManager();
-            Completable<GameplayUISkillChooseSceneEntry> sceneCompletable = _vSSceneManager.LoadAdditive<GameplayUISkillChooseSceneEntry>(GameplayUISkillChooseSceneEntry.SceneName);
-            sceneCompletable.RunOnCompleted(() =>
-          {
-              _skillChooseFrame = sceneCompletable.Value.SkillChooseFrame;
-              _skillChooseFrame.SkillChoosed += SkillChoose;
-          });
+            _skillChooseFrame = a_skillChooseFrame;
+            _skillChooseFrame.SkillChoosed += SkillChoose;
         }
 
 
@@ -39,12 +33,6 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             _skillControllerFactories.Add(Keys.Skills.Knife, new KnifeControllerFactory(a_playerPosition, a_playerDirection));
             _skillControllerFactories.Add(Keys.Skills.MagicBolt, new MagicBoltControllerFactory(a_playerPosition));
             _skillControllerFactories.Add(Keys.Skills.SpikeFloor, new SpikeFloorControllerFactory(a_playerPosition));
-        }
-
-
-        public void Unload()
-        {
-            _vSSceneManager.Unload<GameplayUISkillChooseSceneEntry>(GameplayUISkillChooseSceneEntry.SceneName);
         }
 
 
@@ -73,13 +61,14 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         }
 
+
         private void LevelUpSkill(string a_id)
         {
             if (_currentSkills.TryGetValue(a_id, out SkillController skillController))
             {
                 skillController.LevelUp();
             }
-        }      
+        }
 
 
         public void RequestSkill()
@@ -93,9 +82,9 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             {
                 int skillLevel = 0;
                 if (!_skillLevels.TryGetValue(skillId, out skillLevel))
-                { 
+                {
                 }
-                skillLevels[indexCounter] = skillLevel+1;
+                skillLevels[indexCounter] = skillLevel + 1;
                 indexCounter++;
             }
             _skillChooseFrame.ActivateChooseSkill(skillIds, skillLevels);
@@ -105,16 +94,16 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         public override void Update()
         {
             base.Update();
-            foreach (  SkillController skillController  in _currentSkills.Values)
+            foreach (SkillController skillController in _currentSkills.Values)
             {
                 skillController.Update();
             }
         }
 
 
-        private void Damage(GameObject a_targetGameObject, int a_damage)
+        private void Damage(Type a_damageSource,GameObject a_targetGameObject )
         {
-            DamageRequest?.Invoke(a_targetGameObject, a_damage);
+            DamageRequest?.Invoke(a_damageSource,a_targetGameObject );
         }
 
         private void AddSkillController(string a_id, SkillController a_skillController)

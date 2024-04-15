@@ -33,6 +33,5 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
             }
         }
 
-
     }
 }

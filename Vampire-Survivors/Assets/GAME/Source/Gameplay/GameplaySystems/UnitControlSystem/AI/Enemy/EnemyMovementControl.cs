@@ -47,7 +47,9 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
 
         private void AdjustMovements()
         {
-            _movements.Add(typeof(EnemyUnit), new DefaultEnemyMovement(_targetPosition));
+
+            IMovement defaultEnemyMovement = new DefaultEnemyMovement(_targetPosition);
+            _movements.Add(typeof(EnemyUnit), defaultEnemyMovement);
 
         }
 
