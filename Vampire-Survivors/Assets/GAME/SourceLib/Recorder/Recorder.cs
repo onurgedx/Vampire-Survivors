@@ -14,7 +14,10 @@ namespace VampireSurvivors.Lib.Record
 
         public void Record (TKey a_key, TValue a_recordable)
         {
-            _recordeds.Add(a_key, a_recordable);
+            if(!_recordeds.TryAdd(a_key, a_recordable))
+            {
+                _recordeds[a_key] = a_recordable;
+            }
         }
     }
 }

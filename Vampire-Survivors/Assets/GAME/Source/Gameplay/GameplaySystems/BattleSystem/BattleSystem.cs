@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using VampireSurvivors.Gameplay.Collisions;
+using UnityEngine; 
 using VampireSurvivors.Gameplay.Layer;
 using VampireSurvivors.Gameplay.Units;
 using VampireSurvivors.Lib.Basic.Properties;
+using VampireSurvivors.Update;
 using static VampireSurvivors.Gameplay.Systems.SkillSys.KnifeLevels;
 using static VampireSurvivors.Gameplay.Systems.SkillSys.MagicBoltLevels;
 using static VampireSurvivors.Gameplay.Systems.SkillSys.SpikeFloorLevels;
@@ -53,10 +51,9 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
 
         private Dictionary<GameObject, Type> _damageSourceTypes = new Dictionary<GameObject, Type>();
 
-        private IProperty<Vector3> _playerPosition;
-        private CollisionCheckerBehavior _enemyCollisionChecker;
+        private IProperty<Vector3> _playerPosition; 
         private GameObject _playerGameObject;
-
+        private VSTimerCounter _enemyCheckTimer = new VSTimerCounter(0.2f);
         public BattleSystem(IProperty<Vector3> a_playerPosition)
         {
             _playerPosition = a_playerPosition;
@@ -64,28 +61,18 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
             DamageRecorder = new DamageableRecorder(_damageables);
             DamageRecorder.DamageablePlayerRecoreded += (GameObject a_go) => _playerGameObject = a_go;
             GameObjectDamageSourceTypeRecorder = new DamageSourceTypeRecorder(_damageSourceTypes);
-            _damager.PlayerDead += OnPlayerDead;
-            AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>("CollisionChecker");
-            asyncOperationHandle.Completed += SetupEnemyCollisionChecker;
+            _damager.PlayerDead += OnPlayerDead; 
         }
 
 
         public override void Update()
         {
             base.Update();
-            _enemyCollisionChecker?.UpdatePosition(_playerPosition.Value);
-        }
-
-
-        private void SetupEnemyCollisionChecker(AsyncOperationHandle<GameObject> a_asyncOperationHandle)
-        {
-            GameObject collisionCheckerPrefab = a_asyncOperationHandle.Result;
-            GameObject collisionCheckerGO = GameObject.Instantiate(collisionCheckerPrefab);
-            _enemyCollisionChecker = collisionCheckerGO.GetComponent<CollisionCheckerBehavior>();
-            _enemyCollisionChecker.Init(Layers.EnemyLayerMask);
-            _enemyCollisionChecker.TriggerStay += EnemyDamage;
-        }
-
+            if (_enemyCheckTimer.Process())
+            {
+                EnemyDamage();
+            }
+        } 
 
         public void Damage(System.Type a_damageSource, GameObject a_damageableObject)
         {
@@ -96,11 +83,15 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
         }
 
 
-        private void EnemyDamage(Collider2D collision)
+        private void EnemyDamage( )
         {
-            if (_damageSourceTypes.TryGetValue(collision.gameObject, out Type damageType))
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerPosition.Value, 1, Layers.EnemyLayerMask);
+            foreach (Collider2D collision in colliders)
             {
-                 Damage(damageType, _playerGameObject);
+                if (_damageSourceTypes.TryGetValue(collision.gameObject, out Type damageType))
+                {
+                    Damage(damageType, _playerGameObject);
+                }
             }
         }
 

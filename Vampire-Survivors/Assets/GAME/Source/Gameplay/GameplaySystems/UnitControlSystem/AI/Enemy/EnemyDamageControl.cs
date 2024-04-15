@@ -31,6 +31,7 @@ namespace VampireSurvivors.Gameplay.Systems.AIControl
         {
             if (_timer.Process())
             {
+                
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerPosition.Value, 1, Layers.EnemyLayerMask);
                 if (_playerGameObject == null)
                 {
