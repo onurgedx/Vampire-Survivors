@@ -12,6 +12,7 @@ namespace VampireSurvivors.Gameplay.Systems
     {
          
         private EnemyUnitFactory _unitFactory;
+        private List<string> _unitNames= new List<string>();
 
         public EnemyUnitCrafting(EnemyUnitFactory a_enemyUnitFactory)
         {
@@ -38,12 +39,13 @@ namespace VampireSurvivors.Gameplay.Systems
             {
                 foreach (EnemyData enamyData in waveData.EnemyDatas)
                 {
-                    if (!_unitFactory.EnemyPrefabs.ContainsKey(enamyData.Data.UnitId))
+                    if (!_unitNames.Contains(enamyData.Data.UnitName))
                     {
-                        AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(enamyData.Data.UnitId);
+                        _unitNames.Add(enamyData.Data.UnitName);
+                        AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(enamyData.Data.UnitName);
                         asyncOperationHandle.Completed += (asyncOperationHandle) =>
                         {
-                            _unitFactory.AddEnemyPrefab(enamyData.Data.UnitId, asyncOperationHandle.Result);
+                            _unitFactory.AddEnemyPrefab(enamyData.Data.UnitName, asyncOperationHandle.Result);
                         };
                     }
                 }

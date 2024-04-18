@@ -23,7 +23,6 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
         private Dictionary<System.Type, int> _damageCatalouge = new Dictionary<System.Type, int>()
         {
 
-            { typeof(EnemyUnit) , 10 },
             { typeof(SpikeFloorLevel1) , 100 },
             { typeof(SpikeFloorLevel2) , 150},
             { typeof(SpikeFloorLevel3) , 200 },
@@ -45,8 +44,7 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
             { typeof(MagicBoltLevel5) , 30 },
             { typeof(MagicBoltLevel6) , 35 },
             { typeof(MagicBoltLevel7) , 35 },
-
-
+            { typeof(EnemyUnit) , 10 }
         };
 
         private Dictionary<GameObject, Type> _damageSourceTypes = new Dictionary<GameObject, Type>();
@@ -86,7 +84,7 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
 
         private void EnemyDamage( )
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerPosition.Value, 1, Layers.EnemyLayerMask);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerPosition.Value, 0.5f, Layers.EnemyLayerMask);
             foreach (Collider2D collision in colliders)
             {
                 if (_damageSourceTypes.TryGetValue(collision.gameObject, out Type damageType))
