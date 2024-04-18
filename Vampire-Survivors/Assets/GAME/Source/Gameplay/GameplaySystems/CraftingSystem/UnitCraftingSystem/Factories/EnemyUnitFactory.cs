@@ -19,8 +19,10 @@ namespace VampireSurvivors.Gameplay.Units
         private IDamagableRecorder _damageableRecorder;
         private DamageSourceTypeRecorder _damageSourceTypeRecorder;
 
-        private Dictionary<GameObject, VSObjectPool<UnitBehaviour>> _enemyPools = new Dictionary<GameObject, VSObjectPool<UnitBehaviour>>();
-        private UnitData _enemyUnitData = new UnitData();
+        private Dictionary<string, VSObjectPool<UnitBehaviour>> _enemyPools = new Dictionary<string, VSObjectPool<UnitBehaviour>>();
+
+        public IDictionary<string, GameObject> EnemyPrefabs => _enemyPrefabs;
+        private Dictionary<string, GameObject> _enemyPrefabs = new Dictionary<string, GameObject>();
 
         private IProperty<Vector3> _playerPosition;
         public EnemyUnitFactory(IProperty<Vector3> a_craftOriginPosition, EnemyMovementControl a_enemyMovementControl, IDamagableRecorder a_damageableRecorder, DamageSourceTypeRecorder a_damageSourceTypeRecorder)
@@ -32,15 +34,21 @@ namespace VampireSurvivors.Gameplay.Units
         }
 
 
-        public (EnemyUnit, UnitBehaviour) CreateEnemyUnit(GameObject a_unitPrefab, UnitData a_unitData)
+        public void AddEnemyPrefab(string a_id, GameObject a_prefab)
         {
-            a_unitData = _enemyUnitData;
+            _enemyPrefabs.Add(a_id, a_prefab);
+        }
+
+
+        public (EnemyUnit, UnitBehaviour) CreateEnemyUnit(UnitData a_unitData)
+        {
 
             Property<float> speed = new Property<float>(a_unitData.MovementSpeed);
             UnitHealth unitHealth = new UnitHealth(a_unitData.MaxHealth);
             Property<float> damageTaken = new Property<float>(0);
             Property<int> attackPower = new Property<int>(a_unitData.AttackPower);
-            UnitBehaviour behaviour = CreateUnitBehavior(a_unitPrefab);
+
+            UnitBehaviour behaviour = CreateUnitBehavior(a_unitData.UnitId);
             EnemyUnit unit = new EnemyUnit(unitHealth, speed, damageTaken, attackPower);
             behaviour.Init(unit);
             UnitMovementData unitMovement = new UnitMovementData(speed, new Property<Transform>(behaviour.transform));
@@ -52,9 +60,11 @@ namespace VampireSurvivors.Gameplay.Units
         }
 
 
-        private UnitBehaviour CreateUnitBehavior(GameObject a_unitPrefab)
+        private UnitBehaviour CreateUnitBehavior(string a_unitId)
         {
-            if (_enemyPools.TryGetValue(a_unitPrefab, out VSObjectPool<UnitBehaviour> pool))
+
+
+            if (_enemyPools.TryGetValue(a_unitId, out VSObjectPool<UnitBehaviour> pool))
             {
                 if (pool.TryRetrieve(out UnitBehaviour behaviour))
                 {
@@ -64,23 +74,32 @@ namespace VampireSurvivors.Gameplay.Units
                 }
                 else
                 {
-                    GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, EnemySpawnPosition(), Quaternion.identity);
-                    behaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
-                    gameobjectUnit.SetActive(true);
-                    pool.Add(behaviour);
-                    return behaviour;
+                    if (_enemyPrefabs.TryGetValue(a_unitId, out GameObject unitPrefab))
+                    {
+
+                        GameObject gameobjectUnit = GameObject.Instantiate(unitPrefab, EnemySpawnPosition(), Quaternion.identity);
+                        behaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
+                        gameobjectUnit.SetActive(true);
+                        pool.Add(behaviour);
+                        return behaviour;
+                    }
                 }
             }
             else
             {
-                VSObjectPool<UnitBehaviour> newPool = new VSObjectPool<UnitBehaviour>();
-                _enemyPools.Add(a_unitPrefab, newPool);
-                GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, EnemySpawnPosition(), Quaternion.identity);
-                UnitBehaviour behavior = gameobjectUnit.GetComponent<UnitBehaviour>();
-                gameobjectUnit.SetActive(true);
-                newPool.Add(behavior);
-                return behavior;
+                if (_enemyPrefabs.TryGetValue(a_unitId, out GameObject unitPrefab))
+                {
+
+                    VSObjectPool<UnitBehaviour> newPool = new VSObjectPool<UnitBehaviour>();
+                    _enemyPools.Add(a_unitId, newPool);
+                    GameObject gameobjectUnit = GameObject.Instantiate(unitPrefab, EnemySpawnPosition(), Quaternion.identity);
+                    UnitBehaviour behavior = gameobjectUnit.GetComponent<UnitBehaviour>();
+                    gameobjectUnit.SetActive(true);
+                    newPool.Add(behavior);
+                    return behavior;
+                }                
             }
+            return null;
         }
 
 

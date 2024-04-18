@@ -5,6 +5,10 @@ namespace VampireSurvivors.Gameplay.Units
     [CreateAssetMenu(fileName = "Unit", menuName = "Data/Unit/UnitData", order = 1)]
     public class UnitData : ScriptableObject
     {
+
+        public string UnitId=> _unitId;
+        [SerializeField] private string _unitId;
+
         public int MaxHealth=>_maxHealth;
         [SerializeField] private int _maxHealth=100;
 

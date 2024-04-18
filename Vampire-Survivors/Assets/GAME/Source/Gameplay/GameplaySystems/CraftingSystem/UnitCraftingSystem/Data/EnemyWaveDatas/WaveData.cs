@@ -1,5 +1,6 @@
 using System; 
 using UnityEngine;
+using VampireSurvivors.Gameplay.Units;
 
 namespace VampireSurvivors.Gameplay.Systems.CraftingSys
 {
@@ -13,8 +14,8 @@ namespace VampireSurvivors.Gameplay.Systems.CraftingSys
     [Serializable]
     public class EnemyData
     {
-        public string Name =>_name;
-        [SerializeField]private string _name;
+        public UnitData Data =>_unitData;
+        [SerializeField]private UnitData _unitData;
 
         public int Count=>_count;
         [SerializeField] private int _count;

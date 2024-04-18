@@ -2,51 +2,53 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations; 
-using VampireSurvivors.Gameplay.Systems.CraftingSys; 
-using VampireSurvivors.Gameplay.Units; 
+using UnityEngine.ResourceManagement.AsyncOperations;
+using VampireSurvivors.Gameplay.Systems.CraftingSys;
+using VampireSurvivors.Gameplay.Units;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
     public class EnemyUnitCrafting : VSSystem
     {
-
-        private Dictionary<string, GameObject> _unitPrefabs = new Dictionary<string, GameObject>();
+         
         private EnemyUnitFactory _unitFactory;
 
         public EnemyUnitCrafting(EnemyUnitFactory a_enemyUnitFactory)
         {
-            _unitFactory = a_enemyUnitFactory;
-            LoadEnemyUnitsPrefabs();
+            _unitFactory = a_enemyUnitFactory; 
         }
 
 
-        public void CreateEnemy(EnemyData[] a_enemies)
+        public void CreateEnemy(WaveData a_waveData)
         {
-            foreach (EnemyData data in a_enemies)
-            {
-                if (_unitPrefabs.TryGetValue(data.Name, out GameObject enemyGo))
-                {
+            foreach (EnemyData data in a_waveData.EnemyDatas)
+            {                 
                     for (int i = 0; i < data.Count; i++)
                     {
-                        _unitFactory.CreateEnemyUnit(enemyGo, null);
+                        _unitFactory.CreateEnemyUnit(data.Data);
                     }
-                } 
+                }
             }
-        }
+        
 
 
-        private void LoadEnemyUnitsPrefabs()
+        public void LoadEnemyUnitsPrefabs(EnemyWaveDatas a_waveDatas)
         {
-            foreach (string unitKey in Keys.Units)
+            foreach (WaveData waveData in a_waveDatas.WaveDatas)
             {
-                if (unitKey == Keys.PlayerDefault)
-                { continue; }
-                AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(unitKey);
-                asyncOperationHandle.Completed += (asyncOperationHandle) =>
+                foreach (EnemyData enamyData in waveData.EnemyDatas)
                 {
-                    _unitPrefabs.Add(unitKey, asyncOperationHandle.Result);
-                };
+                    if (!_unitFactory.EnemyPrefabs.ContainsKey(enamyData.Data.UnitId))
+                    {
+                        AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(enamyData.Data.UnitId);
+                        asyncOperationHandle.Completed += (asyncOperationHandle) =>
+                        {
+                            _unitFactory.AddEnemyPrefab(enamyData.Data.UnitId, asyncOperationHandle.Result);
+                        };
+                    }
+                }
+
+
             }
         }
     }

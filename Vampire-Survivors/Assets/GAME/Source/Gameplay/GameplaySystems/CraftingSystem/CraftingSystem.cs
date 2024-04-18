@@ -15,7 +15,7 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private PlayerCrafting _playerCraftig = new PlayerCrafting();
 
-        private VSTimerCounter _enemyCreateTimer = new VSTimerCounter(60);
+        private VSTimerCounter _enemyCreateTimer = new VSTimerCounter(30,28);
 
         public IProperty<IUnitHealth> PlayerUnitHealth => _playerUnitHealth;
         private Property<IUnitHealth> _playerUnitHealth;
@@ -36,6 +36,7 @@ namespace VampireSurvivors.Gameplay.Systems
 
             EnemyUnitFactory enemyFactory = new EnemyUnitFactory(a_playeControlSystem.Position, a_enemyMovementControl, a_damageableRecorder, a_damageSourceTypeRecorder);
             _enemyUnitCraftingSystem = new EnemyUnitCrafting(enemyFactory);
+            _enemyUnitCraftingSystem.LoadEnemyUnitsPrefabs(a_enemyWaveData);
         }
 
 
@@ -51,9 +52,8 @@ namespace VampireSurvivors.Gameplay.Systems
 
             if (_enemyCreateTimer.Process())
             {
+                 _enemyUnitCraftingSystem.CreateEnemy(_enemyWaveData.WaveDatas[_currentWave]);
                 _currentWave++;
-                // _enemyUnitCraftingSystem.CreateEnemy();
-
             }
 
         }

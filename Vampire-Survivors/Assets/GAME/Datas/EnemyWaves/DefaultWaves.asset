@@ -14,11 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waveDatas:
   - _enemyDatas:
-    - Name: EnemyDefault
-      Count: 10
+    - _unitData: {fileID: 11400000, guid: 6a686f7378c3f57439fc3979f2d68672, type: 2}
+      _count: 10
+    - _unitData: {fileID: 11400000, guid: cde4fa0a9b822a84f99a6bf993d679e5, type: 2}
+      _count: 3
+    - _unitData: {fileID: 11400000, guid: 265eb543f489c53448b5aa0b176953a8, type: 2}
+      _count: 1
   - _enemyDatas:
-    - Name: EnemyDefault
-      Count: 22
+    - _unitData: {fileID: 11400000, guid: 6a686f7378c3f57439fc3979f2d68672, type: 2}
+      _count: 20
+    - _unitData: {fileID: 11400000, guid: 265eb543f489c53448b5aa0b176953a8, type: 2}
+      _count: 10
   - _enemyDatas:
-    - Name: EnemyDefault
-      Count: 33
+    - _unitData: {fileID: 11400000, guid: 265eb543f489c53448b5aa0b176953a8, type: 2}
+      _count: 20
+    - _unitData: {fileID: 11400000, guid: 53405a91a069c7742bf6288a07ae9cff, type: 2}
+      _count: 20

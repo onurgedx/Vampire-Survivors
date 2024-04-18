@@ -5,9 +5,10 @@ namespace VampireSurvivors.Update
     {
         private float _duration;
         private float _timeCounter;
-        public VSTimerCounter(float a_duration)
+        public VSTimerCounter(float a_duration, float a_startTime =0)
         {
             _duration = a_duration;
+            _timeCounter = a_startTime;
         }
 
         public bool Process()
