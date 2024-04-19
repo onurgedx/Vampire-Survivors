@@ -11,7 +11,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     public class SkillSystem : VSSystem, ISkillRequester
     {
 
-        public Action<Type,GameObject > DamageRequest;
+        public Action<Type,int > DamageRequest;
         public Action SkillRequested;
         public Action SkillChoosed;
         private Dictionary<string, SkillControllerFactory> _skillControllerFactories = new Dictionary<string, SkillControllerFactory>();
@@ -101,7 +101,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         }
 
 
-        private void Damage(Type a_damageSource,GameObject a_targetGameObject )
+        private void Damage(Type a_damageSource,int a_targetGameObject )
         {
             DamageRequest?.Invoke(a_damageSource,a_targetGameObject );
         }

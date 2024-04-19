@@ -66,8 +66,9 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private void SetupBattleSystem()
         {
-            BattleSystem = new BattleSystem(PlayerControlSystem.Position);
+            BattleSystem = new BattleSystem(PlayerControlSystem.Position,_levelData.EnemyWaveDatas.WaveDatas.ToArray());
             BattleSystem.PlayerDead += LoseGame;
+            
         }
 
 

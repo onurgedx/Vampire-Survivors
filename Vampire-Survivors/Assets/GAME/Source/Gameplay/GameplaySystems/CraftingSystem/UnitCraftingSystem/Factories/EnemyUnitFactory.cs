@@ -25,7 +25,10 @@ namespace VampireSurvivors.Gameplay.Units
         private Dictionary<string, GameObject> _enemyPrefabs = new Dictionary<string, GameObject>();
 
         private IProperty<Vector3> _playerPosition;
-        public EnemyUnitFactory(IProperty<Vector3> a_craftOriginPosition, EnemyMovementControl a_enemyMovementControl, IDamagableRecorder a_damageableRecorder, DamageSourceTypeRecorder a_damageSourceTypeRecorder)
+        public EnemyUnitFactory(IProperty<Vector3> a_craftOriginPosition,
+                                EnemyMovementControl a_enemyMovementControl,
+                                IDamagableRecorder a_damageableRecorder,
+                                DamageSourceTypeRecorder a_damageSourceTypeRecorder)
         {
             _enemyMovementControl = a_enemyMovementControl;
             _damageableRecorder = a_damageableRecorder;
@@ -49,12 +52,12 @@ namespace VampireSurvivors.Gameplay.Units
             Property<int> attackPower = new Property<int>(a_unitData.AttackPower);
 
             UnitBehaviour behaviour = CreateUnitBehavior(a_unitData.UnitName);
-            EnemyUnit unit = new EnemyUnit(unitHealth, speed, damageTaken, attackPower);
+            EnemyUnit unit = new EnemyUnit(unitHealth, speed, damageTaken, attackPower);             
             behaviour.Init(unit);
             UnitMovementData unitMovement = new UnitMovementData(speed, new Property<Transform>(behaviour.transform));
             _enemyMovementControl.Add(unit, unitMovement);
-            _damageableRecorder.Record(behaviour.gameObject, unit);
-            _damageSourceTypeRecorder.Record(behaviour.gameObject, unit.GetType());
+            _damageableRecorder.Record(behaviour.gameObject.GetHashCode(), unit);
+            _damageSourceTypeRecorder.Record(behaviour.gameObject, a_unitData.GetHashCode());
             unit.OnDead += () => { _enemyMovementControl.Remove(unit); };
             return (unit, behaviour);
         }

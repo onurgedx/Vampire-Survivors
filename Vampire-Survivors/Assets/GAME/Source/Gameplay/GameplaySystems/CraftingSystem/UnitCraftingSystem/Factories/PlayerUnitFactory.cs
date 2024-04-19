@@ -9,7 +9,11 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 public class PlayerUnitFactory 
 {
-    public (PlayerUnit ,UnitBehaviour) Create(PlayerControlSystem a_playerControlSys, GameObject a_unitPrefab, IDamageablePlayerRecorder a_damageableRecorder , PlayerHPFrame a_playerHPFrame, Property<IUnitHealth> a_unitHealth)
+    public (PlayerUnit ,UnitBehaviour) Create(PlayerControlSystem a_playerControlSys,
+                                              GameObject a_unitPrefab,
+                                              IDamageablePlayerRecorder a_damageableRecorder,
+                                              PlayerHPFrame a_playerHPFrame,
+                                              Property<IUnitHealth> a_unitHealth)
     {
         Property<float> speed = new Property<float>(3);
         UnitHealth unitHealth = new UnitHealth(111);
@@ -39,7 +43,7 @@ public class PlayerUnitFactory
         UnitBehaviour unitBehaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
         unitBehaviour.Init(unit);
         a_playerControlSys.Init(gameobjectUnit.transform, speed); 
-        a_damageableRecorder.RecordPlayer(gameobjectUnit, unit);
+        a_damageableRecorder.RecordPlayer(gameobjectUnit.GetHashCode(), unit);
         a_unitHealth.SetValue(unitHealth);
         
         a_playerHPFrame.UpdateMaxHP(unitHealth.MaxHealth.Value);
