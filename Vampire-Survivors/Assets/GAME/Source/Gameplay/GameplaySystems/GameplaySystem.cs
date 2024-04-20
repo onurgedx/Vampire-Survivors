@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.AIControl;
@@ -11,8 +10,8 @@ using VampireSurvivors.Gameplay.Systems.LevelSys;
 using VampireSurvivors.Gameplay.Systems.ManaSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.Systems.SkillSys;
-using VampireSurvivors.Gameplay.UI;
-using VampireSurvivors.Gameplay.UI.Finish;
+using VampireSurvivors.Gameplay.Systems.TimeSys;
+using VampireSurvivors.Gameplay.UI; 
 
 namespace VampireSurvivors.Gameplay.Systems
 {
@@ -29,12 +28,16 @@ namespace VampireSurvivors.Gameplay.Systems
         public ChestSystem ChestSystem { get; private set; }
         public BattleSystem BattleSystem { get; private set; }
         public LevelSystem LevelSystem { get; private set; }
+        public TimeSystem TimeSystem { get; private set; }
+
+
 
         private LevelDatas _levelData;
 
         private bool _paused = false;
 
         private GameplayUI _gameplayUI;
+
 
 
         public GameplaySystem(LevelDatas a_levelDatas, GameplayUI a_gameplayUI, Transform a_poolTransform)
@@ -68,6 +71,7 @@ namespace VampireSurvivors.Gameplay.Systems
                                         PlayerControlSystem.Position,
                                         a_poolTransform,
                                         CraftingSystem.PlayerUnitHealth);
+            TimeSystem = new TimeSystem(a_gameplayUI.TimeFrame);
         }
 
 
@@ -131,6 +135,8 @@ namespace VampireSurvivors.Gameplay.Systems
             CraftingSystem.Update();
             SkillSystem.Update();
             BattleSystem.Update();
+            TimeSystem.Update();
+
         }
 
 
@@ -157,9 +163,6 @@ namespace VampireSurvivors.Gameplay.Systems
         {
             PauseGame();
             _gameplayUI.GameplayFinishFrame.Lose();
-        }
-
-
-       
+        }       
     }
 }
