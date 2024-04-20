@@ -7,15 +7,15 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     {
         protected VSObjectPool<SkillBehaviour> _behaviorPool = new VSObjectPool<SkillBehaviour>();
 
-        protected SkillBehaviorFactory _skillFactory;
+        protected SkillBehaviorFactory _skillBehaviorFactory;
         protected Skill _skill;
-        private Action<Type,int > SkillImpact;
-        protected Type[] LevelTypes;
-        public int Level => _level; 
-        protected int _level = 0;
+        private Action<int,int > SkillImpact;        
+        protected int _skillLevelHash;
 
-        public SkillController()
+        public SkillController(Skill a_skill,int a_skillLevelHash)
         {
+            _skill = a_skill;
+            _skillLevelHash = a_skillLevelHash;
         }
 
 
@@ -27,7 +27,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             {
                 if (!_behaviorPool.TryRetrieve(out SkillBehaviour skillBehavior))
                 {
-                    skillBehavior = _skillFactory.Create();
+                    skillBehavior = _skillBehaviorFactory.Create();
                     skillBehavior.Impact += Impact;
                     _behaviorPool.Add(skillBehavior);
                 }
@@ -43,15 +43,20 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         protected void Impact(GameObject a_gameobject)
         {            
-            SkillImpact?.Invoke(LevelTypes[_level], a_gameobject.GetHashCode());
+            SkillImpact?.Invoke(_skillLevelHash, a_gameobject.GetHashCode());
         }
 
 
-        public void RunOnSkillImpact(Action<Type,int > a_skillImpactAction)
+        public void RunOnSkillImpact(Action<int,int > a_skillImpactAction)
         {
             SkillImpact += a_skillImpactAction;
         }
 
-        public abstract void LevelUp();
+        public virtual void LevelUp(int a_skillLevelHash, float a_cooldown, float a_duration)
+        {
+            _skillLevelHash = a_skillLevelHash;
+            _skill.Cooldown = a_cooldown;
+            _skill.Duration = a_duration;
+        }
     }
 }

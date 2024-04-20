@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542c5b49b5f7e8e40a718b4692af5bac, type: 3}
+  m_Name: Skill.SpikeFloor
+  m_EditorClassIdentifier: 
+  _skillLevels:
+  - {fileID: 11400000, guid: 50dfa53c29ac8bb458f144d28d23db20, type: 2}
+  - {fileID: 11400000, guid: c2985772c62d56a49851e3d9678a4359, type: 2}
+  - {fileID: 11400000, guid: 7bbd9f34e2de4f54988b89f92f1c51f4, type: 2}
+  - {fileID: 11400000, guid: 1bee515e0e4ef2f4087a37aa35d098a8, type: 2}
+  - {fileID: 11400000, guid: 2b37952da8105634c988df0712469a6e, type: 2}
+  - {fileID: 11400000, guid: 7fd6d1e7a59b9684280a7eb7ff72e364, type: 2}

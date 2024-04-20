@@ -9,23 +9,12 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     {
         private IProperty<Vector3> _startPosition;
 
-        public MagicBoltController(IProperty<Vector3> a_startPosition ) : base( )
-        {
-            LevelTypes = KnifeLevels.Levels;
-            _level = 1;
-            _skill = new Skill(5.3f,30); 
+        public MagicBoltController(Skill a_skill,int a_skillLevelHash,IProperty<Vector3> a_startPosition  ) : base( a_skill,a_skillLevelHash )
+        {  
             _startPosition = a_startPosition;
            AsyncOperationHandle<GameObject> asset = Addressables.LoadAssetAsync<GameObject>(Keys.Skills.MagicBolt + AddressableSources.Keys.AddressableKeys.Suffix.Prefab);
            asset.Completed += Init;
-        }
-
-
-        public override void LevelUp()
-        {
-            Debug.Log("LevelUp MagicBoltController");
-        }
-
-
+        } 
         public override void Play(SkillBehaviour a_skillBehavior)
         {
             MagicBoltBehavior behavior = a_skillBehavior as MagicBoltBehavior;
@@ -38,7 +27,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         private void Init(AsyncOperationHandle<GameObject> a_asset)
         {
-            _skillFactory = new MagicBoltBehaviorFactory(a_asset.Result, _startPosition); 
+            _skillBehaviorFactory = new MagicBoltBehaviorFactory(a_asset.Result, _startPosition); 
         }
     }
 }

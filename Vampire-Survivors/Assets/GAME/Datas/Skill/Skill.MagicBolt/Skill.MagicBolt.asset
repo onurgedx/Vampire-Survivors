@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542c5b49b5f7e8e40a718b4692af5bac, type: 3}
+  m_Name: Skill.MagicBolt
+  m_EditorClassIdentifier: 
+  _skillLevels:
+  - {fileID: 11400000, guid: 4fb491c5a5da0104f84081641c51ef97, type: 2}
+  - {fileID: 11400000, guid: cea74b470dd975a45a9aaf9d71cbc280, type: 2}
+  - {fileID: 11400000, guid: e5f618c400754414eb4aafe60ff59af9, type: 2}
+  - {fileID: 11400000, guid: c1188264751b35040a1f0b2bce94eef2, type: 2}
+  - {fileID: 11400000, guid: c6e8a2aed9ef1bc439c71ed0fbc1ff8b, type: 2}
+  - {fileID: 11400000, guid: abb465eea59f4ff4c9e6a3470b6c097a, type: 2}

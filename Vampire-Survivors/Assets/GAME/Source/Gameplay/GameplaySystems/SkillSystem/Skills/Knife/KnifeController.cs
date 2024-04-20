@@ -9,22 +9,14 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     {
         private IProperty<Vector3> _startPosition;
         private IProperty<Vector3> _direction;
-        public KnifeController(IProperty<Vector3> a_startPosition, IProperty<Vector3> a_direction)
-        {
-            LevelTypes = KnifeLevels.Levels;
-            _skill = new Skill(3, 45);
+        public KnifeController(Skill a_skill, int a_skillLevelHash, IProperty<Vector3> a_startPosition, IProperty<Vector3> a_direction):base(a_skill, a_skillLevelHash)
+        { 
             _direction = a_direction;
             _startPosition = a_startPosition;
             AsyncOperationHandle<GameObject> asset = Addressables.LoadAssetAsync<GameObject>(Keys.Skills.Knife + AddressableSources.Keys.AddressableKeys.Suffix.Prefab);
             asset.Completed += Init;
 
-        }
-
-        public override void LevelUp()
-        {
-            _level++;            
-
-        }
+        }        
 
 
         public override void Play(SkillBehaviour a_skillBehavior)
@@ -37,7 +29,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         private void Init(AsyncOperationHandle<GameObject> a_asset)
         {
-            _skillFactory = new KnifeBehaviorFactory(a_asset.Result, _startPosition);
+            _skillBehaviorFactory = new KnifeBehaviorFactory(a_asset.Result, _startPosition);
         }
     }
 }

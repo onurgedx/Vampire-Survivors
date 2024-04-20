@@ -7,19 +7,13 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     public class SpikeFloorController : SkillController
     {
         private IProperty<Vector3> _startPosition;
-        public SpikeFloorController(IProperty<Vector3> a_startPosition)
-        {
-            LevelTypes = SpikeFloorLevels.Levels;
-            _skill = new Skill(3.4f, 120);
+        public SpikeFloorController(Skill a_skill,int a_skillLevelHash, IProperty<Vector3> a_startPosition):base(a_skill, a_skillLevelHash)
+        { 
             _startPosition = a_startPosition;
             AsyncOperationHandle<GameObject> asset = Addressables.LoadAssetAsync<GameObject>(Keys.Skills.SpikeFloor + AddressableSources.Keys.AddressableKeys.Suffix.Prefab);
             asset.Completed += Init;
         }
-
-        public override void LevelUp()
-        {
-            _level++;
-        }
+         
 
         public override void Play(SkillBehaviour a_skillBehavior)
         {
@@ -31,7 +25,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         private void Init(AsyncOperationHandle<GameObject> a_asset)
         {
-            _skillFactory = new SpikeFloorBehaviorFactory(a_asset.Result, _startPosition);
+            _skillBehaviorFactory = new SpikeFloorBehaviorFactory(a_asset.Result, _startPosition);
         }
     }
 }

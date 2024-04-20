@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _requiredExperienceForLevel: 050000000a0000001000000019000000240000002f0000003b0000004700000017000000
   _enemyWaveDatas: {fileID: 11400000, guid: fc0c90b9e0c12454f84d7fc75d9d0db1, type: 2}
+  _skillDatas:
+  - {fileID: 11400000, guid: c24c7bc65a3d26247a054242e639c88d, type: 2}
+  - {fileID: 11400000, guid: 38123432ca92f524eaa4916dcf5b3893, type: 2}
+  - {fileID: 11400000, guid: ba103adcac47529459259c5113f2de1f, type: 2}

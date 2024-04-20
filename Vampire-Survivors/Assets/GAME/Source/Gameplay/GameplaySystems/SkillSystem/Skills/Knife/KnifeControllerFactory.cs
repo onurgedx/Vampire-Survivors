@@ -8,15 +8,15 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     {
         private IProperty<Vector3> _startPosition;
         private IProperty<Vector3> _direction;
-        public KnifeControllerFactory(IProperty<Vector3> a_startPosition, IProperty<Vector3> a_direction)
+        public KnifeControllerFactory( IProperty<Vector3> a_startPosition, IProperty<Vector3> a_direction)
         {
             _startPosition = a_startPosition;
             _direction = a_direction;
         }
 
-        public override SkillController Create()
+        public override SkillController Create(Skill a_skill , int a_skillLevelHash )
         {
-            return new KnifeController(_startPosition, _direction);
+            return new KnifeController(a_skill, a_skillLevelHash,_startPosition, _direction);
         }
     }
 }

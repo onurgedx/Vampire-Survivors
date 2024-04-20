@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.UI.SkillSystem;
-using VampireSurvivors.Lib.Basic.Completables;
 using VampireSurvivors.Lib.Basic.Extension.Array;
 using VampireSurvivors.Lib.Basic.Properties;
 
@@ -11,17 +10,21 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     public class SkillSystem : VSSystem, ISkillRequester
     {
 
-        public Action<Type,int > DamageRequest;
+        public Action<int, int> DamageRequest;
         public Action SkillRequested;
         public Action SkillChoosed;
         private Dictionary<string, SkillControllerFactory> _skillControllerFactories = new Dictionary<string, SkillControllerFactory>();
         private Dictionary<string, int> _skillLevels = new Dictionary<string, int>();
         private Dictionary<string, SkillController> _currentSkills = new Dictionary<string, SkillController>();
         private SkillChooseFrame _skillChooseFrame;
+        private Dictionary<string, SkillData> _skillDatas = new Dictionary<string, SkillData>(); 
 
-
-        public SkillSystem(IProperty<Vector3> a_playerPosition, IProperty<Vector3> a_playerDirection, SkillChooseFrame a_skillChooseFrame)
+        public SkillSystem(IProperty<Vector3> a_playerPosition, IProperty<Vector3> a_playerDirection, SkillChooseFrame a_skillChooseFrame, SkillData[] a_skillDatas)
         {
+            foreach (SkillData skillData in a_skillDatas)
+            {
+                _skillDatas.Add(skillData.name, skillData);
+            }
             CreateFactories(a_playerPosition, a_playerDirection);
             _skillChooseFrame = a_skillChooseFrame;
             _skillChooseFrame.SkillChoosed += SkillChoose;
@@ -55,10 +58,12 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
             if (_skillControllerFactories.TryGetValue(a_id, out SkillControllerFactory factory))
             {
-                AddSkillController(a_id, factory.Create());
-                _skillLevels.Add(a_id, 1);
+                SkillData skilData = _skillDatas[a_id];
+                SkillLevel skillLevel = skilData.Levels[0];
+                Skill skill = new Skill(skillLevel.Cooldown, skillLevel.Duration ); 
+                AddSkillController(a_id, factory.Create(skill, skillLevel.GetHashCode()));
+                _skillLevels.Add(a_id, 1); 
             }
-
         }
 
 
@@ -66,7 +71,10 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
             if (_currentSkills.TryGetValue(a_id, out SkillController skillController))
             {
-                skillController.LevelUp();
+                SkillData skillData = _skillDatas[a_id];
+                SkillLevel skillLevel = skillData.Levels[_skillLevels[a_id]]; 
+                skillController.LevelUp(skillLevel.GetHashCode(),skillLevel.Cooldown,skillLevel.Duration);
+                _skillLevels[a_id] += 1;
             }
         }
 
@@ -101,15 +109,16 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         }
 
 
-        private void Damage(Type a_damageSource,int a_targetGameObject )
+        private void Damage(int a_damageSource, int a_targetGameObject)
         {
-            DamageRequest?.Invoke(a_damageSource,a_targetGameObject );
+            DamageRequest?.Invoke(a_damageSource, a_targetGameObject);
         }
+
 
         private void AddSkillController(string a_id, SkillController a_skillController)
         {
             _currentSkills.Add(a_id, a_skillController);
-            a_skillController.RunOnSkillImpact(Damage);
+            a_skillController.RunOnSkillImpact( Damage);
         }
 
 

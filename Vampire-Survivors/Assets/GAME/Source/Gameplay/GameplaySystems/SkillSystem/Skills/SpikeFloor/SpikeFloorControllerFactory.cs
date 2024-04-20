@@ -12,9 +12,9 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             _startPosition = a_startPosition;
         }
 
-        public override SkillController Create()
+        public override SkillController Create(Skill a_skill,int a_skillLevelHash)
         {
-            return new SpikeFloorController(_startPosition);
+            return new SpikeFloorController(a_skill, a_skillLevelHash, _startPosition);
         }
     }
 }

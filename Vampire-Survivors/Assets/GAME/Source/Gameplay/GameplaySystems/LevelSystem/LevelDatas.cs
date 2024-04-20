@@ -1,5 +1,6 @@
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.CraftingSys;
+using VampireSurvivors.Gameplay.Systems.SkillSys;
 
 namespace VampireSurvivors.Gameplay.Systems.LevelSys
 {
@@ -13,5 +14,8 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         public EnemyWaveDatas EnemyWaveDatas => _enemyWaveDatas;
         [SerializeField] private EnemyWaveDatas _enemyWaveDatas;
 
+
+        public SkillData[] SkillDatas => _skillDatas;
+        [SerializeField] private SkillData[] _skillDatas;
     }
 }

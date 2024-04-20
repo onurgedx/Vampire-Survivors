@@ -9,12 +9,14 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         public float TimeCounter = 0;
         public float Cooldown { get; set; }
+        public float Duration { get; set; }
          
 
 
-        public Skill(float a_cooldown, int a_damage)
+        public Skill(float a_cooldown, float a_duration )
         { 
             Cooldown = a_cooldown;
+            Duration = a_duration; 
         }
     }
 }

@@ -21,35 +21,9 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
 
         private Dictionary<int, IDamageable> _damageables = new Dictionary<int, IDamageable>();
 
-        private Dictionary<System.Type, int> _damageCatalouge = new Dictionary<System.Type, int>()
-        {
 
-            { typeof(SpikeFloorLevel1) , 100 },
-            { typeof(SpikeFloorLevel2) , 150},
-            { typeof(SpikeFloorLevel3) , 200 },
-            { typeof(SpikeFloorLevel4) , 250},
-            { typeof(SpikeFloorLevel5) , 300 },
-            { typeof(SpikeFloorLevel6) , 350},
-            { typeof(SpikeFloorLevel7) , 350 },
-            { typeof(KnifeLevel1) , 10 },
-            { typeof(KnifeLevel2) , 15},
-            { typeof(KnifeLevel3) , 20 },
-            { typeof(KnifeLevel4) , 25},
-            { typeof(KnifeLevel5) , 30 },
-            { typeof(KnifeLevel6) , 35 },
-            { typeof(KnifeLevel7) , 35 },
-            { typeof(MagicBoltLevel1) , 10 },
-            { typeof(MagicBoltLevel2) , 15},
-            { typeof(MagicBoltLevel3) , 20 },
-            { typeof(MagicBoltLevel4) , 25},
-            { typeof(MagicBoltLevel5) , 30 },
-            { typeof(MagicBoltLevel6) , 35 },
-            { typeof(MagicBoltLevel7) , 35 },
-            { typeof(EnemyUnit) , 10 }
-        };
-
-
-        private Dictionary<int, int> _enemyDamageCatalouge = new Dictionary<int, int>();
+         
+        private Dictionary<int, int> _damageCatalouge = new Dictionary<int, int>();
 
         private Dictionary<GameObject, int> _enemyDamageSources = new Dictionary<GameObject, int>();
 
@@ -57,7 +31,7 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
         private int _playerGameObjectHash;
         private VSTimerCounter _enemyCheckTimer = new VSTimerCounter(0.2f);
 
-        public BattleSystem(IProperty<Vector3> a_playerPosition,WaveData[] a_waveDatas)
+        public BattleSystem(IProperty<Vector3> a_playerPosition,IEnumerable<IAttackData> a_attackDatas)
         {
             _playerPosition = a_playerPosition;
             _damager = new Damager(_damageables);
@@ -65,20 +39,18 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
             DamageRecorder.DamageablePlayerRecoreded += (int a_go) => _playerGameObjectHash = a_go;
             GameObjectDamageSourceTypeRecorder = new DamageSourceTypeRecorder(_enemyDamageSources);
             _damager.PlayerDead += OnPlayerDead;
-            CatalougeEnemyDamages(a_waveDatas);
+
+            CatalougeEnemyDamages(a_attackDatas);
         }
         
           
-        private void CatalougeEnemyDamages(WaveData[] a_waveDatas)
+        private void CatalougeEnemyDamages(IEnumerable<IAttackData> a_attackDatas)
         {
-            foreach (WaveData waveData in a_waveDatas)
+            foreach (IAttackData attackData in a_attackDatas)
             {
-                foreach (EnemyData enemyData in waveData.EnemyDatas)
-                {
-                    _enemyDamageCatalouge.TryAdd(enemyData.Data.GetHashCode(), enemyData.Data.AttackPower);
-                }
-
+                _damageCatalouge.Add(attackData.GetHashCode(), attackData.AttackPower);
             }
+               
         }
 
         public override void Update()
@@ -91,11 +63,11 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
         } 
 
 
-        public void Damage(System.Type a_damageSource, int a_damageableObjectHash)
+        public void Damage(int a_damageSourceHash, int a_damageableObjectHash )
         {
-            if (_damageCatalouge.TryGetValue(a_damageSource, out int damage))
+            if (_damageCatalouge.TryGetValue(a_damageSourceHash, out int damages))
             {
-                _damager.Damage(a_damageableObjectHash, damage);
+                _damager.Damage(a_damageableObjectHash, damages );
             }
         }
 
@@ -105,13 +77,9 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
             Collider2D[] colliders = Physics2D.OverlapCircleAll(_playerPosition.Value, 0.5f, Layers.EnemyLayerMask);
             foreach (Collider2D collision in colliders)
             {
-                if (_enemyDamageSources.TryGetValue(collision.gameObject, out int damageType))
+                if (_enemyDamageSources.TryGetValue(collision.gameObject, out int damageHash))
                 {
-                    if(_enemyDamageCatalouge.TryGetValue(damageType,out int damage))
-                    {
-                        _damager.Damage(_playerGameObjectHash, damage);
-                    } 
-                    //Damage(damageType, _playerGameObject);
+                    Damage(damageHash, _playerGameObjectHash); 
                 }
             }
         }
