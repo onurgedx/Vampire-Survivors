@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.UI.SkillSystem;
 using VampireSurvivors.Lib.Basic.Extension.Array;
+using VampireSurvivors.Lib.Basic.Extension.Lists;
 using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
@@ -17,13 +18,17 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         private Dictionary<string, int> _skillLevels = new Dictionary<string, int>();
         private Dictionary<string, SkillController> _currentSkills = new Dictionary<string, SkillController>();
         private SkillChooseFrame _skillChooseFrame;
-        private Dictionary<string, SkillData> _skillDatas = new Dictionary<string, SkillData>(); 
+        private Dictionary<string, SkillData> _skillDatas = new Dictionary<string, SkillData>();
+
+        private List<string> _requestableSkills = new List<string>();
+
 
         public SkillSystem(IProperty<Vector3> a_playerPosition, IProperty<Vector3> a_playerDirection, SkillChooseFrame a_skillChooseFrame, SkillData[] a_skillDatas)
         {
             foreach (SkillData skillData in a_skillDatas)
             {
                 _skillDatas.Add(skillData.name, skillData);
+                _requestableSkills.Add(skillData.name);
             }
             CreateFactories(a_playerPosition, a_playerDirection);
             _skillChooseFrame = a_skillChooseFrame;
@@ -71,19 +76,25 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
             if (_currentSkills.TryGetValue(a_id, out SkillController skillController))
             {
+                int level = _skillLevels[a_id];
                 SkillData skillData = _skillDatas[a_id];
-                SkillLevel skillLevel = skillData.Levels[_skillLevels[a_id]]; 
+                SkillLevel skillLevel = skillData.Levels[level]; 
                 skillController.LevelUp(skillLevel.GetHashCode(),skillLevel.Cooldown,skillLevel.Duration);
-                _skillLevels[a_id] += 1;
+                level++;
+                _skillLevels[a_id] = level;
+                if (level >= skillData.Levels.Length)
+                {
+                    _requestableSkills.Remove(a_id);
+                }
             }
         }
-
+        
 
         public void RequestSkill()
         {
             SkillRequested?.Invoke();
             int requestedSkillCount = 2;
-            string[] skillIds = Keys.Skills.SkillArray.RandomInArray(requestedSkillCount);
+            List<string> skillIds = _requestableSkills.RandomInList(requestedSkillCount);
             int[] skillLevels = new int[requestedSkillCount];
             int indexCounter = 0;
             foreach (string skillId in skillIds)
@@ -95,7 +106,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
                 skillLevels[indexCounter] = skillLevel + 1;
                 indexCounter++;
             }
-            _skillChooseFrame.ActivateChooseSkill(skillIds, skillLevels);
+            _skillChooseFrame.ActivateChooseSkill(skillIds.ToArray(), skillLevels);
         }
 
 

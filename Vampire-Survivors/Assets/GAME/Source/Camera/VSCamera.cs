@@ -35,7 +35,7 @@ namespace VampireSurvivors.CameraSystems
 
         private void UpdateCameraPosition()
         {
-            Vector3 destionationPosition = Vector3.Lerp(_cameraPosition.Value, _followPosition.Value, Time.deltaTime * 5);
+            Vector3 destionationPosition = Vector3.Lerp(_cameraPosition.Value, _followPosition.Value, Time.deltaTime * 55);
             destionationPosition.z = -10;
             _cameraPosition.SetValue(destionationPosition);
         }
