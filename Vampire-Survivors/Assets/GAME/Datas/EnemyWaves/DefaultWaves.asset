@@ -30,3 +30,21 @@ MonoBehaviour:
       _count: 20
     - _unitData: {fileID: 11400000, guid: 53405a91a069c7742bf6288a07ae9cff, type: 2}
       _count: 20
+  - _enemyDatas:
+    - _unitData: {fileID: 11400000, guid: 265eb543f489c53448b5aa0b176953a8, type: 2}
+      _count: 20
+    - _unitData: {fileID: 11400000, guid: 53405a91a069c7742bf6288a07ae9cff, type: 2}
+      _count: 20
+    - _unitData: {fileID: 11400000, guid: d71ba0f166618b64682aedd95a0e8a9f, type: 2}
+      _count: 30
+    - _unitData: {fileID: 11400000, guid: d564f025b96e449408efbbdc2fc5ee9e, type: 2}
+      _count: 3
+  - _enemyDatas:
+    - _unitData: {fileID: 11400000, guid: 265eb543f489c53448b5aa0b176953a8, type: 2}
+      _count: 34
+    - _unitData: {fileID: 11400000, guid: 53405a91a069c7742bf6288a07ae9cff, type: 2}
+      _count: 20
+    - _unitData: {fileID: 11400000, guid: d71ba0f166618b64682aedd95a0e8a9f, type: 2}
+      _count: 20
+    - _unitData: {fileID: 11400000, guid: d564f025b96e449408efbbdc2fc5ee9e, type: 2}
+      _count: 30
