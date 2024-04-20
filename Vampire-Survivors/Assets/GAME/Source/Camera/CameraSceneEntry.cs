@@ -18,6 +18,10 @@ namespace VampireSurvivors.CameraSystems
             _vsCameraBehavior.Init(VSCamera);
         }
 
+        public override void Unload()
+        {
+            
+        }
 
         private void Update()
         {

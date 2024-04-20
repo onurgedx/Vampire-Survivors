@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.AIControl;
@@ -11,6 +12,7 @@ using VampireSurvivors.Gameplay.Systems.ManaSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.Systems.SkillSys;
 using VampireSurvivors.Gameplay.UI;
+using VampireSurvivors.Gameplay.UI.Finish;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
@@ -32,17 +34,20 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private bool _paused = false;
 
+        private GameplayUI _gameplayUI;
+
 
         public GameplaySystem(LevelDatas a_levelDatas, GameplayUI a_gameplayUI, Transform a_poolTransform)
         {
-            _levelData = a_levelDatas;
+            _gameplayUI = a_gameplayUI;
+              _levelData = a_levelDatas;
 
             PlayerControlSystem = new PlayerControlSystem();
 
             SetupBattleSystem();
 
             AIControlSystem = new AIControlSystem(PlayerControlSystem.Position);
-            SetupCraftingSystem(a_gameplayUI);
+            SetupCraftingSystem(a_gameplayUI, a_poolTransform);
             SetupSkillSystem(a_gameplayUI);
 
             LevelSystem = new LevelSystem(_levelData.RequiredExperiences, SkillSystem, a_gameplayUI.GameplayUILevel);
@@ -77,14 +82,14 @@ namespace VampireSurvivors.Gameplay.Systems
             {
                 foreach (EnemyData enemyData in waveData.EnemyDatas)
                 {
-                    if(!attackDatas.Contains(enemyData.Data))
+                    if (!attackDatas.Contains(enemyData.Data))
                     {
                         attackDatas.Add(enemyData.Data);
                     }
                 }
             }
 
-            BattleSystem = new BattleSystem(PlayerControlSystem.Position, attackDatas );
+            BattleSystem = new BattleSystem(PlayerControlSystem.Position, attackDatas);
             BattleSystem.PlayerDead += LoseGame;
 
         }
@@ -99,14 +104,17 @@ namespace VampireSurvivors.Gameplay.Systems
         }
 
 
-        private void SetupCraftingSystem(GameplayUI a_gameplayUI)
+        private void SetupCraftingSystem(GameplayUI a_gameplayUI, Transform a_poolTransform)
         {
             CraftingSystem = new CraftingSystem(PlayerControlSystem,
                                                 AIControlSystem.EnemyMovementControl,
                                                 BattleSystem.DamageRecorder,
                                                 a_gameplayUI.PlayerHPFrame,
                                                 BattleSystem.GameObjectDamageSourceTypeRecorder,
-                                                _levelData.EnemyWaveDatas);
+                                                _levelData.EnemyWaveDatas,
+                                                _levelData.WaveDuration,
+                                                a_poolTransform);
+            CraftingSystem.NoRemainsEnemyWave += WinGame;
         }
 
 
@@ -140,19 +148,18 @@ namespace VampireSurvivors.Gameplay.Systems
 
         public void WinGame()
         {
-
+            PauseGame();
+            _gameplayUI.GameplayFinishFrame.Win();
         }
 
 
         public void LoseGame()
         {
-            Debug.Log("PlayerDead");
-            _paused = true;
+            PauseGame();
+            _gameplayUI.GameplayFinishFrame.Lose();
         }
 
 
-        public void Unload()
-        {
-        }
+       
     }
 }

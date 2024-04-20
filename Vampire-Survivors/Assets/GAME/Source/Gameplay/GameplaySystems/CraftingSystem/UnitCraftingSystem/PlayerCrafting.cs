@@ -18,7 +18,11 @@ namespace VampireSurvivors.Gameplay.Systems
         }
 
 
-        public void CraftPlayer(PlayerControlSystem a_playerControlSystem, PlayerHPFrame a_playerHPFrame,IDamageablePlayerRecorder a_damageableRecorder, Property<IUnitHealth> a_unitHealth)
+        public void CraftPlayer(PlayerControlSystem a_playerControlSystem,
+                                PlayerHPFrame a_playerHPFrame,
+                                IDamageablePlayerRecorder a_damageableRecorder,
+                                Property<IUnitHealth> a_unitHealth,
+                                Transform a_poolTransform)
         {
             AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(  Keys.PlayerDefault );
             asyncOperationHandle.Completed += (asyncOperationHandle) =>
@@ -27,7 +31,8 @@ namespace VampireSurvivors.Gameplay.Systems
                                                                                       asyncOperationHandle.Result,
                                                                                       a_damageableRecorder,
                                                                                       a_playerHPFrame,
-                                                                                      a_unitHealth);                
+                                                                                      a_unitHealth,
+                                                                                      a_poolTransform);                
             };
         }
     }

@@ -5,10 +5,7 @@ namespace VampireSurvivors
     {
         public abstract void Load();
 
-        public virtual void Unload()
-        {
-
-        }
+        public abstract void Unload();
          
     }
 }

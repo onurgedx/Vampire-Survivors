@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.AIControl;
 using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Gameplay.Systems.CraftingSys;
@@ -16,12 +18,12 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private PlayerCrafting _playerCraftig = new PlayerCrafting();
 
-        private VSTimerCounter _enemyCreateTimer = new VSTimerCounter(30, 28);
-
+        private VSTimerCounter _enemyCreateTimer;
         public IProperty<IUnitHealth> PlayerUnitHealth => _playerUnitHealth;
         private Property<IUnitHealth> _playerUnitHealth;
         private List<WaveData> _enemyWaveDatas;
         private int _currentWave = 0;
+        public Action NoRemainsEnemyWave;
 
 
         public CraftingSystem(PlayerControlSystem a_playeControlSystem,
@@ -29,13 +31,16 @@ namespace VampireSurvivors.Gameplay.Systems
                               DamageableRecorder a_damageableRecorder,
                               PlayerHPFrame a_playerHPFrame,
                               DamageSourceTypeRecorder a_damageSourceTypeRecorder,
-                              EnemyWaveDatas a_enemyWaveData)
+                              EnemyWaveDatas a_enemyWaveData,
+                              float a_waveDuration,
+                              Transform a_poolTransform)
         {
-            _enemyWaveDatas = a_enemyWaveData.WaveDatas;
+            _enemyCreateTimer = new VSTimerCounter(a_waveDuration, a_waveDuration - 2);
+               _enemyWaveDatas = a_enemyWaveData.WaveDatas;
             _playerUnitHealth = new Property<IUnitHealth>(null);
-            _playerCraftig.CraftPlayer(a_playeControlSystem, a_playerHPFrame, a_damageableRecorder, _playerUnitHealth);
+            _playerCraftig.CraftPlayer(a_playeControlSystem, a_playerHPFrame, a_damageableRecorder, _playerUnitHealth, a_poolTransform);
 
-            EnemyUnitFactory enemyFactory = new EnemyUnitFactory(a_playeControlSystem.Position, a_enemyMovementControl, a_damageableRecorder, a_damageSourceTypeRecorder);
+            EnemyUnitFactory enemyFactory = new EnemyUnitFactory(a_playeControlSystem.Position, a_enemyMovementControl, a_damageableRecorder, a_damageSourceTypeRecorder, a_poolTransform);
             _enemyUnitCraftingSystem = new EnemyUnitCrafting(enemyFactory);
             _enemyUnitCraftingSystem.LoadEnemyUnitsPrefabs(a_enemyWaveData);
         }
@@ -47,6 +52,11 @@ namespace VampireSurvivors.Gameplay.Systems
             if (_enemyWaveDatas.Count > _currentWave)
             {
                 EnemyCreateProcess();
+            }
+            else
+            {
+                NoRemainsEnemyWave?.Invoke();
+
             }
         }
 

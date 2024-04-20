@@ -25,11 +25,14 @@ namespace VampireSurvivors.Gameplay.Units
         private Dictionary<string, GameObject> _enemyPrefabs = new Dictionary<string, GameObject>();
 
         private IProperty<Vector3> _playerPosition;
+        private Transform _poolTransform;
         public EnemyUnitFactory(IProperty<Vector3> a_craftOriginPosition,
                                 EnemyMovementControl a_enemyMovementControl,
                                 IDamagableRecorder a_damageableRecorder,
-                                DamageSourceTypeRecorder a_damageSourceTypeRecorder)
+                                DamageSourceTypeRecorder a_damageSourceTypeRecorder,
+                                Transform a_poolTransform)
         {
+            _poolTransform = a_poolTransform;
             _enemyMovementControl = a_enemyMovementControl;
             _damageableRecorder = a_damageableRecorder;
             _damageSourceTypeRecorder = a_damageSourceTypeRecorder;
@@ -80,7 +83,7 @@ namespace VampireSurvivors.Gameplay.Units
                     if (_enemyPrefabs.TryGetValue(a_unitName, out GameObject unitPrefab))
                     {
 
-                        GameObject gameobjectUnit = GameObject.Instantiate(unitPrefab, EnemySpawnPosition(), Quaternion.identity);
+                        GameObject gameobjectUnit = GameObject.Instantiate(unitPrefab, EnemySpawnPosition(), Quaternion.identity, _poolTransform);
                         behaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
                         gameobjectUnit.SetActive(true);
                         pool.Add(behaviour);
@@ -95,7 +98,7 @@ namespace VampireSurvivors.Gameplay.Units
 
                     VSObjectPool<UnitBehaviour> newPool = new VSObjectPool<UnitBehaviour>();
                     _enemyPools.Add(a_unitName, newPool);
-                    GameObject gameobjectUnit = GameObject.Instantiate(unitPrefab, EnemySpawnPosition(), Quaternion.identity);
+                    GameObject gameobjectUnit = GameObject.Instantiate(unitPrefab, EnemySpawnPosition(), Quaternion.identity, _poolTransform);
                     UnitBehaviour behavior = gameobjectUnit.GetComponent<UnitBehaviour>();
                     gameobjectUnit.SetActive(true);
                     newPool.Add(behavior);

@@ -7,6 +7,9 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
     [CreateAssetMenu(fileName = "Level", menuName = "Data/LevelData", order = 1)]
     public class LevelDatas : ScriptableObject
     {
+        public float WaveDuration => _waveDuration;
+        [SerializeField] private float _waveDuration=30;
+
         public int[] RequiredExperiences => _requiredExperienceForLevel;
         [SerializeField] private int[] _requiredExperienceForLevel;
 

@@ -13,7 +13,8 @@ public class PlayerUnitFactory
                                               GameObject a_unitPrefab,
                                               IDamageablePlayerRecorder a_damageableRecorder,
                                               PlayerHPFrame a_playerHPFrame,
-                                              Property<IUnitHealth> a_unitHealth)
+                                              Property<IUnitHealth> a_unitHealth,
+                                              Transform a_poolTransform)
     {
         Property<float> speed = new Property<float>(3);
         UnitHealth unitHealth = new UnitHealth(111);
@@ -39,7 +40,7 @@ public class PlayerUnitFactory
                                          attackPower);
 
 
-        GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab);
+        GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, a_poolTransform);
         UnitBehaviour unitBehaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
         unitBehaviour.Init(unit);
         a_playerControlSys.Init(gameobjectUnit.transform, speed); 
