@@ -10,6 +10,8 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         protected SkillBehaviorFactory _skillBehaviorFactory;
 
+        public ISkill Skill => _skill;
+        protected Skill _skill { get; set; }
         private Action<int, int> SkillImpact;
         protected int _skillHashCode;
 
@@ -46,7 +48,6 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
                     }
                     Play(skillBehavior);
                 }
-
                 _skill.TimeCounter = 0;
             }
         }

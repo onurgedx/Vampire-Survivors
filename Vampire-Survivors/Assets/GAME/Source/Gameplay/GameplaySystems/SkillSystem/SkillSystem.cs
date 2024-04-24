@@ -91,8 +91,8 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
                 SkillLevelImprovements skillLevel = skillData.Levels[level];
                 skillController.LevelUp(skillLevel.Improvements);
                 if (HasTypeOf<DamageIncreaseFeature, SkillImprovement>(skillLevel.Improvements))
-                {
-                    DamageUpdated?.Invoke(skillData.GetHashCode(), skillController.Skill.Damage);
+                {                    
+                    DamageUpdated?.Invoke(skillData.GetHashCode(), (skillController as ActiveSkillController).Skill.Damage);
                 }
                 level++;
                 _skillLevels[a_id] = level;
