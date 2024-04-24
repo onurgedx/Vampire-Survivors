@@ -89,8 +89,8 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
                 int level = _skillLevels[a_id];
                 SkillData skillData = _skillDatas[a_id];
                 SkillLevelImprovements skillLevel = skillData.Levels[level];
-                skillController.LevelUp(skillLevel.Improvements);
-                if (HasTypeOf<DamageIncreaseFeature, SkillImprovement>(skillLevel.Improvements))
+                skillController.LevelUp(skillLevel.Improvements); 
+                if (skillLevel.Improvements.HasTypeOf<SkillImprovement, DamageIncreaseFeature>())
                 {                    
                     DamageUpdated?.Invoke(skillData.GetHashCode(), (skillController as ActiveSkillController).Skill.Damage);
                 }
@@ -104,17 +104,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         }
 
 
-        private bool HasTypeOf<T, K>(K[] a_improvments)
-        {
-            foreach (K imporvment in a_improvments)
-            {
-                if (imporvment is T desiredImprovement)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+       
 
 
         public void RequestSkill()

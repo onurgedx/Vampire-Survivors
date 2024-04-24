@@ -27,5 +27,20 @@ namespace VampireSurvivors.Lib.Basic.Extension.Array
             return a_array;
         }
 
+
+
+        public static bool HasTypeOf<T,K> (this T[] a_array)
+        {
+            foreach (T member in a_array)
+            {
+                if (member is K )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+         
+
     }
 }
