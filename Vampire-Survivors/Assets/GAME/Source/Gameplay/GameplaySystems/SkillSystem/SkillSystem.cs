@@ -56,7 +56,6 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             if (_skillLevels.TryGetValue(a_id, out int level))
             {
                 LevelUpSkill(a_id);
-                _skillLevels[a_id] = level + 1;
             }
             else
             {
@@ -101,10 +100,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
                     _requestableSkills.Remove(a_id);
                 }
             }
-        }
-
-
-       
+        }      
 
 
         public void RequestSkill()

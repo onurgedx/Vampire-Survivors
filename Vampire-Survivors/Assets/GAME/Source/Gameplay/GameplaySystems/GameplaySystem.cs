@@ -36,11 +36,11 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private LevelDatas _levelData;
 
-        private bool _paused = false;
+        private bool _paused = true;
 
         private GameplayUI _gameplayUI;
 
-        private Transform _poolTransform;
+        private Transform _poolTransform; 
 
 
         public GameplaySystem(LevelDatas a_levelDatas, GameplayUI a_gameplayUI, Transform a_poolTransform)
@@ -67,6 +67,7 @@ namespace VampireSurvivors.Gameplay.Systems
             SetupLevelSystem();
             SetupCollectionSystems();
             SetupTimeSystem();
+            ContinueGame();
         }
 
         private void SetupPlayerControlSystem()
@@ -161,7 +162,7 @@ namespace VampireSurvivors.Gameplay.Systems
 
         public override void Update()
         {
-            if (_paused) { return; }
+            if (_paused  ) { return; }
             base.Update();
             PlayerControlSystem.Update();
             AIControlSystem.Update();
