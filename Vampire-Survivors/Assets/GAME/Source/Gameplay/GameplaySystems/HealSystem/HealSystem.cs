@@ -8,19 +8,23 @@ using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Gameplay.Units;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Lib.Record;
+using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems.HealSys
 {
+    /// <summary>
+    ///  Controls Spawning and Collecting Heals
+    /// </summary>
     public class HealSystem : AbstractCollectableSpawnSystem<Heal>
     {
-
         private  IUnitHealth  _unitHealth;
+        private float _createDelay = 35;
 
         private Dictionary<Type, int> _healAmounts = new Dictionary<Type, int>()
         {
             {typeof(Heal),100 }
-
         };
+
 
         public HealSystem(IRecorder<GameObject, Collectable> a_recorder,
                             ICollectorAdder a_collectorAdder,
@@ -29,11 +33,10 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
                             IUnitHealth a_unitHealth) : base(a_recorder, a_collectorAdder, a_originTransform, Layers.HealLayerMask, a_collectableParentTransform)
         {
             _unitHealth = a_unitHealth;
-            _collectRange.SetValue(1);
-            _collectableSpawnDelayDuration = 20;
+            _collectRange.SetValue(1); 
+            _vsTimeCounter = new VSTimerCounter(_createDelay, _createDelay - 5);
             _maxActiveCollectableCount = 3;
         }
-
 
 
         protected override void CreateSpawner()
@@ -57,7 +60,6 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
                 heal.Collect();
                 _activeCollectables.Remove(heal);
                 _activeCollectableCount--;
-
                 if (_healAmounts.TryGetValue(heal.GetType(), out int healAmount))
                 {
                     _unitHealth.UpdateCurrentHealth(healAmount);

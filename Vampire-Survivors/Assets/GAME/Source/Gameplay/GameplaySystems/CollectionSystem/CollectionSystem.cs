@@ -4,6 +4,9 @@ using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Systems.CollectionSys
 {
+    /// <summary>
+    /// Collects and Stores  Collectables
+    /// </summary>
     public class CollectionSystem : VSSystem
     {
         private Dictionary<GameObject, Collectable> _collectables = new Dictionary<GameObject, Collectable>();

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127a07a236f401540b80aa5c8ed9d318, type: 3}
   m_Name: Skill.PlayerSpeed.Beginning
   m_EditorClassIdentifier: 
-  _increaseRate: 20
+  _increaseAmount: 1

@@ -4,17 +4,22 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VampireSurvivors.Gameplay.Layer;
-using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Gameplay.Systems.LevelSys;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Lib.Record;
+using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems.ManaSys
 {
+    /// <summary>
+    ///  Controls Spawning and Collecting Manas
+    /// </summary>
     public class ManaSystem : AbstractCollectableSpawnSystem<Mana>
     {
         private IExperiencer _experiencer;
+
+        private float _createDelay = 2;
 
         private Dictionary<Type, Experience> _manaExperiences = new Dictionary<Type, Experience>()
         {
@@ -26,18 +31,18 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
 
 
         public ManaSystem(IRecorder<GameObject, Collectable> a_recorder,
-                            ICollectorAdder a_collectorAdder,
+                          ICollectorAdder a_collectorAdder,
                           IProperty<Vector3> a_originTransform,
                           Transform a_collectableParentTransform,
                           IExperiencer a_experiencer) : base(a_recorder, a_collectorAdder, a_originTransform, Layers.ManaLayerMask, a_collectableParentTransform)
         {
             _experiencer = a_experiencer;
             _collectRange.SetValue(1);
-            _collectableSpawnDelayDuration = 3;
-            _maxActiveCollectableCount = 40;
+            _vsTimeCounter = new VSTimerCounter(_createDelay, _createDelay - 5);
+            _maxActiveCollectableCount = 60;
         }
 
-         
+
 
         protected override void OnCollected(Collectable a_collectable)
         {

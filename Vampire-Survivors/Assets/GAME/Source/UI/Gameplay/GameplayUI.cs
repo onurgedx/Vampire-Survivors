@@ -7,8 +7,9 @@ using VampireSurvivors.Gameplay.UI.SkillSystem;
 
 namespace VampireSurvivors.Gameplay.UI
 {
-
-
+    /// <summary>
+    /// Contains Gameplay UIes
+    /// </summary>
     public class GameplayUI
     {
         public GameplayLevelFrame GameplayUILevel { get; private set; }

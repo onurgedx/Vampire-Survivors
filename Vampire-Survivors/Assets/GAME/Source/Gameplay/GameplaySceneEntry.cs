@@ -17,18 +17,20 @@ namespace VampireSurvivors.Gameplay
 
         private VSSceneManager _vsSceneManager;
 
+
         public override void Load()
         {
             _vsSceneManager = new VSSceneManager( );
             LoadGameplayUI();
         }
 
+
         private void LoadGameplayUI()
         {
             ICompletable<GameplayUISceneEntry> gameplayUICompletable = _vsSceneManager.LoadAdditive<GameplayUISceneEntry>(GameplayUISceneEntry.GameplayUIScene);
             gameplayUICompletable.RunOnCompleted(() => CreateGameplaySystem(gameplayUICompletable.Value.GameplayUI));
-
         }
+
 
         private void CreateGameplaySystem(GameplayUI a_gameplayUI)
         {
@@ -37,6 +39,7 @@ namespace VampireSurvivors.Gameplay
             a_gameplayUI.GameplayFinishFrame.GameplayUILoseFrame.BackToMenuButton += BackToMenu;
             a_gameplayUI.GameplayFinishFrame.GameplayUIWinFrame.BackToMenuButton += BackToMenu;
         }
+
 
         private void LoadCamera()
         {
@@ -47,10 +50,12 @@ namespace VampireSurvivors.Gameplay
             });
         }
 
+
         private void BackToMenu()
         {
             _vsSceneManager.LoadAdditive<UIMenuSceneEntry>(UIMenuSceneEntry.Scene_MenuUI).RunOnCompleted(UnloadRelatedScenes); 
         }
+
 
         private void UnloadRelatedScenes()
         {
@@ -69,7 +74,5 @@ namespace VampireSurvivors.Gameplay
         {
             GameplaySystem?.Update();
         }
-
-
     }
 }

@@ -7,23 +7,25 @@ using VampireSurvivors.Gameplay.Systems.CraftingSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.UI.PlayerHP;
 using VampireSurvivors.Gameplay.Units;
-using VampireSurvivors.Lib.Basic.Completables;
-using VampireSurvivors.Lib.Basic.Properties;
+using VampireSurvivors.Lib.Basic.Completables; 
 using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
+
+    /// <summary>
+    /// Controls Creating Process of Player and Enemies
+    /// </summary>
     public class CraftingSystem : VSSystem
     {
-        private EnemyUnitCrafting _enemyUnitCraftingSystem { get; set; }
-
-        private PlayerCrafting _playerCraftig = new PlayerCrafting();
-
-        private VSTimerCounter _enemyCreateTimer;
+        public Action NoRemainsEnemyWave;
         public PlayerUnit PlayerUnit { get; private set; }
+
+        private EnemyUnitCrafting _enemyUnitCraftingSystem { get; set; }
+        private PlayerCrafting _playerCraftig = new PlayerCrafting();
+        private VSTimerCounter _enemyCreateTimer;
         private List<WaveData> _enemyWaveDatas;
         private int _currentWave = 0;
-        public Action NoRemainsEnemyWave;
 
 
         public CraftingSystem(PlayerControlSystem a_playeControlSystem,
@@ -58,7 +60,6 @@ namespace VampireSurvivors.Gameplay.Systems
             else
             {
                 NoRemainsEnemyWave?.Invoke();
-
             }
         }
 

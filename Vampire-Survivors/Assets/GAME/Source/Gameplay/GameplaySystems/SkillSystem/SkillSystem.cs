@@ -5,11 +5,13 @@ using VampireSurvivors.Gameplay.UI.SkillSystem;
 using VampireSurvivors.Gameplay.Units;
 using VampireSurvivors.Lib.Basic.Extension.Array;
 using VampireSurvivors.Lib.Basic.Extension.Lists;
-using VampireSurvivors.Lib.Basic.Properties;
-using VampireSurvivors.Lib.Record;
+using VampireSurvivors.Lib.Basic.Properties; 
 
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
+    /// <summary>
+    /// Create and Controls Player Skills
+    /// </summary>
     public class SkillSystem : VSSystem, ISkillRequester
     {
         public Action<int, int> DamageUpdated;
@@ -22,7 +24,6 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         private SkillChooseFrame _skillChooseFrame;
         private Dictionary<string, SkillData> _skillDatas = new Dictionary<string, SkillData>();
-
         private List<string> _requestableSkills = new List<string>();
 
 
@@ -46,14 +47,14 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             _skillControllerFactories.Add(Keys.Skills.MagicBolt, new MagicBoltControllerFactory(_skillDatas[Keys.Skills.MagicBolt].GetHashCode(), _skillDatas[Keys.Skills.MagicBolt].SkillBeginningData, a_playerPosition));
             _skillControllerFactories.Add(Keys.Skills.SpikeFloor, new SpikeFloorControllerFactory(_skillDatas[Keys.Skills.SpikeFloor].GetHashCode(), _skillDatas[Keys.Skills.SpikeFloor].SkillBeginningData, a_playerPosition));
             _skillControllerFactories.Add(Keys.Skills.PlayerMaxHP, new PlayerMaxHPControllerFactory(a_playerUnit.Health, _skillDatas[Keys.Skills.PlayerMaxHP].SkillBeginningData));
-            _skillControllerFactories.Add(Keys.Skills.PlayerSpeed, new PlayerSpeedControllerFactory(a_playerUnit.MovementSpeed));
+            _skillControllerFactories.Add(Keys.Skills.PlayerSpeed, new PlayerSpeedControllerFactory(a_playerUnit.MovementSpeed, _skillDatas[Keys.Skills.PlayerSpeed].SkillBeginningData));
         }
 
 
         private void SkillChoose(string a_id)
         {
             SkillChoosed?.Invoke();
-            if (_skillLevels.TryGetValue(a_id, out int level))
+            if (_skillLevels.ContainsKey(a_id))
             {
                 LevelUpSkill(a_id);
             }

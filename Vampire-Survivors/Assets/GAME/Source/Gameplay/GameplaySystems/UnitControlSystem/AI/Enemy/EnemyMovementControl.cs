@@ -6,6 +6,9 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.AIControl
 {
+    /// <summary>
+    /// Responsible for Enemy Movement
+    /// </summary>
     public class EnemyMovementControl
     {
 

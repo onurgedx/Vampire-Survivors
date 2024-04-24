@@ -7,15 +7,19 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     public class PlayerSpeedControllerFactory : SkillControllerFactory
     {
         private Property<float> _movementSpeed;
-        public PlayerSpeedControllerFactory(Property<float> a_movementSpeed)
+        private SkillBeginingData _skillBeginingData;
+            
+        public PlayerSpeedControllerFactory(Property<float> a_movementSpeed, SkillBeginingData a_skillBeginningData)
         {
-            _movementSpeed = a_movementSpeed;
+            _skillBeginingData = a_skillBeginningData;
+               _movementSpeed = a_movementSpeed;
         }
 
         public override SkillController Create()
         {
-            return new PlayerSpeedController(_movementSpeed);
-
+            PlayerSpeedController skillController = new PlayerSpeedController(_movementSpeed);
+            skillController.Begin(_skillBeginingData as PassiveSkillBeginningData);
+            return skillController;
         }
     }
 }

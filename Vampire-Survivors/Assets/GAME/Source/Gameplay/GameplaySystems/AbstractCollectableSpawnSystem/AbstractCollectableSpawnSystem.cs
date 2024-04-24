@@ -4,6 +4,7 @@ using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Lib.Record;
+using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
@@ -18,10 +19,8 @@ namespace VampireSurvivors.Gameplay.Systems
         protected IProperty<Vector3> _originPosition;
         protected List<T> _activeCollectables = new List<T>();
         protected int _activeCollectableCount = 0;
-        protected int _maxActiveCollectableCount = 1;
-        protected float _spawnTimer = 0;
-        protected float _collectableSpawnDelayDuration = 100;
-
+        protected int _maxActiveCollectableCount = 1; 
+        protected VSTimerCounter _vsTimeCounter;
 
         protected AbstractCollectableSpawnSystem(IRecorder<GameObject, Collectable> a_recorder,ICollectorAdder a_collectorAdder, IProperty<Vector3> a_originTransform, LayerMask a_collectableLayer, Transform a_collectableParentTransform)
         {
@@ -48,14 +47,13 @@ namespace VampireSurvivors.Gameplay.Systems
             if (_activeCollectableCount >= _maxActiveCollectableCount)
             {
                 return;
-            }
-            _spawnTimer += Time.deltaTime;
-            if (_spawnTimer > _collectableSpawnDelayDuration)
-            {
-                _spawnTimer = 0;
+            } 
+            if (_vsTimeCounter.Process())
+            { 
                 Spawn();
             }
         }
+
 
         protected void Spawn(Type type = null)
         {
@@ -66,14 +64,13 @@ namespace VampireSurvivors.Gameplay.Systems
             }
         }
 
+
         protected abstract void OnCollected(Collectable a_collectable);
 
 
         protected abstract void OnCreated(T a_collectabe);
 
 
-        protected abstract void CreateSpawner();
-
-        
+        protected abstract void CreateSpawner();        
     }    
 }

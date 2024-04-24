@@ -3,6 +3,9 @@ using VampireSurvivors.Gameplay.UI.GameTime;
 
 namespace VampireSurvivors.Gameplay.Systems.TimeSys
 {
+    /// <summary>
+    /// Calculates time
+    /// </summary>
     public class TimeSystem : VSSystem
     {
         public float TimeCounter => _timeCounter;

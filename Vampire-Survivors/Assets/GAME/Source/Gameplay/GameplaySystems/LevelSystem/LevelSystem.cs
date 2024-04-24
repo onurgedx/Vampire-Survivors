@@ -4,6 +4,9 @@ using VampireSurvivors.Gameplay.UI.LevelSystem;
 
 namespace VampireSurvivors.Gameplay.Systems.LevelSys
 {
+    /// <summary>
+    /// Controls Player's Level 
+    /// </summary>
     public class LevelSystem : VSSystem, IExperiencer
     {
         public Action LevelUp;

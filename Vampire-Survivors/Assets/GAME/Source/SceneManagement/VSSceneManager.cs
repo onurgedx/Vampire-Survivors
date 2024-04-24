@@ -17,6 +17,12 @@ public class VSSceneManager
     }
 
 
+    /// <summary>
+    /// Load a scene according to given key and return a SceneEntry which desired scene has When scene loaded 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="a_key"></param>
+    /// <returns></returns>
     public Completable<T> LoadAdditive<T>(string a_key) where T : SceneEntry
     {
         if (_sceneEntries.ContainsKey(a_key))
@@ -40,6 +46,12 @@ public class VSSceneManager
     }
 
 
+    /// <summary>
+    /// Unload a scene according to given key and return a SceneEntry which desired scene has When scene unloaded 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="a_key"></param>
+    /// <returns></returns>
     public Completable<T> Unload<T>(string a_key) where T : SceneEntry
     {
         Completable<T> completable = new Completable<T>();
@@ -51,7 +63,6 @@ public class VSSceneManager
         scene.completed += (_) => { completable.Complete(); };
         return completable;
     }
-
 
 
     private bool TryGetSceneEntry<T>(string a_key, out T a_sceneEntry) where T : SceneEntry

@@ -3,6 +3,9 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
 {
+    /// <summary> 
+    /// Analyze the player inputs and controls the player movements
+    /// </summary>
     public class PlayerControlSystem : VSSystem
     {
         public IProperty<Vector3> Position => _playerPosition;

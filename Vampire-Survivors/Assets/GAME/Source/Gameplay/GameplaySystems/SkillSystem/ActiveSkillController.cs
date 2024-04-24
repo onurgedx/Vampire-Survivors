@@ -7,7 +7,6 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     public abstract class ActiveSkillController : SkillController
     {
         protected VSObjectPool<SkillBehaviour> _behaviorPool = new VSObjectPool<SkillBehaviour>();
-
         protected SkillBehaviorFactory _skillBehaviorFactory;
 
         public ISkill Skill => _skill;
@@ -17,12 +16,10 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         protected Dictionary<Type, SkillImproveHelper> _skillImprovers = new Dictionary<Type, SkillImproveHelper>()
         {
-            { typeof(CooldownDecreaseFeature)  ,   new CooldownDecreaser() },
+            {typeof(CooldownDecreaseFeature),new CooldownDecreaser() },
             {typeof(SizeIncreaseFeature),new SizeIncreaser() },
             {typeof(DamageIncreaseFeature),new DamageIncreaser() },
             {typeof(CountIncreaseFeature),new CountIncreaser() },
-
-
         };
 
         public ActiveSkillController(Skill a_skill, int a_skillHashCode)
@@ -78,8 +75,5 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
             SkillImpact += a_skillImpactAction;
         }
-
-
-
     }
 }

@@ -12,6 +12,12 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             _movementSpeed = a_movementSpeed;
         }
 
+        public void Begin(PassiveSkillBeginningData a_speedIncrease)
+        {
+            _movementSpeed.SetValue(_movementSpeed.Value + a_speedIncrease.IncreaseAmount);
+        }
+
+
         public override void LevelUp(SkillImprovement[] a_skillImprovments)
         {
             foreach (SkillImprovement skillImprovment in a_skillImprovments)

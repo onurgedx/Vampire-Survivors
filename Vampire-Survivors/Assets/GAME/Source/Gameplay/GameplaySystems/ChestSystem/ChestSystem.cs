@@ -8,21 +8,28 @@ using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Gameplay.Systems.SkillSys;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Lib.Record;
+using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems.ChestSys
 {
+    /// <summary>
+    ///  Controls Spawning and Collecting Chests
+    /// </summary>
     public class ChestSystem : AbstractCollectableSpawnSystem<Chest>
     {
 
         private ISkillRequester _skillRequester;
+        private float _createDelay = 30;
+
+
         public ChestSystem(IRecorder<GameObject, Collectable> a_recorder,
                             ICollectorAdder a_collectorAdder,
                            IProperty<Vector3> a_originTransform,
                            Transform a_collectableParentTransform,
                            ISkillRequester a_skillRequester) : base(a_recorder, a_collectorAdder, a_originTransform, Layers.ChestLayerMask, a_collectableParentTransform)
         {
-            _collectRange.SetValue(1);
-            _collectableSpawnDelayDuration = 10;
+            _vsTimeCounter = new  VSTimerCounter(_createDelay, _createDelay-5);
+            _collectRange.SetValue(1); 
             _maxActiveCollectableCount = 3;
             _skillRequester = a_skillRequester;
         }

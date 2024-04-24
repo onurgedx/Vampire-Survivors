@@ -7,6 +7,7 @@ namespace VampireSurvivors.CameraSystems
     public class VSCamera : ICamera
     {
         private Camera _camera;
+        private float _speed = 65;
         public IProperty<Vector3> CameraPosition => _cameraPosition;
         private Property<Vector3> _cameraPosition { get; set; }
         private IProperty<Vector3> _followPosition { get; set; }
@@ -35,7 +36,7 @@ namespace VampireSurvivors.CameraSystems
 
         private void UpdateCameraPosition()
         {
-            Vector3 destionationPosition = Vector3.Lerp(_cameraPosition.Value, _followPosition.Value, Time.deltaTime * 55);
+            Vector3 destionationPosition = Vector3.Lerp(_cameraPosition.Value, _followPosition.Value, Time.deltaTime * _speed);
             destionationPosition.z = -10;
             _cameraPosition.SetValue(destionationPosition);
         }

@@ -140,7 +140,6 @@ namespace VampireSurvivors.Gameplay.Systems
             }
             BattleSystem = new BattleSystem(PlayerControlSystem.Position, attackDatas);
             BattleSystem.PlayerDead += LoseGame;
-
         }
 
 

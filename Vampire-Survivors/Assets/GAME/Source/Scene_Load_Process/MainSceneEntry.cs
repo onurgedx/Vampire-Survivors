@@ -28,18 +28,17 @@ namespace VampireSurvivors.SceneProcess
         { 
         }
 
+        
         private void LoadMenuUI()
         {
             Completable<UIMenuSceneEntry> uiMenuCompletable = _vsSceneManager.LoadAdditive<UIMenuSceneEntry>(UIMenuSceneEntry.Scene_MenuUI);
             uiMenuCompletable.RunOnCompleted(UnloadScene);
         }
 
+
         private void UnloadScene()
         {
-            _vsSceneManager.Unload<MainSceneEntry>(MainSceneEntry.SceneName);
-        }
-
-
-         
+            _vsSceneManager.Unload<MainSceneEntry>(SceneName);
+        }     
     }
 }

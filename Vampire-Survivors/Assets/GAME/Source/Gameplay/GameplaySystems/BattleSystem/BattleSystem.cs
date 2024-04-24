@@ -8,6 +8,9 @@ using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems.BattleSys
 {
+    /// <summary>
+    /// Controls Damageables Damage Process
+    /// </summary>
     public class BattleSystem : VSSystem
     {
         public Action PlayerDead;
