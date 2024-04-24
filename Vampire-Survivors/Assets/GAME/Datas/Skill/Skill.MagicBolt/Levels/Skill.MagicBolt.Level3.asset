@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ce8cba8f32d5ee459510b28573995cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 21d694894451f8c4992d3f2c4a0e419e, type: 3}
   m_Name: Skill.MagicBolt.Level3
   m_EditorClassIdentifier: 
-  _cooldown: 0.8
-  _duration: 0
-  _attackPower: 30
+  LevelImprovments:
+  - {fileID: 11400000, guid: e4aac5ea995bc8142b2cad518fac2cc0, type: 2}

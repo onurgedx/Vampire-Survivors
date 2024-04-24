@@ -19,3 +19,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd63b126dc720c141877712f1b2eb6b1, type: 2}
   - {fileID: 11400000, guid: be5dcad136c089140bd76050132f45fc, type: 2}
   - {fileID: 11400000, guid: 7874560f898342a4283137052550e518, type: 2}
+  _skillBeginningData: {fileID: 11400000, guid: 1bb31613f6159c749b5ff8a5829ff88a, type: 2}

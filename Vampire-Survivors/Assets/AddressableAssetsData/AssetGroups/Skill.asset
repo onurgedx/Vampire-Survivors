@@ -55,6 +55,16 @@ MonoBehaviour:
     m_SerializedLabels:
     - Skill
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee1724ab630d24cebb282289abcf17e1
+    m_Address: Skill.PlayerMaxHP.Icon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f968827812fe04383ae1f660560652d0
+    m_Address: Skill.PlayerSpeed.Icon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7cd60bb34076bc84b9785833014a0986, type: 2}
   m_SchemaSet:

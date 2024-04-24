@@ -14,7 +14,7 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
     public class HealSystem : AbstractCollectableSpawnSystem<Heal>
     {
 
-        private IProperty<IUnitHealth> _unitHealth;
+        private  IUnitHealth  _unitHealth;
 
         private Dictionary<Type, int> _healAmounts = new Dictionary<Type, int>()
         {
@@ -26,7 +26,7 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
                             ICollectorAdder a_collectorAdder,
                           IProperty<Vector3> a_originTransform, 
                           Transform a_collectableParentTransform,
-                          IProperty< IUnitHealth> a_unitHealth) : base(a_recorder, a_collectorAdder, a_originTransform, Layers.HealLayerMask, a_collectableParentTransform)
+                            IUnitHealth a_unitHealth) : base(a_recorder, a_collectorAdder, a_originTransform, Layers.HealLayerMask, a_collectableParentTransform)
         {
             _unitHealth = a_unitHealth;
             _collectRange.SetValue(1);
@@ -60,7 +60,7 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
 
                 if (_healAmounts.TryGetValue(heal.GetType(), out int healAmount))
                 {
-                    _unitHealth.Value.UpdateCurrentHealth(healAmount);
+                    _unitHealth.UpdateCurrentHealth(healAmount);
                 }
             }
         }

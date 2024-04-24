@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VampireSurvivors.Gameplay.Layer;
+using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Gameplay.Systems.LevelSys;
 using VampireSurvivors.Lib.Basic.Properties;
@@ -23,6 +24,7 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
 
         };
 
+
         public ManaSystem(IRecorder<GameObject, Collectable> a_recorder,
                             ICollectorAdder a_collectorAdder,
                           IProperty<Vector3> a_originTransform,
@@ -35,8 +37,7 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
             _maxActiveCollectableCount = 40;
         }
 
-
-
+         
 
         protected override void OnCollected(Collectable a_collectable)
         {
@@ -48,7 +49,6 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
                 {
                     _experiencer.ExperienceGained(exp);
                 }
-
             }
         }
 
@@ -63,17 +63,26 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
         protected override void CreateSpawner()
         {
             AsyncOperationHandle<GameObject> manaBig = Addressables.LoadAssetAsync<GameObject>(Keys.SmallMana);
-            AsyncOperationHandle<GameObject> manaMedium = Addressables.LoadAssetAsync<GameObject>(Keys.MediumMana);
-            AsyncOperationHandle<GameObject> manaSmall = Addressables.LoadAssetAsync<GameObject>(Keys.SmallMana);
-            manaMedium.Completed += (_) =>
+            manaBig.Completed += (_) =>
             {
-                Dictionary<Type, CollectableFactory> factories = new Dictionary<Type, CollectableFactory>()
+
+                AsyncOperationHandle<GameObject> manaMedium = Addressables.LoadAssetAsync<GameObject>(Keys.MediumMana);
+                manaMedium.Completed += (_) =>
                 {
-                    {typeof(SmallMana) , new SmallManaFactory(manaSmall.Result, _parentTransform) },
-                    {typeof(MediumMana) , new MediumManaFactory(manaMedium.Result, _parentTransform) },
-                    {typeof(BigMana) , new BigManaFactory(manaBig.Result, _parentTransform) },
+
+                    AsyncOperationHandle<GameObject> manaSmall = Addressables.LoadAssetAsync<GameObject>(Keys.SmallMana);
+                    manaSmall.Completed += (_) =>
+                    {
+                        Dictionary<Type, CollectableFactory> factories = new Dictionary<Type, CollectableFactory>()
+                        {
+                         {typeof(SmallMana) , new SmallManaFactory(manaSmall.Result, _parentTransform) },
+                         {typeof(MediumMana) , new MediumManaFactory(manaMedium.Result, _parentTransform) },
+                         {typeof(BigMana) , new BigManaFactory(manaBig.Result, _parentTransform) },
+                             };
+                        _spawner = new ManaSpawner(_collectableRecorder, factories, _originPosition);
+                    };
+
                 };
-                _spawner = new ManaSpawner(_collectableRecorder, factories, _originPosition);
             };
         }
     }

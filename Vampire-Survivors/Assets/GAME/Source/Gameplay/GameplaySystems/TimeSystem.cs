@@ -8,7 +8,7 @@ namespace VampireSurvivors.Gameplay.Systems.TimeSys
         public float TimeCounter => _timeCounter;
         private float _timeCounter = 0;
         private TimeFrame _timeFrame;
-        private int _timeAsInt = 0;
+        
 
         public TimeSystem(TimeFrame a_timeFrame)
         {

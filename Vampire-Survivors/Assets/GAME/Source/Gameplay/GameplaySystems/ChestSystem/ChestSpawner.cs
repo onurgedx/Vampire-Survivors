@@ -27,6 +27,7 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
 
         protected override Vector3 SpawnPosition()
         {
+            //_originTransform.Value.RandomPosition(_minSpawnDistance, _maxSpawnDistance);
             return VSVectors.RandomPosition(_originTransform.Value, _minSpawnDistance, _maxSpawnDistance);
         }
 

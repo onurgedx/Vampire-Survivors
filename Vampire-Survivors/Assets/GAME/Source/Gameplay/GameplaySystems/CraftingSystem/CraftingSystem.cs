@@ -7,6 +7,7 @@ using VampireSurvivors.Gameplay.Systems.CraftingSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.UI.PlayerHP;
 using VampireSurvivors.Gameplay.Units;
+using VampireSurvivors.Lib.Basic.Completables;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Update;
 
@@ -19,8 +20,7 @@ namespace VampireSurvivors.Gameplay.Systems
         private PlayerCrafting _playerCraftig = new PlayerCrafting();
 
         private VSTimerCounter _enemyCreateTimer;
-        public IProperty<IUnitHealth> PlayerUnitHealth => _playerUnitHealth;
-        private Property<IUnitHealth> _playerUnitHealth;
+        public PlayerUnit PlayerUnit { get; private set; }
         private List<WaveData> _enemyWaveDatas;
         private int _currentWave = 0;
         public Action NoRemainsEnemyWave;
@@ -33,12 +33,14 @@ namespace VampireSurvivors.Gameplay.Systems
                               DamageSourceTypeRecorder a_damageSourceTypeRecorder,
                               EnemyWaveDatas a_enemyWaveData,
                               float a_waveDuration,
-                              Transform a_poolTransform)
+                              Transform a_poolTransform,
+                              Completable<PlayerUnit> a_completablePlayerUnit)
         {
             _enemyCreateTimer = new VSTimerCounter(a_waveDuration, a_waveDuration - 2);
-               _enemyWaveDatas = a_enemyWaveData.WaveDatas;
-            _playerUnitHealth = new Property<IUnitHealth>(null);
-            _playerCraftig.CraftPlayer(a_playeControlSystem, a_playerHPFrame, a_damageableRecorder, _playerUnitHealth, a_poolTransform);
+            _enemyWaveDatas = a_enemyWaveData.WaveDatas;
+
+            _playerCraftig.CraftPlayer(a_playeControlSystem, a_playerHPFrame, a_damageableRecorder, a_poolTransform, a_completablePlayerUnit);
+            a_completablePlayerUnit.RunOnCompleted(() => PlayerUnit = a_completablePlayerUnit.Value);
 
             EnemyUnitFactory enemyFactory = new EnemyUnitFactory(a_playeControlSystem.Position, a_enemyMovementControl, a_damageableRecorder, a_damageSourceTypeRecorder, a_poolTransform);
             _enemyUnitCraftingSystem = new EnemyUnitCrafting(enemyFactory);

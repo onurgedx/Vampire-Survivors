@@ -8,7 +8,7 @@ namespace VampireSurvivors.Lib.Basic.Extension.Vectors
     {
 
         ///This is not Extension . Folder it properly
-        public static Vector3 RandomPosition(Vector3 a_originPosition,float a_minimumDistance, float a_maximumDistance)
+        public static Vector3 RandomPosition(this Vector3 a_originPosition,float a_minimumDistance, float a_maximumDistance)
         {
             float distanceX = UnityEngine.Random.Range(a_minimumDistance, a_maximumDistance);
             float distanceY = UnityEngine.Random.Range(a_minimumDistance, a_maximumDistance);

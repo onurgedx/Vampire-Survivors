@@ -4,7 +4,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using VampireSurvivors.Lib.Basic.Properties;
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
-    public class SpikeFloorController : SkillController
+    public class SpikeFloorController : ActiveSkillController
     {
         private IProperty<Vector3> _startPosition;
         public SpikeFloorController(Skill a_skill,int a_skillLevelHash, IProperty<Vector3> a_startPosition):base(a_skill, a_skillLevelHash)
@@ -14,8 +14,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             asset.Completed += Init;
         }
          
-
-        public override void Play(SkillBehaviour a_skillBehavior)
+        protected override void Play(SkillBehaviour a_skillBehavior)
         {
             SpikeFloorBehavior behavior = a_skillBehavior as SpikeFloorBehavior;
             behavior.Settings(_startPosition.Value);

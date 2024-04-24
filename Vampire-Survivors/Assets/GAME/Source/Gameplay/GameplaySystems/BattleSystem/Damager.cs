@@ -7,7 +7,7 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
 {
     public class Damager 
     {
-        public Action PlayerDead;
+        public Action<IDamageable> DamagableDead; 
         private Dictionary<int, IDamageable> _damageables ;
 
 
@@ -24,10 +24,7 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
                 damageable.Damage(a_damage);
                 if (!damageable.IsAlive)
                 {
-                    if(damageable is PlayerUnit)
-                    {
-                        PlayerDead?.Invoke();
-                    }
+                    DamagableDead?.Invoke(damageable); 
                     _damageables.Remove(a_damageableGameObject);
                 }
             }

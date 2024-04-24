@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
@@ -52,14 +53,18 @@ namespace VampireSurvivors.Gameplay.Systems
             if (_spawnTimer > _collectableSpawnDelayDuration)
             {
                 _spawnTimer = 0;
-                T collectable = _spawner.Spawn() as T;
-                if (collectable != null)
-                {
-                    OnCreated(collectable);
-                }
+                Spawn();
             }
         }
 
+        protected void Spawn(Type type = null)
+        {
+            T collectable = _spawner.Spawn(type) as T;
+            if (collectable != null)
+            {
+                OnCreated(collectable);
+            }
+        }
 
         protected abstract void OnCollected(Collectable a_collectable);
 

@@ -5,7 +5,7 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
-    public class MagicBoltController : SkillController 
+    public class MagicBoltController : ActiveSkillController 
     {
         private IProperty<Vector3> _startPosition;
 
@@ -14,8 +14,10 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             _startPosition = a_startPosition;
            AsyncOperationHandle<GameObject> asset = Addressables.LoadAssetAsync<GameObject>(Keys.Skills.MagicBolt + AddressableSources.Keys.AddressableKeys.Suffix.Prefab);
            asset.Completed += Init;
-        } 
-        public override void Play(SkillBehaviour a_skillBehavior)
+        }
+         
+
+        protected override void Play(SkillBehaviour a_skillBehavior)
         {
             MagicBoltBehavior behavior = a_skillBehavior as MagicBoltBehavior;
             Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);    

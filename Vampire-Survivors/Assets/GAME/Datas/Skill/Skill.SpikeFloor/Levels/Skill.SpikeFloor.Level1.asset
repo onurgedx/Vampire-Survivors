@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ce8cba8f32d5ee459510b28573995cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 21d694894451f8c4992d3f2c4a0e419e, type: 3}
   m_Name: Skill.SpikeFloor.Level1
   m_EditorClassIdentifier: 
-  _cooldown: 2
-  _duration: 0
-  _attackPower: 10
+  LevelImprovments:
+  - {fileID: 11400000, guid: 13aba1062d0e21643a8011fa8b119b19, type: 2}
+  - {fileID: 11400000, guid: c04571b5b20615d4986091781fea0ec0, type: 2}

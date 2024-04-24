@@ -15,7 +15,7 @@ namespace VampireSurvivors.Gameplay.UI.GameTime
         }
 
         public void UpdateTime(int a_minute, int a_second)
-        { 
+        {             
             _time.SetValue(a_minute.ToString() + ":" + a_second.ToString());
         }
     }

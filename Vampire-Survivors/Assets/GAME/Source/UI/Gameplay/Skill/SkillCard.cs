@@ -25,7 +25,7 @@ namespace VampireSurvivors.Gameplay.UI
         private Property<string> _level;
 
         public IProperty<string> Description => _description;
-        private Property<string> _description;         
+        private Property<string> _description;
 
         public IActionProperty<bool> Activated => _activated;
         private ActionProperty<bool> _activated { get; set; }
@@ -48,7 +48,15 @@ namespace VampireSurvivors.Gameplay.UI
                 _iconSprite.SetValue(icon.Result);
                 _name.SetValue(LanguageTranslator.Translate(a_skillId));
                 _description.SetValue(LanguageTranslator.Translate(a_skillId + "." + a_level.ToString()));
-                _level.SetValue("Level " + a_level.ToString());
+
+                if (a_level != 0)
+                {
+                    _level.SetValue("Level " + a_level.ToString());
+                }
+                else
+                {
+                    _level.SetValue("NEW");
+                }
                 Updated?.Invoke();
             };
         }

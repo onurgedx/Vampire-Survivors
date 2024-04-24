@@ -9,11 +9,13 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     public class SkillData: ScriptableObject
     {
         public string Name => this.name;
-        public SkillLevel[]  Levels => _skillLevels;
+        public SkillLevelImprovements[]  Levels => _skillLevels;
 
-        [SerializeField] private SkillLevel[] _skillLevels;
-        
-         
+        [SerializeField] private SkillLevelImprovements[] _skillLevels;
+
+
+        public SkillBeginingData  SkillBeginningData => _skillBeginningData ;
+        [SerializeField] private SkillBeginingData  _skillBeginningData ;
 
     }
 }
