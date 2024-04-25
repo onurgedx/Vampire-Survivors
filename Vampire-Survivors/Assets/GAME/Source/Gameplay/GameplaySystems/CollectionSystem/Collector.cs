@@ -3,6 +3,9 @@ using UnityEngine;
 using VampireSurvivors.Lib.Basic.Properties;
 namespace VampireSurvivors.Gameplay.Systems.CollectionSys
 {
+    /// <summary>
+    /// Collects collectables
+    /// </summary>
     public class Collector:ICollector
     {
         public Action<Collectable> OnCollect;

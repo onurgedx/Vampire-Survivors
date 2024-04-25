@@ -7,6 +7,4 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
         public readonly static string ChestMedium = "Collectable.Chest.Medium";
         public readonly static string ChestBig = "Collectable.Chest.Big";
     }
-
-
 }

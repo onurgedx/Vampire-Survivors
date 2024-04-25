@@ -8,7 +8,7 @@ using VampireSurvivors.Gameplay.UI.SkillSystem;
 namespace VampireSurvivors.Gameplay.UI
 {
     /// <summary>
-    /// Contains Gameplay UIes
+    /// Contains and Manage Gameplay UI Features
     /// </summary>
     public class GameplayUI
     {

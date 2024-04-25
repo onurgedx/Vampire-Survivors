@@ -2,10 +2,11 @@
 
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
+    /// <summary>
+    /// Ensures SkillImprovments correctly complete
+    /// </summary>
     public abstract class SkillImproveHelper
     {
-
-
         public abstract void Improve(SkillImprovement a_skillImprovement, Skill a_skill);
 
     }

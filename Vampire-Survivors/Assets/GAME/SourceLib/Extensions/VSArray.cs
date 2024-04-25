@@ -3,12 +3,24 @@ namespace VampireSurvivors.Lib.Basic.Extension.Array
 {
     public static class VSArray
     {
+        /// <summary>
+        /// Returns a random member in array
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="a_array"></param>
+        /// <returns></returns>
         public static T Random<T>(this T[] a_array)
         {
             return a_array[UnityEngine.Random.Range(0, a_array.Length)];
         }
 
-
+        /// <summary>
+        /// Returns a random array from given array
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="a_array"></param>
+        /// <param name="a_count"></param>
+        /// <returns></returns>
         public static T[] RandomInArray<T>(this T[] a_array, int a_count)
         {
             List<T> randomList = new List<T>();
@@ -29,6 +41,13 @@ namespace VampireSurvivors.Lib.Basic.Extension.Array
 
 
 
+        /// <summary>
+        /// Returns Whether given array has <typeparamref name="K"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="K"></typeparam>
+        /// <param name="a_array"></param>
+        /// <returns></returns>
         public static bool HasTypeOf<T,K> (this T[] a_array)
         {
             foreach (T member in a_array)

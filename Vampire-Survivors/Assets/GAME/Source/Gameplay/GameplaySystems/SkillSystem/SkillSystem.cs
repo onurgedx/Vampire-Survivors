@@ -123,7 +123,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
             SkillRequested?.Invoke();
             int requestedSkillCount = 2;
-            List<string> skillIds = _requestableSkills.RandomInList(requestedSkillCount);
+            List<string> skillIds = _requestableSkills.RandomListInList(requestedSkillCount);
             int[] skillLevels = new int[requestedSkillCount];
             int indexCounter = 0;
             foreach (string skillId in skillIds)

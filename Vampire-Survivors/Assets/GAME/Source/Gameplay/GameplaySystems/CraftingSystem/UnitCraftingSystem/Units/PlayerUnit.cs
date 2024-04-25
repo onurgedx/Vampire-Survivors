@@ -2,6 +2,9 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Units
 {
+    /// <summary>
+    /// Unit for Player
+    /// </summary>
     public class PlayerUnit : Unit
     {
         public Property<float> CriticalStrikeRate { get; private set; } // %3

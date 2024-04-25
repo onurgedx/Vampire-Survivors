@@ -1,6 +1,9 @@
 using VampireSurvivors.Lib.Basic.Properties;
 namespace VampireSurvivors.Gameplay.UI.LevelSystem
 { 
+    /// <summary>
+    /// View of Player Level Information
+    /// </summary>
     public class GameplayLevelFrame : IGameplayUILevel
     {
         public IActionProperty<int> Level => _level;

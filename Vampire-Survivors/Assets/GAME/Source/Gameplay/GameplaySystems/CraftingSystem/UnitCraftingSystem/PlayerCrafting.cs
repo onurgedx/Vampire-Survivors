@@ -5,11 +5,13 @@ using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.UI.PlayerHP;
 using VampireSurvivors.Gameplay.Units;
-using VampireSurvivors.Lib.Basic.Completables;
-using VampireSurvivors.Lib.Basic.Properties;
+using VampireSurvivors.Lib.Basic.Completables; 
 
 namespace VampireSurvivors.Gameplay.Systems
 {
+    /// <summary>
+    /// Crafts Player
+    /// </summary>
     public class PlayerCrafting
     {
 

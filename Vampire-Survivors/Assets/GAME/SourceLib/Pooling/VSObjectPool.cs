@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace VampireSurvivors.Lib.Pooling
 {
+    /// <summary>
+    /// Generic Pool for Components
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class VSObjectPool<T> where T : Component
     {
         private List<T> _objectList = new List<T>() { };

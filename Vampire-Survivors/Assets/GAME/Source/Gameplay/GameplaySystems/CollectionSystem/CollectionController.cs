@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace VampireSurvivors.Gameplay.Systems.CollectionSys
 {
+    /// <summary>
+    /// Controls Collectors and Manages Collection Progress
+    /// </summary>
     public class CollectionController: ICollectorAdder
     {
 

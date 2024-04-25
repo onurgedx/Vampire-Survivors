@@ -2,6 +2,9 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.UI.PlayerHP
 {
+    /// <summary>
+    /// Displays Player HP Processes 
+    /// </summary>
     public class PlayerHPFrame: IPlayerHPFrame
     {
         public IActionProperty<int> CurrentHP=> _currentHP;

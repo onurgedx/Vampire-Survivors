@@ -4,6 +4,9 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Units
 {
+    /// <summary>
+    /// Unit and Its Features
+    /// </summary>
     public abstract class Unit : IDamageable
     {
         public int Id { get; private set; }
@@ -31,6 +34,10 @@ namespace VampireSurvivors.Gameplay.Units
         }
 
 
+        /// <summary>
+        /// Unit Health decrease
+        /// </summary>
+        /// <param name="a_rawDamage"></param>
         public void Damage(int a_rawDamage)
         {
             int conculusionDamage = ConculusionDamage((Math.Abs(a_rawDamage) * -1));
@@ -44,6 +51,7 @@ namespace VampireSurvivors.Gameplay.Units
             conculusionDamage = (int)( a_rawDamage + a_rawDamage * DamageTaken.Value);
             return conculusionDamage;
         }
+
 
         private void Dead()
         {

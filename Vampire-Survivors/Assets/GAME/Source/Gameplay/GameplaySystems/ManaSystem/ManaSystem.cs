@@ -43,7 +43,10 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
         }
 
 
-
+        /// <summary>
+        /// Player gains experience
+        /// </summary>
+        /// <param name="a_collectable"></param>
         protected override void OnCollected(Collectable a_collectable)
         {
             if (a_collectable is Mana mana)

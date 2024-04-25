@@ -11,14 +11,16 @@ namespace VampireSurvivors.Gameplay.UI
     {
         public static readonly string GameplayUIScene = "UI.Gameplay";
 
-        [SerializeField] private GameObject[] _hideOnUnloadGameobjects = new GameObject[] { };
         public GameplayUI GameplayUI { get; private set; }
-        [SerializeField] private SkillChooseFrameBehavior _skillChooseFrameBehavior;
 
+        [SerializeField] private GameObject[] _hideOnUnloadGameobjects = new GameObject[] { };
+        [SerializeField] private SkillChooseFrameBehavior _skillChooseFrameBehavior;
         [SerializeField] private GameplayUILevelBehavior _gameplayUILevelBehavior;
         [SerializeField] private PlayerHPFrameBehavior _playerHPFrameBehavior;
         [SerializeField] private GameplayFinishFrameBehavior _gameplayFinishFrameBehavior;
         [SerializeField] private TimeFrameBehavior _timeFrameBehavior;
+
+
         public override void Load()
         {
             GameplayUI = new GameplayUI();
@@ -28,6 +30,7 @@ namespace VampireSurvivors.Gameplay.UI
             _gameplayFinishFrameBehavior.Init(GameplayUI.GameplayFinishFrame);
             _timeFrameBehavior.Init(GameplayUI.TimeFrame);
         }
+
 
         public override void Unload()
         {

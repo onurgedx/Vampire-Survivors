@@ -1,6 +1,9 @@
 using UnityEngine;
 namespace VampireSurvivors.Update
 {
+    /// <summary>
+    /// Calculates and process time progress
+    /// </summary>
     public class VSTimerCounter
     {
         private float _duration;

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using VampireSurvivors.Gameplay.Units;
-
 namespace VampireSurvivors.Gameplay.Systems.BattleSys
 {
+    /// <summary>
+    /// Responsible all damage process
+    /// </summary>
     public class Damager 
     {
         public Action<IDamageable> DamagableDead; 
@@ -17,15 +17,15 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
         }
         
         
-        public void Damage(int a_damageableGameObject, int a_damage)
+        public void Damage(int a_damageableGameObjectHashCode, int a_damage)
         {
-            if(_damageables.TryGetValue(a_damageableGameObject, out IDamageable damageable))
+            if(_damageables.TryGetValue(a_damageableGameObjectHashCode, out IDamageable damageable))
             {
                 damageable.Damage(a_damage);
                 if (!damageable.IsAlive)
                 {
                     DamagableDead?.Invoke(damageable); 
-                    _damageables.Remove(a_damageableGameObject);
+                    _damageables.Remove(a_damageableGameObjectHashCode);
                 }
             }
         }

@@ -3,6 +3,9 @@ using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.UI.GameTime
 {
+    /// <summary>
+    /// Updates Gameplay Time's View
+    /// </summary>
     public class TimeFrame
     {
         public IActionProperty<string> Time => _time;

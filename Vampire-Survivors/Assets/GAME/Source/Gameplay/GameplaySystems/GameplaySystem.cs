@@ -17,6 +17,9 @@ using VampireSurvivors.Lib.Basic.Completables;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
+    /// <summary>
+    /// Creates and Controls Gameplay Progress
+    /// </summary>
     public class GameplaySystem : VSSystem
     {
 

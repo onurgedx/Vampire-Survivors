@@ -2,16 +2,18 @@ using System;
 using System.Collections.Generic;
 namespace VampireSurvivors.Gameplay.UI.SkillSystem
 {
-
+    /// <summary>
+    /// SkillCard Choose Frame
+    /// </summary>
     public class SkillChooseFrame
     {
-
         public Action SkillChooseActivate;
         public Action<string> SkillChoosed;
-
         public Action<SkillCard> SkillCardCreated;
 
         public List<SkillCard> SkillCards = new List<SkillCard>() { };
+
+
         public SkillCard GenerateSkillCard()
         {
             SkillCard skillCard = new SkillCard();
@@ -20,11 +22,18 @@ namespace VampireSurvivors.Gameplay.UI.SkillSystem
             return skillCard;
         }
 
+
         private void Choose(string a_id)
         {            
             SkillChoosed?.Invoke(a_id);
         }
 
+
+        /// <summary>
+        /// Activates Skill Card Choose Screen
+        /// </summary>
+        /// <param name="a_skillIds"></param>
+        /// <param name="a_levels"></param>
         public void ActivateChooseSkill(string[] a_skillIds, int[] a_levels)
         {
             int neededCardCount = a_skillIds.Length - SkillCards.Count;

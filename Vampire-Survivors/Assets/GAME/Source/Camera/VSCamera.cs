@@ -1,9 +1,10 @@
-
 using UnityEngine;
 using VampireSurvivors.Lib.Basic.Properties;
-
 namespace VampireSurvivors.CameraSystems
 {
+    /// <summary>
+    /// Camera Component for system
+    /// </summary>
     public class VSCamera : ICamera
     {
         private Camera _camera;
@@ -11,6 +12,7 @@ namespace VampireSurvivors.CameraSystems
         public IProperty<Vector3> CameraPosition => _cameraPosition;
         private Property<Vector3> _cameraPosition { get; set; }
         private IProperty<Vector3> _followPosition { get; set; }
+
 
         public VSCamera(Camera a_camera)
         {
@@ -40,6 +42,7 @@ namespace VampireSurvivors.CameraSystems
             destionationPosition.z = -10;
             _cameraPosition.SetValue(destionationPosition);
         }
+
 
         public Vector3 Position()
         {

@@ -53,6 +53,10 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
         }
 
 
+        /// <summary>
+        /// Requests Skill
+        /// </summary>
+        /// <param name="a_collectable"></param>
         protected override void OnCollected(Collectable a_collectable)
         {
             if (a_collectable is Chest chest)

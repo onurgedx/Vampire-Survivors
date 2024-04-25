@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -8,29 +7,32 @@ using VampireSurvivors.Gameplay.Units;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
+    /// <summary>
+    /// Responsible for crafting enemy unit
+    /// </summary>
     public class EnemyUnitCrafting : VSSystem
     {
-         
+
         private EnemyUnitFactory _unitFactory;
-        private List<string> _unitNames= new List<string>();
+        private List<string> _unitNames = new List<string>();
 
         public EnemyUnitCrafting(EnemyUnitFactory a_enemyUnitFactory)
         {
-            _unitFactory = a_enemyUnitFactory; 
+            _unitFactory = a_enemyUnitFactory;
         }
 
 
         public void CreateEnemy(WaveData a_waveData)
         {
             foreach (EnemyData data in a_waveData.EnemyDatas)
-            {                 
-                    for (int i = 0; i < data.Count; i++)
-                    {
-                        _unitFactory.CreateEnemyUnit(data.Data);
-                    }
+            {
+                for (int i = 0; i < data.Count; i++)
+                {
+                    _unitFactory.CreateEnemyUnit(data.Data);
                 }
             }
-        
+        }
+
 
 
         public void LoadEnemyUnitsPrefabs(EnemyWaveDatas a_waveDatas)
@@ -49,7 +51,6 @@ namespace VampireSurvivors.Gameplay.Systems
                         };
                     }
                 }
-
 
             }
         }

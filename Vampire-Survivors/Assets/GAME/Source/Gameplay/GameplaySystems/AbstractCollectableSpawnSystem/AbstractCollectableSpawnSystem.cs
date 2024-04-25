@@ -5,15 +5,18 @@ using VampireSurvivors.Gameplay.Systems.CollectionSys;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Lib.Record;
 using VampireSurvivors.Update;
-
 namespace VampireSurvivors.Gameplay.Systems
 {
+    /// <summary>
+    /// Manages Collectables' Collectting and Spawning Process
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class AbstractCollectableSpawnSystem<T> :VSSystem where T :Collectable 
     {
+        public IProperty<float> CollectableRange => _collectRange;
         protected Collector _collector;
         protected CollectableSpawner _spawner;
         protected IRecorder<GameObject,Collectable> _collectableRecorder;
-        public IProperty<float> CollectableRange => _collectRange;
         protected Property<float> _collectRange { get; set; }
         protected Transform _parentTransform;
         protected IProperty<Vector3> _originPosition;
@@ -22,7 +25,12 @@ namespace VampireSurvivors.Gameplay.Systems
         protected int _maxActiveCollectableCount = 1; 
         protected VSTimerCounter _vsTimeCounter;
 
-        protected AbstractCollectableSpawnSystem(IRecorder<GameObject, Collectable> a_recorder,ICollectorAdder a_collectorAdder, IProperty<Vector3> a_originTransform, LayerMask a_collectableLayer, Transform a_collectableParentTransform)
+
+        protected AbstractCollectableSpawnSystem(IRecorder<GameObject, Collectable> a_recorder,
+                                                 ICollectorAdder a_collectorAdder,
+                                                 IProperty<Vector3> a_originTransform,
+                                                 LayerMask a_collectableLayer,
+                                                 Transform a_collectableParentTransform)
         {
             _collectableRecorder = a_recorder;
             _collectRange = new Property<float>(1);

@@ -3,6 +3,9 @@ using System;
 
 namespace VampireSurvivors.Gameplay.UI.Finish
 {
+    /// <summary>
+    /// Contains Win and Lose State Frames
+    /// </summary>
     public class GameplayFinishFrame  
     {
         public GameplayUIWinFrame GameplayUIWinFrame { get; private set; }

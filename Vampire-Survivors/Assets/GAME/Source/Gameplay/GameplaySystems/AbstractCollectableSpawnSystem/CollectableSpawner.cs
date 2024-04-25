@@ -6,6 +6,9 @@ using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Systems
 {
+    /// <summary>
+    /// Spawn Collectables
+    /// </summary>
     public abstract class CollectableSpawner
     {
         protected IRecorder<GameObject,Collectable> _collectableRecorder = null;

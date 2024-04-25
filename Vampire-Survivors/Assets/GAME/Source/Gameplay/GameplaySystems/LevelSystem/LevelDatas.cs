@@ -4,7 +4,11 @@ using VampireSurvivors.Gameplay.Systems.SkillSys;
 
 namespace VampireSurvivors.Gameplay.Systems.LevelSys
 {
+    /// <summary>
+    /// Contains Level Datas
+    /// </summary>
     [CreateAssetMenu(fileName = "Level", menuName = "Data/LevelData", order = 1)]
+    
     public class LevelDatas : ScriptableObject
     {
         public float WaveDuration => _waveDuration;

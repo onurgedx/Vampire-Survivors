@@ -53,6 +53,10 @@ namespace VampireSurvivors.Gameplay.Systems.HealSys
         }
 
 
+        /// <summary>
+        /// Player Heal Increases
+        /// </summary>
+        /// <param name="a_collectable"></param>
         protected override void OnCollected(Collectable a_collectable)
         {
             if (a_collectable is Heal heal)
