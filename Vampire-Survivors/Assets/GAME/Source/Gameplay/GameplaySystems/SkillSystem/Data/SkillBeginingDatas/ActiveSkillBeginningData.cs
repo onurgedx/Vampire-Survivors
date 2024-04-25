@@ -13,7 +13,14 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         public int Damage => _damage;
         [SerializeField] private int _damage =40;
 
+        public float Duration => _duration;
+        [SerializeField] private float _duration=3;
 
+        public float Size => _size;
+        [SerializeField] private float _size = 1;
+
+        public int Count => _count;
+        [SerializeField] private int _count=1;
 
     }
 }

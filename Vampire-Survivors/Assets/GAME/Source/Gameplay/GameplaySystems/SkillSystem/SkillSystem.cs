@@ -43,9 +43,24 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         private void CreateFactories(IProperty<Vector3> a_playerPosition, IProperty<Vector3> a_playerDirection, PlayerUnit a_playerUnit)
         {
-            _skillControllerFactories.Add(Keys.Skills.Knife, new KnifeControllerFactory(_skillDatas[Keys.Skills.Knife].GetHashCode(), _skillDatas[Keys.Skills.Knife].SkillBeginningData, a_playerPosition, a_playerDirection));
-            _skillControllerFactories.Add(Keys.Skills.MagicBolt, new MagicBoltControllerFactory(_skillDatas[Keys.Skills.MagicBolt].GetHashCode(), _skillDatas[Keys.Skills.MagicBolt].SkillBeginningData, a_playerPosition));
-            _skillControllerFactories.Add(Keys.Skills.SpikeFloor, new SpikeFloorControllerFactory(_skillDatas[Keys.Skills.SpikeFloor].GetHashCode(), _skillDatas[Keys.Skills.SpikeFloor].SkillBeginningData, a_playerPosition));
+            ActiveSkillFactory activeSkillFactory = new ActiveSkillFactory();
+
+            _skillControllerFactories.Add(Keys.Skills.Knife, new KnifeControllerFactory(_skillDatas[Keys.Skills.Knife].GetHashCode(),
+                                                                                        _skillDatas[Keys.Skills.Knife].SkillBeginningData,
+                                                                                        a_playerPosition,
+                                                                                        a_playerDirection,
+                                                                                        activeSkillFactory));
+
+            _skillControllerFactories.Add(Keys.Skills.MagicBolt, new MagicBoltControllerFactory(_skillDatas[Keys.Skills.MagicBolt].GetHashCode(),
+                                                                                                _skillDatas[Keys.Skills.MagicBolt].SkillBeginningData,
+                                                                                                a_playerPosition,
+                                                                                                activeSkillFactory));
+
+            _skillControllerFactories.Add(Keys.Skills.SpikeFloor, new SpikeFloorControllerFactory(_skillDatas[Keys.Skills.SpikeFloor].GetHashCode(),
+                                                                                                  _skillDatas[Keys.Skills.SpikeFloor].SkillBeginningData,
+                                                                                                  a_playerPosition,
+                                                                                                  activeSkillFactory));
+
             _skillControllerFactories.Add(Keys.Skills.PlayerMaxHP, new PlayerMaxHPControllerFactory(a_playerUnit.Health, _skillDatas[Keys.Skills.PlayerMaxHP].SkillBeginningData));
             _skillControllerFactories.Add(Keys.Skills.PlayerSpeed, new PlayerSpeedControllerFactory(a_playerUnit.MovementSpeed, _skillDatas[Keys.Skills.PlayerSpeed].SkillBeginningData));
         }
