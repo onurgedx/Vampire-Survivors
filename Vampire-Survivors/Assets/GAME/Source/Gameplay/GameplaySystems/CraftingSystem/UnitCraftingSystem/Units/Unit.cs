@@ -32,14 +32,7 @@ namespace VampireSurvivors.Gameplay.Units
             int conculusionDamage =  (Math.Abs(a_rawDamage) * -1) ;
             Health.UpdateCurrentHealth(conculusionDamage);            
         }
-
-
-        private int ConculusionDamage( int a_rawDamage)
-        {
-            int conculusionDamage ;
-            conculusionDamage = (int)( a_rawDamage + a_rawDamage );
-            return conculusionDamage;
-        }
+         
 
 
         private void Dead()

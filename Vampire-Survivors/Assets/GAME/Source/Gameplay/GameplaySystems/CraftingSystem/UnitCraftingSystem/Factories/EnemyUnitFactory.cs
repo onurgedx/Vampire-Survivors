@@ -51,10 +51,7 @@ namespace VampireSurvivors.Gameplay.Units
         {
 
             Property<float> speed = new Property<float>(a_unitData.MovementSpeed);
-            UnitHealth unitHealth = new UnitHealth(a_unitData.MaxHealth);
-            Property<float> damageTaken = new Property<float>(0);
-            Property<int> attackPower = new Property<int>(a_unitData.AttackPower );
-
+            UnitHealth unitHealth = new UnitHealth(a_unitData.MaxHealth); 
             UnitBehaviour behaviour = CreateUnitBehavior(a_unitData.UnitName);
             EnemyUnit unit = new EnemyUnit(unitHealth);             
             behaviour.Init(unit);

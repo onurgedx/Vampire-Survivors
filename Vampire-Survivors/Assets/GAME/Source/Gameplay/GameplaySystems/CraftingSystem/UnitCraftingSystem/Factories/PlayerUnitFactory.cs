@@ -30,7 +30,7 @@ namespace VampireSurvivors.Gameplay.Systems
         {
             Property<float> speed = new Property<float>(3);
             UnitHealth unitHealth = new UnitHealth(111);
-            PlayerUnit unit = new PlayerUnit(unitHealth);
+            PlayerUnit unit = new PlayerUnit(unitHealth, speed);
 
             GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, a_poolTransform);
             UnitBehaviour unitBehaviour = gameobjectUnit.GetComponent<UnitBehaviour>();

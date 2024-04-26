@@ -7,8 +7,10 @@ namespace VampireSurvivors.Gameplay.Units
     /// </summary>
     public class PlayerUnit : Unit
     {
-        public PlayerUnit(UnitHealth a_unitHealth) : base(a_unitHealth)
+        public Property<float> MovementSpeed { get; private set; }
+        public PlayerUnit(UnitHealth a_unitHealth,Property<float> a_movementSpeed) : base(a_unitHealth)
         {
+            MovementSpeed = a_movementSpeed;
         }
     }
 }
