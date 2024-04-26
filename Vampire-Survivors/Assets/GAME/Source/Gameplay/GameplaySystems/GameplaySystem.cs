@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 using VampireSurvivors.Gameplay.Systems.AIControl;
 using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Gameplay.Systems.ChestSys;
 using VampireSurvivors.Gameplay.Systems.CollectionSys;
-using VampireSurvivors.Gameplay.Systems.CraftingSys;
 using VampireSurvivors.Gameplay.Systems.HealSys;
 using VampireSurvivors.Gameplay.Systems.LevelSys;
 using VampireSurvivors.Gameplay.Systems.ManaSys;
@@ -32,9 +30,8 @@ namespace VampireSurvivors.Gameplay.Systems
         public HealSystem HealSystem { get; private set; }
         public ChestSystem ChestSystem { get; private set; }
         public BattleSystem BattleSystem { get; private set; }
-        public LevelSystem LevelSystem { get; private set; }
+        public PlayerLevelSystem PlayerLevelSystem { get; private set; }
         public TimeSystem TimeSystem { get; private set; }
-
 
 
         private LevelDatas _levelData;
@@ -87,7 +84,7 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private void SetupLevelSystem()
         {
-            LevelSystem = new LevelSystem(_levelData.RequiredExperiences, SkillSystem, _gameplayUI.GameplayUILevel);
+            PlayerLevelSystem = new PlayerLevelSystem(_levelData.RequiredExperiences, SkillSystem, _gameplayUI.GameplayUILevel);
         }
 
 
@@ -118,7 +115,7 @@ namespace VampireSurvivors.Gameplay.Systems
                                         CollectionSystem.CollectorAdder,
                                         PlayerControlSystem.Position,
                                         _poolTransform,
-                                        LevelSystem); 
+                                        PlayerLevelSystem); 
             HealSystem = new HealSystem(CollectionSystem.CollectableRecorder,
                                         CollectionSystem.CollectorAdder,
                                         PlayerControlSystem.Position,

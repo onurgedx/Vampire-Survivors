@@ -46,30 +46,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         }
 
 
-        private void CreateFactories(IProperty<Vector3> a_playerPosition, IProperty<Vector3> a_playerDirection, PlayerUnit a_playerUnit,IDamager a_damager)
-        {
-            ActiveSkillFactory activeSkillFactory = new ActiveSkillFactory();
-
-            _skillControllerFactories.Add(Keys.Skills.Knife, new KnifeControllerFactory(a_damager,
-                                                                                        _skillDatas[Keys.Skills.Knife].SkillBeginningData,
-                                                                                        a_playerPosition,
-                                                                                        a_playerDirection,
-                                                                                        activeSkillFactory));
-
-            _skillControllerFactories.Add(Keys.Skills.MagicBolt, new MagicBoltControllerFactory(a_damager,
-                                                                                                _skillDatas[Keys.Skills.MagicBolt].SkillBeginningData,
-                                                                                                a_playerPosition,
-                                                                                                activeSkillFactory));
-
-            _skillControllerFactories.Add(Keys.Skills.SpikeFloor, new SpikeFloorControllerFactory(a_damager,
-                                                                                                  _skillDatas[Keys.Skills.SpikeFloor].SkillBeginningData,
-                                                                                                  a_playerPosition,
-                                                                                                  activeSkillFactory));
-
-            _skillControllerFactories.Add(Keys.Skills.PlayerMaxHP, new PlayerMaxHPControllerFactory(a_playerUnit.Health, _skillDatas[Keys.Skills.PlayerMaxHP].SkillBeginningData));
-            _skillControllerFactories.Add(Keys.Skills.PlayerSpeed, new PlayerSpeedControllerFactory(a_playerUnit.MovementSpeed, _skillDatas[Keys.Skills.PlayerSpeed].SkillBeginningData));
-        }
-
+       
 
         private void SkillChoose(string a_id)
         {
@@ -152,5 +129,31 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         {
             _currentSkillControllers.Add(a_id, a_skillController); 
         }
+
+
+        private void CreateFactories(IProperty<Vector3> a_playerPosition, IProperty<Vector3> a_playerDirection, PlayerUnit a_playerUnit, IDamager a_damager)
+        {
+            ActiveSkillFactory activeSkillFactory = new ActiveSkillFactory();
+
+            _skillControllerFactories.Add(Keys.Skills.Knife, new KnifeControllerFactory(a_damager,
+                                                                                        _skillDatas[Keys.Skills.Knife].SkillBeginningData,
+                                                                                        a_playerPosition,
+                                                                                        a_playerDirection,
+                                                                                        activeSkillFactory));
+
+            _skillControllerFactories.Add(Keys.Skills.MagicBolt, new MagicBoltControllerFactory(a_damager,
+                                                                                                _skillDatas[Keys.Skills.MagicBolt].SkillBeginningData,
+                                                                                                a_playerPosition,
+                                                                                                activeSkillFactory));
+
+            _skillControllerFactories.Add(Keys.Skills.SpikeFloor, new SpikeFloorControllerFactory(a_damager,
+                                                                                                  _skillDatas[Keys.Skills.SpikeFloor].SkillBeginningData,
+                                                                                                  a_playerPosition,
+                                                                                                  activeSkillFactory));
+
+            _skillControllerFactories.Add(Keys.Skills.PlayerMaxHP, new PlayerMaxHPControllerFactory(a_playerUnit.Health, _skillDatas[Keys.Skills.PlayerMaxHP].SkillBeginningData));
+            _skillControllerFactories.Add(Keys.Skills.PlayerSpeed, new PlayerSpeedControllerFactory(a_playerUnit.MovementSpeed, _skillDatas[Keys.Skills.PlayerSpeed].SkillBeginningData));
+        }
+
     }
 }

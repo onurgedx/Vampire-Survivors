@@ -7,7 +7,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
     /// <summary>
     /// Controls Player's Level 
     /// </summary>
-    public class LevelSystem : VSSystem, IExperiencer
+    public class PlayerLevelSystem : VSSystem, IExperiencer
     {
         public Action LevelUp;
         public Action Experienced;
@@ -19,7 +19,7 @@ namespace VampireSurvivors.Gameplay.Systems.LevelSys
         private ISkillRequester _skillRequester; 
         private GameplayLevelFrame _gameplayUILevel;
 
-        public LevelSystem(int[] a_levelCapaties, ISkillRequester a_skillRequester, GameplayLevelFrame a_gameplayLevelUI)
+        public PlayerLevelSystem(int[] a_levelCapaties, ISkillRequester a_skillRequester, GameplayLevelFrame a_gameplayLevelUI)
         {
             _skillRequester = a_skillRequester;
             _levelCapaties = a_levelCapaties;

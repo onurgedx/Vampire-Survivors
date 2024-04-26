@@ -21,7 +21,6 @@ namespace VampireSurvivors.Gameplay.Systems
     {
         public Action NoRemainsEnemyWave;
         public PlayerUnit PlayerUnit { get; private set; }
-
         private EnemyUnitCrafting _enemyUnitCraftingSystem { get; set; }
         private PlayerCrafting _playerCraftig = new PlayerCrafting();
         private VSTimerCounter _enemyCreateTimer;
