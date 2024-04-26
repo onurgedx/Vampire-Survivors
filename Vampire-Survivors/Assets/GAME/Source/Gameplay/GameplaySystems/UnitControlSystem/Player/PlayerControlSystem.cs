@@ -17,7 +17,7 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
         private Transform _playerTransform;
         private IProperty<float> _playerSpeed; 
 
-        PlayerInput _playerInput;
+        private PlayerInput _playerInput;
         private Vector2 _touchStartPosition;
         private bool _isMove = false;
         private bool _canMove = false;

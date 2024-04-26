@@ -5,7 +5,7 @@ namespace VampireSurvivors.Gameplay.Systems.BattleSys
     /// <summary>
     /// Responsible all damage process
     /// </summary>
-    public class Damager 
+    public class Damager  : IDamager
     {
         public Action<IDamageable> DamagableDead; 
         private Dictionary<int, IDamageable> _damageables ;

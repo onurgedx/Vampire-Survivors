@@ -24,38 +24,19 @@ namespace VampireSurvivors.Gameplay.Systems
         /// <returns></returns>
         public (PlayerUnit, UnitBehaviour) Create(PlayerControlSystem a_playerControlSys,
                                                   GameObject a_unitPrefab,
-                                                  IDamageablePlayerRecorder a_damageableRecorder,
+                                                  IDamageableRecorder a_damageableRecorder,
                                                   PlayerHPFrame a_playerHPFrame,
                                                   Transform a_poolTransform)
         {
             Property<float> speed = new Property<float>(3);
             UnitHealth unitHealth = new UnitHealth(111);
-            Property<float> damageTaken = new Property<float>(0);
-            Property<int> attackPower = new Property<int>(11);
-            Property<float> criticalStrikeRate = new Property<float>(0);
-            Property<float> criticalStrike = new Property<float>(2);
-            Property<float> manaGain = new Property<float>(0);
-            Property<float> itemPickupRange = new Property<float>(0);
-            Property<float> hPRegenPerSecond = new Property<float>(0);
-            Property<float> allMagicSize = new Property<float>(0);
-            Property<float> allMagicDuration = new Property<float>(0);
-            PlayerUnit unit = new PlayerUnit(criticalStrikeRate,
-                                             criticalStrike,
-                                             manaGain,
-                                             itemPickupRange,
-                                             hPRegenPerSecond,
-                                             allMagicSize,
-                                             allMagicDuration,
-                                             unitHealth,
-                                             speed,
-                                             damageTaken,
-                                             attackPower);
+            PlayerUnit unit = new PlayerUnit(unitHealth);
 
             GameObject gameobjectUnit = GameObject.Instantiate(a_unitPrefab, a_poolTransform);
             UnitBehaviour unitBehaviour = gameobjectUnit.GetComponent<UnitBehaviour>();
             unitBehaviour.Init(unit);
             a_playerControlSys.Init(gameobjectUnit.transform, speed);
-            a_damageableRecorder.RecordPlayer(gameobjectUnit.GetHashCode(), unit);
+            a_damageableRecorder.Record(gameobjectUnit.GetHashCode(), unit);
 
             a_playerHPFrame.UpdateMaxHP(unitHealth.MaxHealth.Value);
             a_playerHPFrame.UpdateHP(unitHealth.CurrentHealth.Value);

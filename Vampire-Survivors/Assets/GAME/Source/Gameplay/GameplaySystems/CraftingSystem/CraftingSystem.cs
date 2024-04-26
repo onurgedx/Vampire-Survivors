@@ -7,7 +7,8 @@ using VampireSurvivors.Gameplay.Systems.CraftingSys;
 using VampireSurvivors.Gameplay.Systems.PlayerControlSys;
 using VampireSurvivors.Gameplay.UI.PlayerHP;
 using VampireSurvivors.Gameplay.Units;
-using VampireSurvivors.Lib.Basic.Completables; 
+using VampireSurvivors.Lib.Basic.Completables;
+using VampireSurvivors.Lib.Record;
 using VampireSurvivors.Update;
 
 namespace VampireSurvivors.Gameplay.Systems
@@ -30,9 +31,9 @@ namespace VampireSurvivors.Gameplay.Systems
 
         public CraftingSystem(PlayerControlSystem a_playeControlSystem,
                               EnemyMovementControl a_enemyMovementControl,
-                              DamageableRecorder a_damageableRecorder,
+                              IDamageableRecorder a_damageableRecorder,
                               PlayerHPFrame a_playerHPFrame,
-                              DamageSourceTypeRecorder a_damageSourceTypeRecorder,
+                              IRecorder<GameObject, int> a_enemyDamageRecorder,
                               EnemyWaveDatas a_enemyWaveData,
                               float a_waveDuration,
                               Transform a_poolTransform,
@@ -44,7 +45,7 @@ namespace VampireSurvivors.Gameplay.Systems
             _playerCraftig.CraftPlayer(a_playeControlSystem, a_playerHPFrame, a_damageableRecorder, a_poolTransform, a_completablePlayerUnit);
             a_completablePlayerUnit.RunOnCompleted(() => PlayerUnit = a_completablePlayerUnit.Value);
 
-            EnemyUnitFactory enemyFactory = new EnemyUnitFactory(a_playeControlSystem.Position, a_enemyMovementControl, a_damageableRecorder, a_damageSourceTypeRecorder, a_poolTransform);
+            EnemyUnitFactory enemyFactory = new EnemyUnitFactory(a_playeControlSystem.Position, a_enemyMovementControl, a_damageableRecorder, a_enemyDamageRecorder, a_poolTransform);
             _enemyUnitCraftingSystem = new EnemyUnitCrafting(enemyFactory);
             _enemyUnitCraftingSystem.LoadEnemyUnitsPrefabs(a_enemyWaveData);
         }

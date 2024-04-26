@@ -20,7 +20,7 @@ namespace VampireSurvivors.Gameplay.Systems
 
         public void CraftPlayer(PlayerControlSystem a_playerControlSystem,
                                 PlayerHPFrame a_playerHPFrame,
-                                IDamageablePlayerRecorder a_damageableRecorder, 
+                                IDamageableRecorder a_damageableRecorder, 
                                 Transform a_poolTransform ,
                                 Completable<PlayerUnit> a_completablePlayerUnit)
         {

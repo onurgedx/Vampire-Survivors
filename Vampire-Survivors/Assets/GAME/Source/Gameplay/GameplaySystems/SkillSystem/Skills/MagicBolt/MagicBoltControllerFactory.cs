@@ -1,4 +1,5 @@
 using UnityEngine;
+using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
@@ -7,13 +8,14 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     {
         private IProperty<Vector3> _startPosition;
         private SkillBeginingData _skillBegginingData;
-        private int _skillHashCode;
-        private SkillBeginingData skillBeginningData;
-        private IProperty<Vector3> a_playerPosition;
+        private IDamager _damager;  
 
-        public MagicBoltControllerFactory(int a_skillHashCode, SkillBeginingData a_skillBegginingData, IProperty<Vector3> a_startPosition, ActiveSkillFactory a_skillFactory ) : base(a_skillFactory)
+        public MagicBoltControllerFactory(IDamager a_damager,
+                                          SkillBeginingData a_skillBegginingData,
+                                          IProperty<Vector3> a_startPosition,
+                                          ActiveSkillFactory a_skillFactory) : base(a_skillFactory)
         {
-            _skillHashCode = a_skillHashCode;
+            _damager = a_damager;
             _skillBegginingData = a_skillBegginingData;
             _startPosition = a_startPosition;
         }
@@ -23,7 +25,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         public override SkillController Create()
         {
             Skill activeSkill = _skillFactory.CrateSkill(_skillBegginingData);
-            return new MagicBoltController(activeSkill, _skillHashCode, _startPosition);
+            return new MagicBoltController(activeSkill, _damager, _startPosition);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace VampireSurvivors.Gameplay.Systems
 
         private void SetupAIControlSystem()
         {
-            AIControlSystem = new AIControlSystem(PlayerControlSystem.Position);
+            AIControlSystem = new AIControlSystem(PlayerControlSystem.Position,BattleSystem.Damager);
         }
 
 
@@ -97,7 +97,7 @@ namespace VampireSurvivors.Gameplay.Systems
                                                 AIControlSystem.EnemyMovementControl,
                                                 BattleSystem.DamageableRecorder,
                                                 _gameplayUI.PlayerHPFrame,
-                                                BattleSystem.GameObjectDamageSourceTypeRecorder,
+                                                AIControlSystem.EnemyDamageControl.DamagerRecorder,
                                                 _levelData.EnemyWaveDatas,
                                                 _levelData.WaveDuration,
                                                 _poolTransform,
@@ -129,28 +129,15 @@ namespace VampireSurvivors.Gameplay.Systems
 
 
         private void SetupBattleSystem()
-        {
-            List<IAttackData> attackDatas = new List<IAttackData>();
-            foreach (WaveData waveData in _levelData.EnemyWaveDatas.WaveDatas)
-            {
-                foreach (EnemyData enemyData in waveData.EnemyDatas)
-                {
-                    if (!attackDatas.Contains(enemyData.Data))
-                    {
-                        attackDatas.Add(enemyData.Data);
-                    }
-                }
-            }
-            BattleSystem = new BattleSystem(PlayerControlSystem.Position, attackDatas);
+        {            
+            BattleSystem = new BattleSystem( );
             BattleSystem.PlayerDead += LoseGame;
         }
 
 
         private void SetupSkillSystem()
         {
-            SkillSystem = new SkillSystem(PlayerControlSystem.Position, PlayerControlSystem.Direction, _gameplayUI.SkillChooseFrame, _levelData.SkillDatas, CraftingSystem.PlayerUnit);
-            SkillSystem.DamageRequest += BattleSystem.Damage;
-            SkillSystem.DamageUpdated += BattleSystem.UpdateDamage;
+            SkillSystem = new SkillSystem(PlayerControlSystem.Position, PlayerControlSystem.Direction, _gameplayUI.SkillChooseFrame, _levelData.SkillDatas, CraftingSystem.PlayerUnit,BattleSystem.Damager);            
             SkillSystem.SkillRequested += PauseGame;
             SkillSystem.SkillChoosed += ContinueGame;
         }

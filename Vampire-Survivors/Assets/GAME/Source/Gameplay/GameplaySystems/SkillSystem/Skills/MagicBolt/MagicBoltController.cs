@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
@@ -9,7 +10,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     {
         private IProperty<Vector3> _startPosition;
 
-        public MagicBoltController(Skill a_skill,int a_skillLevelHash,IProperty<Vector3> a_startPosition  ) : base( a_skill,a_skillLevelHash )
+        public MagicBoltController(Skill a_skill,IDamager a_damager,IProperty<Vector3> a_startPosition  ) : base( a_skill,a_damager )
         {  
             _startPosition = a_startPosition;
            AsyncOperationHandle<GameObject> asset = Addressables.LoadAssetAsync<GameObject>(Keys.Skills.MagicBolt + AddressableSources.Keys.AddressableKeys.Suffix.Prefab);

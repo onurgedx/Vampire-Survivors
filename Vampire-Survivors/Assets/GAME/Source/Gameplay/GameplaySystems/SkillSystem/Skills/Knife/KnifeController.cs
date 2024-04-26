@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Lib.Basic.Extension.Vectors;
 using VampireSurvivors.Lib.Basic.Properties;
 
@@ -12,7 +13,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         private IProperty<Vector3> _direction;
          
 
-        public KnifeController(Skill a_skill, int a_skillLevelHash, IProperty<Vector3> a_startPosition, IProperty<Vector3> a_direction):base(a_skill, a_skillLevelHash)
+        public KnifeController(Skill a_skill, IDamager a_damager, IProperty<Vector3> a_startPosition, IProperty<Vector3> a_direction):base(a_skill, a_damager)
         { 
             _direction = a_direction;
             _startPosition = a_startPosition;

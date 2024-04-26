@@ -7,6 +7,7 @@ using VampireSurvivors.Lib.Basic.Extension.Array;
 using VampireSurvivors.Lib.Basic.Extension.Vectors;
 using VampireSurvivors.Lib.Basic.Properties;
 using VampireSurvivors.Lib.Pooling;
+using VampireSurvivors.Lib.Record;
 
 namespace VampireSurvivors.Gameplay.Units
 {
@@ -16,8 +17,8 @@ namespace VampireSurvivors.Gameplay.Units
         private float _minEnemySpawnDistance = 10;
 
         private EnemyMovementControl _enemyMovementControl;
-        private IDamagableRecorder _damageableRecorder;
-        private DamageSourceTypeRecorder _damageSourceTypeRecorder;
+        private IDamageableRecorder _damageableRecorder;
+        private IRecorder<GameObject,int> _enemyDamageRecorder;
 
         private Dictionary<string, VSObjectPool<UnitBehaviour>> _enemyPools = new Dictionary<string, VSObjectPool<UnitBehaviour>>();
 
@@ -28,14 +29,14 @@ namespace VampireSurvivors.Gameplay.Units
         private Transform _poolTransform;
         public EnemyUnitFactory(IProperty<Vector3> a_craftOriginPosition,
                                 EnemyMovementControl a_enemyMovementControl,
-                                IDamagableRecorder a_damageableRecorder,
-                                DamageSourceTypeRecorder a_damageSourceTypeRecorder,
+                                IDamageableRecorder a_damageableRecorder,
+                                 IRecorder<GameObject, int> a_enemyDamageRecorder,
                                 Transform a_poolTransform)
         {
             _poolTransform = a_poolTransform;
             _enemyMovementControl = a_enemyMovementControl;
             _damageableRecorder = a_damageableRecorder;
-            _damageSourceTypeRecorder = a_damageSourceTypeRecorder;
+            _enemyDamageRecorder = a_enemyDamageRecorder;
             _playerPosition = a_craftOriginPosition;
         }
 
@@ -55,12 +56,12 @@ namespace VampireSurvivors.Gameplay.Units
             Property<int> attackPower = new Property<int>(a_unitData.AttackPower );
 
             UnitBehaviour behaviour = CreateUnitBehavior(a_unitData.UnitName);
-            EnemyUnit unit = new EnemyUnit(unitHealth, speed, damageTaken, attackPower);             
+            EnemyUnit unit = new EnemyUnit(unitHealth);             
             behaviour.Init(unit);
             UnitMovementData unitMovement = new UnitMovementData(speed, new Property<Transform>(behaviour.transform));
             _enemyMovementControl.Add(unit, unitMovement);
             _damageableRecorder.Record(behaviour.gameObject.GetHashCode(), unit);
-            _damageSourceTypeRecorder.Record(behaviour.gameObject, a_unitData.GetHashCode());
+            _enemyDamageRecorder.Record(behaviour.gameObject, a_unitData.AttackPower);
             unit.OnDead += () => { _enemyMovementControl.Remove(unit); };
             return (unit, behaviour);
         }

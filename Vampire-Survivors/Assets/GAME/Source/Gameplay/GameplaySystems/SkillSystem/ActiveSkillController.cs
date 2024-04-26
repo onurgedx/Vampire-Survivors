@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Lib.Pooling;
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
 {
-    public abstract class ActiveSkillController : SkillController
+    public abstract class ActiveSkillController : SkillController 
     {
         protected VSObjectPool<SkillBehaviour> _behaviorPool = new VSObjectPool<SkillBehaviour>();
         protected SkillBehaviorFactory _skillBehaviorFactory;
 
         public ISkill Skill => _skill;
         protected Skill _skill { get; set; }
-        private Action<int, int> SkillImpact;
-        protected int _skillHashCode;
+        private IDamager _damager;
 
         protected Dictionary<Type, SkillImproveHelper> _skillImprovers = new Dictionary<Type, SkillImproveHelper>()
         {
@@ -22,10 +22,10 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             {typeof(CountIncreaseFeature),new CountIncreaser() },
         };
 
-        public ActiveSkillController(Skill a_skill, int a_skillHashCode)
+        public ActiveSkillController(Skill a_skill, IDamager a_damager)
         {
+            _damager = a_damager;
             _skill = a_skill;
-            _skillHashCode = a_skillHashCode;
         }
 
 
@@ -67,13 +67,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
 
         protected void Impact(GameObject a_gameobject)
         {
-            SkillImpact?.Invoke(_skillHashCode, a_gameobject.GetHashCode());
-        }
-
-
-        public void RunOnSkillImpact(Action<int, int> a_skillImpactAction)
-        {
-            SkillImpact += a_skillImpactAction;
-        }
+            _damager.Damage(a_gameobject.GetHashCode(), _skill.Damage);
+        } 
     }
 }

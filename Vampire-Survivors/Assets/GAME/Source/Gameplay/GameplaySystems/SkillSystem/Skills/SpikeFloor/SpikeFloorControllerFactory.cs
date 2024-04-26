@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using VampireSurvivors.Gameplay.Systems.BattleSys;
 using VampireSurvivors.Lib.Basic.Properties;
 
 namespace VampireSurvivors.Gameplay.Systems.SkillSys
@@ -8,10 +9,10 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
     {
         private IProperty<Vector3> _startPosition; 
         private SkillBeginingData _skillBegginingData;
-        private int _skillHashCode;
-        public SpikeFloorControllerFactory(int a_skillHashCode, SkillBeginingData a_skillBegginingData,IProperty<Vector3> a_startPosition, ActiveSkillFactory a_skillFactory) :base(a_skillFactory)
+        private IDamager _damager;
+        public SpikeFloorControllerFactory(IDamager a_damager, SkillBeginingData a_skillBegginingData,IProperty<Vector3> a_startPosition, ActiveSkillFactory a_skillFactory) :base(a_skillFactory)
         {
-            _skillHashCode = a_skillHashCode;
+            _damager = a_damager;
             _skillBegginingData = a_skillBegginingData;
             _startPosition = a_startPosition;
         }
@@ -23,7 +24,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
             {
                 activeSkill = _skillFactory.CrateSkill(activeBeginData);
             }
-            return new SpikeFloorController(activeSkill, _skillHashCode, _startPosition);
+            return new SpikeFloorController(activeSkill, _damager, _startPosition);
         }
     }
 }
