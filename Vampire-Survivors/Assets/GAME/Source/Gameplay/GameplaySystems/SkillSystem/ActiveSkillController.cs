@@ -14,7 +14,7 @@ namespace VampireSurvivors.Gameplay.Systems.SkillSys
         protected Skill _skill { get; set; }
         private IDamager _damager;
 
-        protected Dictionary<Type, SkillImproveHelper> _skillImprovers = new Dictionary<Type, SkillImproveHelper>()
+        protected static readonly Dictionary<Type, SkillImproveHelper> _skillImprovers = new Dictionary<Type, SkillImproveHelper>()
         {
             {typeof(CooldownDecreaseFeature),new CooldownDecreaser() },
             {typeof(SizeIncreaseFeature),new SizeIncreaser() },
