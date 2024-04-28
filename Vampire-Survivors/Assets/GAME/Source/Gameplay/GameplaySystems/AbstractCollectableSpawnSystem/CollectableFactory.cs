@@ -25,7 +25,6 @@ namespace VampireSurvivors.Gameplay.Systems.CollectionSys
             }
             else
             {
-                //GameObject collectableGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent );
                 GameObject collectableGameObject = GameObject.Instantiate(_prefab, a_position, Quaternion.identity, _parent);
                 collectableBehavior = collectableGameObject.GetComponent<CollectableBehavior>();
                 _pool.Add(collectableBehavior);

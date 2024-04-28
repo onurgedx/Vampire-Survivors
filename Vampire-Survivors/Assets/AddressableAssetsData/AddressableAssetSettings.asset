@@ -94,6 +94,8 @@ MonoBehaviour:
     - Unit
     - Mana
     - Skill
+    - Chest
+    - Heal
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 2bd3b74b5bedd704d9bf058e3a900cdb, type: 2}

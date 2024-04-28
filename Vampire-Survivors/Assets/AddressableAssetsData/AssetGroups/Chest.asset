@@ -20,17 +20,20 @@ MonoBehaviour:
   - m_GUID: ed131344f060c4249ad029ef0863d2a0
     m_Address: Collectable.Chest.Small
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Chest
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cd669246759c81948a0a0f5dd558b706
     m_Address: Collectable.Chest.Medium
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Chest
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a9c4b6131fbf92d44b5f4376236b0c2d
     m_Address: Collectable.Chest.Big
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Chest
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7cd60bb34076bc84b9785833014a0986, type: 2}

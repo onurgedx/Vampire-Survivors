@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: 7c9d0a39fb1a5dc429d8442b1372fcf4
     m_Address: Collectable.Heal
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Heal
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7cd60bb34076bc84b9785833014a0986, type: 2}

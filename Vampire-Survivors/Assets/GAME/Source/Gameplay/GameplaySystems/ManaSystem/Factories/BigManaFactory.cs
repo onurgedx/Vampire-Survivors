@@ -13,7 +13,8 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
         
         protected override Collectable RetriveCollectable()
         {
-            throw new System.NotImplementedException();
+            BigMana mana = new BigMana();
+            return mana;
         }
     }
 

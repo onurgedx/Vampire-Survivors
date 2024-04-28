@@ -28,8 +28,8 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
                            Transform a_collectableParentTransform,
                            ISkillRequester a_skillRequester) : base(a_recorder, a_collectorAdder, a_originTransform, Layers.ChestLayerMask, a_collectableParentTransform)
         {
-            _vsTimeCounter = new  VSTimerCounter(_createDelay, _createDelay-5);
-            _collectRange.SetValue(1); 
+            _vsTimeCounter = new VSTimerCounter(_createDelay, _createDelay - 5);
+            _collectRange.SetValue(1);
             _maxActiveCollectableCount = 3;
             _skillRequester = a_skillRequester;
         }
@@ -38,18 +38,27 @@ namespace VampireSurvivors.Gameplay.Systems.ChestSys
         protected override void CreateSpawner()
         {
             AsyncOperationHandle<GameObject> chestBig = Addressables.LoadAssetAsync<GameObject>(Keys.ChestBig);
-            AsyncOperationHandle<GameObject> chestMedium = Addressables.LoadAssetAsync<GameObject>(Keys.ChestMedium);
-            AsyncOperationHandle<GameObject> chestSmall = Addressables.LoadAssetAsync<GameObject>(Keys.ChestSmall);
-            chestMedium.Completed += (_) =>
-            {
-                Dictionary<Type, CollectableFactory> factories = new Dictionary<Type, CollectableFactory>()
-                {
-                    {typeof(SmallChest) , new SmallChestFactory(chestSmall.Result,_parentTransform) },
-                    {typeof(MediumChest) , new MediumChestFactory(chestMedium.Result,_parentTransform)},
-                    {typeof(BigChest) , new BigChestFactory(chestBig.Result,_parentTransform)}
-                };
-                _spawner = new ChestSpawner(_collectableRecorder, factories, _originPosition);
-            };
+            chestBig.Completed += (_) =>
+             {
+
+                 AsyncOperationHandle<GameObject> chestMedium = Addressables.LoadAssetAsync<GameObject>(Keys.ChestMedium);
+
+                 chestMedium.Completed += (_) =>
+                 {
+                     AsyncOperationHandle<GameObject> chestSmall = Addressables.LoadAssetAsync<GameObject>(Keys.ChestSmall);
+                     chestSmall.Completed += (_) =>
+                       {
+
+                           Dictionary<Type, CollectableFactory> factories = new Dictionary<Type, CollectableFactory>()
+                            {
+                                {typeof(SmallChest) , new SmallChestFactory(chestSmall.Result,_parentTransform) },
+                                {typeof(MediumChest) , new MediumChestFactory(chestMedium.Result,_parentTransform)},
+                                {typeof(BigChest) , new BigChestFactory(chestBig.Result,_parentTransform)}
+                            };
+                           _spawner = new ChestSpawner(_collectableRecorder, factories, _originPosition);
+                       };
+                 };
+             };
         }
 
 

@@ -70,7 +70,7 @@ namespace VampireSurvivors.Gameplay.Systems.ManaSys
 
         protected override void CreateSpawner()
         {
-            AsyncOperationHandle<GameObject> manaBig = Addressables.LoadAssetAsync<GameObject>(Keys.SmallMana);
+            AsyncOperationHandle<GameObject> manaBig = Addressables.LoadAssetAsync<GameObject>(Keys.BigMana);
             manaBig.Completed += (_) =>
             {
 
