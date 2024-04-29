@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Skill.MagicBolt.Level4
   m_EditorClassIdentifier: 
   LevelImprovments:
-  - {fileID: 11400000, guid: 134121da382cce445a4bb26c9f618fde, type: 2}
+  - {fileID: 11400000, guid: 5531433caa18d3749a5679312d212016, type: 2}
+  - {fileID: 11400000, guid: e4aac5ea995bc8142b2cad518fac2cc0, type: 2}

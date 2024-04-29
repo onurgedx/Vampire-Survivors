@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelImprovments:
   - {fileID: 11400000, guid: e4aac5ea995bc8142b2cad518fac2cc0, type: 2}
+  - {fileID: 11400000, guid: e4aac5ea995bc8142b2cad518fac2cc0, type: 2}

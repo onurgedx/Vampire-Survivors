@@ -30,6 +30,7 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
             _playerDirection = new Property<Vector3>(Vector3.up);
             _playerInput.PlayerTouch.TouchInput.started += ctx => TouchStarted(ctx);
             _playerInput.PlayerTouch.TouchInput.canceled += ctx => TouchEnded(ctx);
+            _touchStartPosition = new Vector2(Screen.width / 2, Screen.height / 2);
         }
 
 
@@ -38,7 +39,7 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
             _canMove = true;
             _playerSpeed = a_playerSpeed;
             _playerTransform = a_playerTransform;
-            _playerPosition.SetValue(_playerTransform.position);
+            _playerPosition.SetValue(_playerTransform.position); 
         }
 
 
@@ -66,7 +67,6 @@ namespace VampireSurvivors.Gameplay.Systems.PlayerControlSys
         private void TouchStarted(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
         {
             _isMove = true;
-            _touchStartPosition = _playerInput.PlayerTouch.TouchPosition.ReadValue<Vector2>();
         }
 
 
